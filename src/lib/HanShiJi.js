@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import { watchesss } from "./Database/database.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import moment from "moment";

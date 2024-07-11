@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"

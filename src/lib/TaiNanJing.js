@@ -1,5 +1,5 @@
 
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"

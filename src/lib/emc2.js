@@ -2,7 +2,7 @@ import moment from 'moment'
 import { watchesss } from './Database/database.js'
 import { FastLoad } from './Hook/FastLoad.js'
 
-import puppeteer from 'puppeteer'
+import puppeteer from "puppeteer-core";
 import createBrowser from './Hook/Browser.js'
 
 export const url_emc2 = (pg)=>{

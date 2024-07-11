@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core";
 import { checkDB } from "./Hook/CheckDB.js";
 export const JC_url = (pg) =>{ return `https://www.369rolexwatch.com/index.asp?index=${pg}`}
 import { FastLoad } from "./Hook/FastLoad.js";

@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer-core";
 import {Cluster} from 'puppeteer-cluster';
 import { watchesss } from './Database/database.js';
 

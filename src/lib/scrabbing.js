@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer"
+import puppeteer from "puppeteer-core";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js"
 import createBrowser from "./Hook/Browser.js"
