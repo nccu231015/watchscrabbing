@@ -8,7 +8,12 @@ export const revalidate = 0;
 
 export async function POST(req, res) {
 
+    
     try {
+        if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+            return res.status(401).end('Unauthorized');
+          }
+          
         main();
         return NextResponse.json({ data: 'Success', status: 200 });
 
