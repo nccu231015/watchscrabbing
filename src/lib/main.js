@@ -18,27 +18,43 @@ import { TT_count, TT_main, TT_url } from './TTWatches.js';
 
 
 
+
 import {watchesss} from './Database/database.js';
 import mongoose from 'mongoose';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
 import chromium from "@sparticuz/chromium"
 import puppeteer from 'puppeteer-core';
 
-const clusterTask = async (w)=>{
-    const cluster = await Cluster.launch({
+
+async function createCluster() {
+    const executablePath = await chromium.executablePath();
+
+    return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
         puppeteer,
-        puppeteerOptions:{
+        puppeteerOptions: {
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath(),
+            executablePath: executablePath,
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         },
         monitor: true,
         timeout: 360000,
     });
+}
+
+async function getClusterInstance() {
+    if (!clusterInstance) {
+        clusterInstance = await createCluster();
+    }
+    return clusterInstance;
+}
+
+
+const clusterTask = async (w)=>{
+    const cluster = await getClusterInstance();
 
     cluster.on('taskerror', (err, data) => {
         console.log(`Error crawling ${data}: ${err.message}`);
