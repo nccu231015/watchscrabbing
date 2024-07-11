@@ -3,9 +3,10 @@ import { NextResponse } from "next/server";
 
 import cron from 'node-cron'
 
-export dynamic = "force-dynamic"
-export maxDuration = 600
+export const dynamic = "force-dynamic"
+export const  maxDuration = 600
 export const revalidate = 0
+
 export async function POST(req, res) {
 
     try {
