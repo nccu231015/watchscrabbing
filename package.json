@@ -20,6 +20,7 @@
     "TaiNanJing": "node lib/TaiNanJing.js"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^123.0.1",
     "aws-sdk": "^2.1654.0",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",

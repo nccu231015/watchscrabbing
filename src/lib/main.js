@@ -21,12 +21,21 @@ import { TT_count, TT_main, TT_url } from './TTWatches.js';
 import {watchesss} from './Database/database.js';
 import mongoose from 'mongoose';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from "@sparticuz/chromium"
 
 const clusterTask = async (w)=>{
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
+        puppeteer,
+        puppeteerOptions:{
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath(),
+            headless: chromium.headless,
+            ignoreHTTPSErrors: true,
+        },
         monitor: true,
         timeout: 360000,
     });
