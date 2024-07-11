@@ -24,9 +24,6 @@ import fetchWatchMiddleware from './Database/fetchWatch.js';
 
 import puppeteer from "puppeteer-core"
 
-
-
-
 const clusterTask = async (w)=>{
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
@@ -36,6 +33,7 @@ const clusterTask = async (w)=>{
         timeout: 360000,
         puppeteerOptions: {
             defaultViewport: false,
+            executablePath: 'path/to/Crhome'
         },
     });
 
