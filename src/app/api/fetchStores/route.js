@@ -1,3 +1,5 @@
+"use server"
+
 import { watchesss } from "@/lib/Database/database";
 import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
 import { NextResponse } from "next/server";
