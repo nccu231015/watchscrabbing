@@ -7,10 +7,9 @@ export async function POST(req, res) {
 
     try {
 
-        cron.schedule('*/30 * * * *', async () => {
-            console.log("the scrabbing has started")
-            main();
-        });
+
+        main();
+
 
         return NextResponse.json({ data: 'Success', status: 200 });
 
