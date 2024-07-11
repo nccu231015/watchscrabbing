@@ -36,7 +36,6 @@ const clusterTask = async (w)=>{
         timeout: 360000,
         puppeteerOptions: {
             defaultViewport: false,
-            userDataDir: './tmp/scrapping-session',
         },
     });
 
