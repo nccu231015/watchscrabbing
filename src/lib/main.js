@@ -21,8 +21,8 @@ import { TT_count, TT_main, TT_url } from './TTWatches.js';
 import {watchesss} from './Database/database.js';
 import mongoose from 'mongoose';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
-import puppeteer from 'puppeteer-core';
 import chromium from "@sparticuz/chromium"
+import puppeteer from 'puppeteer-core';
 
 const clusterTask = async (w)=>{
     const cluster = await Cluster.launch({
@@ -32,7 +32,7 @@ const clusterTask = async (w)=>{
         puppeteerOptions:{
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath(),
+            executablePath: await chromium.executablePath("https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar"),
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         },
