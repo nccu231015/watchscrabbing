@@ -8,9 +8,9 @@ dotenv.config();
 export async function GET(req) {
 
     if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-        return res.status(401).end('Unauthorized');
+        return req.status(401).end('Unauthorized');
       }
-      
+
     try {
         await main();
         return NextResponse.json({ data: 'Success', status: 200 });
