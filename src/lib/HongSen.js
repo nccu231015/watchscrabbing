@@ -1,13 +1,14 @@
 import puppeteer from "puppeteer"
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 export const HSe_url = (pg)=>{
     return `https://www.999watch.com/index.asp?index=${pg}`
 }
 
 export const HSe_count = async () =>{
-    const browser = await puppeteer.launch();
+    const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto('https://www.999watch.com/')
     await page.goto(HSe_url(1), { waitUntil: 'domcontentloaded' })

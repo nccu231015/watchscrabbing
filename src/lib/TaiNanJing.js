@@ -4,6 +4,7 @@ import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"
+import createBrowser from "./Hook/Browser.js"
 
 export const url_TNJ = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y8401229000?pg=${pg+1}`
@@ -11,7 +12,7 @@ export const url_TNJ = (pg)=>{
 
 
 export const TNJ_count = async ()=>{
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     await page.goto(url_TNJ(1),{waitUntil:'networkidle0'});
    

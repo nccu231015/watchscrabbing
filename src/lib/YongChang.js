@@ -5,6 +5,7 @@ import { watchesss } from './Database/database.js';
 import mongoose from 'mongoose';
 import { FastLoad } from './Hook/FastLoad.js';
 import moment from 'moment';
+import createBrowser from './Hook/Browser.js';
 
 
 export const url_YC = (pg) => {
@@ -17,7 +18,7 @@ export const url_YC = (pg) => {
 
 export const YC_count = async ()=>{
 
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     
     let  currentpages = 11

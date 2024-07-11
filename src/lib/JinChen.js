@@ -2,9 +2,10 @@ import puppeteer from "puppeteer"
 import { checkDB } from "./Hook/CheckDB.js";
 export const JC_url = (pg) =>{ return `https://www.369rolexwatch.com/index.asp?index=${pg}`}
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 export const JC_count = async() => {
-    const browser = await puppeteer.launch();
+    const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto('https://www.369rolexwatch.com/')
     

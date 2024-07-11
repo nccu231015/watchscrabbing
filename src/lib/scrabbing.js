@@ -1,11 +1,12 @@
 import puppeteer from "puppeteer"
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js"
+import createBrowser from "./Hook/Browser.js"
 
 export const YS_url = (pg)=>{ return  `https://www.egps.com.tw/index.asp?index=${pg}`}
 
 export const YS_count = async()=>{
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto("https://www.egps.com.tw/", { waitUntil: 'domcontentloaded' })
     

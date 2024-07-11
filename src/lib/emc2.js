@@ -3,6 +3,7 @@ import { watchesss } from './Database/database.js'
 import { FastLoad } from './Hook/FastLoad.js'
 
 import puppeteer from 'puppeteer'
+import createBrowser from './Hook/Browser.js'
 
 export const url_emc2 = (pg)=>{
     return `https://www.emc2watches.com/product/index/is_featured2/1/page/${pg}.html`
@@ -10,7 +11,7 @@ export const url_emc2 = (pg)=>{
 
 export const emc2_count = async ()=>{
 
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     
     let  currentpages = 10

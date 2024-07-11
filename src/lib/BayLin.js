@@ -3,13 +3,14 @@ import { scrollToBottom } from "./Hook/ScrollToBottom.js";
 import { yahooscrab } from "./Hook/yahooScrabbing.js";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 export const url_BL = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y0796619069?guccounter=1&pg=${pg+1}`
 }
 
 export const BL_count = async ()=>{
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     await page.goto(url_BL(1),{waitUntil:'networkidle0'});
    

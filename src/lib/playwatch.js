@@ -1,11 +1,12 @@
 import puppeteer from "puppeteer"
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 export const PW_url = (pg)=>{ return `http://www.playwatch.com.tw/index.asp?index=${pg}`}
 
 export const PW_count = async () => {
-    const browser = await puppeteer.launch();
+    const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto('http://www.playwatch.com.tw/')
     

@@ -52,7 +52,7 @@ const nextConfig = {
     },
     experimental:{
         esmExternals: "loose", // <-- add this
-        serverComponentsExternalPackages: ["mongoose"] // <-- and this
+        serverComponentsExternalPackages: ["mongoose",'puppeteer-core', '@sparticuz/chromium'] // <-- and this
     },
     webpack: (config) => {
         return config;

@@ -4,13 +4,14 @@ import { watchesss } from "./Database/database.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import moment from "moment";
 import { checkDB } from "./Hook/CheckDB.js";
+import createBrowser from "./Hook/Browser.js";
 
 export const url_HS = (pg) => {
     return `https://www.goodtimezone.com.tw/index.asp?index=${pg}`;
 };
 
 export const HS_count = async () => {
-    const browser = await puppeteer.launch();
+    const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto("https://www.goodtimezone.com.tw/", { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');

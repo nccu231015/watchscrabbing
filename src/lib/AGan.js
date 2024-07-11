@@ -3,6 +3,7 @@ import { scrollToBottom } from "./Hook/ScrollToBottom.js";
 import { yahooscrab } from "./Hook/yahooScrabbing.js";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 
 export const url_AG = (pg)=>{
@@ -11,7 +12,7 @@ export const url_AG = (pg)=>{
 
 export const AG_count = async ()=>{
     try{
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     await page.goto(url_AG(1),{waitUntil:'networkidle0'});
    

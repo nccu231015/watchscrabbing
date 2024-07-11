@@ -3,6 +3,7 @@ import puppeteer from "puppeteer"
 import mongoose from "mongoose";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import createBrowser from "./Hook/Browser.js";
 
 // const url = "https://watchstore.tw/newproduct.asp?keywords=&larcode=&newsclass=&page=1"
 
@@ -12,7 +13,7 @@ export const WS_url = (pg) =>{
 
 
 export const WS_count = async () =>{
-    const browser = await puppeteer.launch()
+    const browser = await createBrowser();
     const page = await browser.newPage()
     await page.goto(WS_url(0))
     while(page.url() == WS_url(0)){
