@@ -31,10 +31,6 @@ const clusterTask = async (w)=>{
         puppeteer,
         monitor: true,
         timeout: 360000,
-        puppeteerOptions: {
-            defaultViewport: false,
-            executablePath: 'path/to/Crhome'
-        },
     });
 
     cluster.on('taskerror', (err, data) => {
