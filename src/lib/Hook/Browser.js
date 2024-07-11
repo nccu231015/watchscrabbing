@@ -7,7 +7,7 @@ export default async function createBrowser() {
     const browser = await puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
-        executablePath: executablePath || '/path/to/local/chrome', // fallback for local development
+        executablePath: await chromium.executablePath(), // fallback for local development
         headless: chromium.headless,
     });
 
