@@ -21,14 +21,12 @@ import { TT_count, TT_main, TT_url } from './TTWatches.js';
 import {watchesss} from './Database/database.js';
 import mongoose from 'mongoose';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
-
-import puppeteer from "puppeteer-core"
+import puppeteer from 'puppeteer';
 
 const clusterTask = async (w)=>{
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
-        puppeteer,
         monitor: true,
         timeout: 360000,
     });
@@ -316,3 +314,5 @@ export default async function main(){
     await fetchWatchMiddleware();
     await clusterTask(watchesss);
 }
+
+main();
