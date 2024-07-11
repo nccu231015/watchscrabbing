@@ -2,7 +2,7 @@ import Card from '../card/Card'
 import './cardcomponent.css'
 import moment from 'moment'
 
-export default function CardComponent({wt, bought}){  
+export default function CardComponent({wt=[], bought}){  
   const now = moment();
     return(
         <div className="flex">
