@@ -1,82 +1,70 @@
-
-"use client"
+"use client";
 import CardComponent from "@/components/Card Component/CardComponent";
 import Title from "@/components/Title/title";
-import Card from "@/components/card/Card";
-import Image from "next/image";
+import FilterBar from "@/components/FilterBar/FilterBar";
 import { useEffect, useState } from "react";
 
-import mongoose from 'mongoose';
-import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
-import FilterBar from "@/components/FilterBar/FilterBar";
-
-
-
-
-
 export default function Home() {
-
-  const [product,setproduct] = useState([])
-  const [stores, setstores] = useState([])
-  const [currentsotres, setcurrentsotres] = useState("")
-  const [bought,setbought] = useState(false)
-  const [loading,setloading] =useState(false)
-
-  const [inputValue, setinputValue] = useState("")
-
-  const startloading = ()=>{
-    setloading(true)
-  }
+  const [product, setProduct] = useState([]);
+  const [stores, setStores] = useState([]);
+  const [currentStores, setCurrentStores] = useState("");
+  const [bought, setBought] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (value) => {
-      setinputValue(value);
+    setInputValue(value);
   };
 
-  const fetchProducts = async (stores)=>{
-    setloading(true)
+  const fetchProducts = async () => {
+    setLoading(true);
     const params = new URLSearchParams({
-      store: currentsotres,
-      inputvalue: inputValue
-    })
-    const res = await fetch(`/api/fetchWatch?${params}`)
+      store: currentStores,
+      inputvalue: inputValue,
+    });
+    const res = await fetch(`/api/fetchWatch?${params}`);
     const data = await res.json();
-    setloading(false)
-    return data
-  }
+    setLoading(false);
+    return data;
+  };
 
-  const fetchStores = async ()=>{
-    const res_stores = await fetch("/api/fetchStores")
-    const data = await res_stores.json();
-    return data
-  }
+  const fetchStores = async () => {
+    const resStores = await fetch("/api/fetchStores");
+    const data = await resStores.json();
+    return data;
+  };
 
-
-  useEffect(()=>{
-    fetchProducts().then((data)=>{
-      setproduct(data)
-    })
-
-    fetchStores().then((data)=>{
-      setstores(data)
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      setProduct(data);
       console.log(data)
-    })
-  }, [])
+    });
 
-  useEffect(()=>{
-     fetchProducts().then((data)=>{
-      setproduct(data)
-    })
-  },[currentsotres, inputValue])
+    fetchStores().then((data) => {
+      setStores(data);
+      console.log(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchProducts().then((data) => {
+      setProduct(data);
+    });
+  }, [currentStores, inputValue]);
 
   return (
     <div>
-      <Title></Title>
-      <FilterBar store={stores} onshopchange={value=>{
-        setcurrentsotres(value)}} onboughtchange={value=>{
-          setbought(value)}} inputValue={inputValue} handleInputChange={handleInputChange} startloading={startloading}
-      ></FilterBar>
+      <Title />
+      <FilterBar
+        store={stores}
+        onshopchange={(value) => setCurrentStores(value)}
+        onboughtchange={(value) => setBought(value)}
+        inputValue={inputValue}
+        handleInputChange={handleInputChange}
+        startloading={()=> setLoading(true)}
+      />
       {loading ? (
-        <p>Loading...</p> // Replace with your preferred loading indicator
+        <p>Loading...</p>
       ) : (
         <CardComponent wt={product} bought={bought} />
       )}

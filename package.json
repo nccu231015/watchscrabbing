@@ -30,6 +30,7 @@
     "mongoose": "^8.4.1",
     "next": "14.2.3",
     "node-cron": "^3.0.3",
+    "prop-types": "^15.8.1",
     "puppeteer": "^22.10.0",
     "puppeteer-cluster": "^0.24.0",
     "react": "^18",
