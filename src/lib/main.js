@@ -1,5 +1,4 @@
 
-import puppeteer from 'puppeteer';
 import {Cluster} from 'puppeteer-cluster';
 import { YC,url_YC, YC_count } from './YongChang.js';
 import { XinRue_main, XR_count, url_XR } from './XinRue.js';
@@ -23,7 +22,7 @@ import {watchesss} from './Database/database.js';
 import mongoose from 'mongoose';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
 
-
+import puppeteer from "puppeteer-core"
 
 
 
@@ -32,6 +31,7 @@ const clusterTask = async (w)=>{
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
+        puppeteer,
         monitor: true,
         timeout: 360000,
         puppeteerOptions: {
