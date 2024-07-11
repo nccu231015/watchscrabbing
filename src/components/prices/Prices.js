@@ -1,4 +1,4 @@
-import "../Card/card.css"
+import "../card/card.css"
 import PriceTags from "./priceTag"
 
 
