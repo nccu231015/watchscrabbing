@@ -1,3 +1,5 @@
+"use server"
+
 import express from 'express';
 import next from 'next';
 import axios from 'axios';
