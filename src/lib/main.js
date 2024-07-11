@@ -25,6 +25,7 @@ import fetchWatchMiddleware from './Database/fetchWatch.js';
 import chromium from "@sparticuz/chromium"
 import puppeteer from 'puppeteer-core';
 
+let clusterInstance = null;
 
 async function createCluster() {
     const executablePath = await chromium.executablePath();
