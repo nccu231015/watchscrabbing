@@ -11,7 +11,7 @@ export const TT_count = async () =>{
     const browser = await createBrowser();
     const page = await browser.newPage();
     FastLoad(page)
-    await page.goto(TT_url(1))
+    await page.goto("https://ttwatches.com/products.php")
     const pages = page.evaluate(()=>{
         const pg = document.querySelector('#boxWidth > div.pagenums > select > option:nth-last-child(1)')
         return pg.innerText
