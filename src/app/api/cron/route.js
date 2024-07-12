@@ -13,9 +13,9 @@ export const dynamic = "force-dynamic"
 
 export async function GET(req) {
 
-    if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
-        return req.status(401).end('Unauthorized');
-      }
+    // if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    // return req.status(401).end('Unauthorized');
+    // }
 
     try {
         const shop = req.headers.get('shop')
