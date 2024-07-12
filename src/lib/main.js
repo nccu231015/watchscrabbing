@@ -29,7 +29,7 @@ let clusterInstance = null;
 
 const pages = {};
 
-const getpages = async (shop) => {
+export const getpages = async (shop) => {
     if (shop === "TT") {
         try {
             const value = await TT_count();
