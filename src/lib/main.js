@@ -38,7 +38,7 @@ async function createCluster() {
         puppeteerOptions: {
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: executablePath,
+            executablePath: "./tmp/scrapping-session" || executablePath,
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         },
@@ -74,11 +74,9 @@ async function Scrapping (count,url,main,w,cluster){
     }
 }
 
+var pages = {}
 
-const clusterTask = async (w,shop)=>{
-
-    const pages = {}
-
+const getpages = async (shop)=>{
     if(shop=="TT"){
         try{
             await TT_count().then(value=>{
@@ -87,6 +85,8 @@ const clusterTask = async (w,shop)=>{
                 console.log(`爬取 TT 頁面時出錯 ${error}`)
             }
     }
+}
+const clusterTask = async (w,shop)=>{
 
     const cluster = await getClusterInstance();
 
@@ -380,6 +380,7 @@ const clusterTask = async (w,shop)=>{
 
 export default async function main(shop){
     await fetchWatchMiddleware();
+    await getpages(shop);
     await clusterTask(watchesss,shop);
 }
 
