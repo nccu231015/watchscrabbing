@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import dotenv from 'dotenv';
 import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
 import { getpages } from "@/lib/Hook/GetPages";
+import { clusterTask } from "@/lib/Hook/StartScrabbing";
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ export async function GET(req) {
     try {
         const shop = req.headers.get('shop')
         await fetchWatchMiddleware();
-        await getpages(shop);
+        const pages = await getpages(shop);
+        clusterTask();
         return NextResponse.json({ data: 'Success', status: 200 });
     } catch (error) {
         console.error(error);
