@@ -9,7 +9,13 @@ export const TT_url = (pg) =>{ return `https://ttwatches.com/products.php?&page=
 //{page,data}
 export const TT_count = async () =>{
     // const {url,database} = data
-    const browser = await createBrowser();
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(), // fallback for local development
+        headless: chromium.headless,
+        ignoreHTTPSErrors: true,
+    });
     const page = await browser.newPage();
     FastLoad(page)
     await page.goto("https://ttwatches.com/products.php")
