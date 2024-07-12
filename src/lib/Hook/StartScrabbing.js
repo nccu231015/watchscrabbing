@@ -41,14 +41,13 @@ export const clusterTask = async (w, shop, pages) => {
 
     console.log("Starting crawl");
 
-    const urls =[]
     if (shop === "TT") {
         const TT_urls = [];
         for (let i = 0; i < pages; i++) {
-            urls.push(TT_url(i + 1));
+            TT_urls.push(TT_url(i + 1));
         }
 
-        for (const u of urls) {
+        for (const u of TT_urls) {
             cluster.queue({ url: u, database: w }, TT_main);
         }
     }
