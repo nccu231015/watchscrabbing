@@ -59,12 +59,14 @@ async function Scrapping (count,url,main,w){
     try{
         await count().then(value=>{
             for(let i=0; i<value;i++){
-                url_list.push(url(i+1));
+                url_list.push(url(i+1))
             }
         })
         for(const u of url_list){
             cluster.queue({url:u, database:w},main)
         }
+    } catch(error){
+        console.log(`error when crapping TT ${error}`)
     }
 }
 
