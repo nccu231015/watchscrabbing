@@ -83,7 +83,7 @@ const clusterTask = async (w,shop)=>{
 
     console.log("爬取開始")
 
-    if(hsop=="TT"){
+    if(shop=="TT"){
         Scrapping(TT_count,TT_url,TT_main,w)
     }
     
