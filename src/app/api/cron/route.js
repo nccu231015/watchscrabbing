@@ -21,7 +21,7 @@ export async function GET(req) {
         const shop = req.headers.get('shop')
         await fetchWatchMiddleware();
         const pages = await getpages(shop);
-        clusterTask(watchesss,shop,pages);
+        await clusterTask(watchesss,shop,pages);
         return NextResponse.json({ data: 'Success', status: 200 });
     } catch (error) {
         console.error(error);
