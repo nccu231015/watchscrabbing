@@ -3,6 +3,7 @@ import Chromium from "@sparticuz/chromium";
 import puppeteerCore from 'puppeteer-core';
 import { TT_main,TT_url } from '../TTWatches.js';
 
+let clusterInstance = null;
 
 const createCluster = async () => {
     return await Cluster.launch({
