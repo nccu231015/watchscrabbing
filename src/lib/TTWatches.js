@@ -35,7 +35,7 @@ export const TT_count = async () => {
 
 
 
-export const TT_main = async ({pages, data})=>{
+export const TT_main = async ({page, data})=>{
 
     const {url,database} = data
     FastLoad(page);
