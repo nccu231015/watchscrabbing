@@ -20,7 +20,6 @@ import { TT_count, TT_main, TT_url } from './TTWatches.js';
 
 
 import { Cluster } from 'puppeteer-cluster';
-import { TT_count, TT_url } from './TTWatches.js';
 import { watchesss } from './Database/database.js';
 import fetchWatchMiddleware from './Database/fetchWatch.js';
 import Chromium from "@sparticuz/chromium";
