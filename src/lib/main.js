@@ -55,7 +55,7 @@ async function getClusterInstance() {
 }
 
 
-async function Scrapping (count,url,main,w){
+async function Scrapping (count,url,main,w,cluster){
     var url_list=[]
     try{
         cluster.queue({url:null,database:w},count().then(
@@ -88,7 +88,7 @@ const clusterTask = async (w,shop)=>{
     console.log("爬取開始")
 
     if(shop=="TT"){
-        Scrapping(TT_count,TT_url,TT_main,w)
+        Scrapping(TT_count,TT_url,TT_main,w,cluster)
     }
     
     // if(shop=="TT"){
