@@ -93,7 +93,6 @@ const clusterTask = async (w,shop)=>{
         console.log(`Error crawling ${data}: ${err.message}`);
         return
     });
-
  
 
     console.log("爬取開始")
@@ -105,7 +104,6 @@ const clusterTask = async (w,shop)=>{
     if(shop=="TT"){
         // Get Total pages
        
-
         const TT_urlss= []
         
         for(let i=0; i<pages["TT"];i++){
