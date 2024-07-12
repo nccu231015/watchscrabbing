@@ -44,7 +44,7 @@ const createCluster = async () => {
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
-        puppeteer,
+        puppeteerCore,
         puppeteerOptions: {
             args: Chromium.args,
             defaultViewport: Chromium.defaultViewport,
