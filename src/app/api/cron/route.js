@@ -6,6 +6,7 @@ dotenv.config();
 
 export const maxDuration = 60;
 
+
 export async function GET(req) {
 
     if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
