@@ -2,31 +2,36 @@
 import puppeteer from "puppeteer-core";
 import Chromium from "@sparticuz/chromium";
 import { FastLoad } from "./Hook/FastLoad.js"
-import { checkDB } from "./Hook/CheckDB.js"
-import createBrowser from "./Hook/Browser.js"
 
-export const TT_url = (pg) =>{ return `https://ttwatches.com/products.php?&page=${pg}` }
-//{page,data}
-export const TT_count = async () =>{
-    // const {url,database} = data
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(), // fallback for local development
-        headless: chromium.headless,
-        ignoreHTTPSErrors: true,
-    });
-    const page = await browser.newPage();
-    FastLoad(page)
-    await page.goto("https://ttwatches.com/products.php")
-    const pages = page.evaluate(()=>{
-        const pg = document.querySelector('#boxWidth > div.pagenums > select > option:nth-last-child(1)')
-        return pg.innerText
-    })
+export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page=${pg}` }
 
-    return pages
-    await browser.close()
+export const TT_count = async () => {
+    let browser;
+    try {
+        browser = await puppeteer.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(),
+            headless: Chromium.headless,
+            ignoreHTTPSErrors: true,
+        });
+        const page = await browser.newPage();
+        FastLoad(page);
+        await page.goto("https://ttwatches.com/products.php");
+        const pages = await page.evaluate(() => {
+            const pg = document.querySelector('#boxWidth > div.pagenums > select > option:nth-last-child(1)');
+            return pg.innerText;
+        });
+        return pages;
+    } catch (error) {
+        console.error('Error in TT_count:', error);
+    } finally {
+        if (browser) {
+            await browser.close();
+        }
+    }
 }
+
 
 
 export const TT_main = async ({page, data})=>{
