@@ -30,7 +30,10 @@ const getClusterInstance = async () => {
 }
 
 export const clusterTask = async (w, shop, pages) => {
+    console.log("start to get cluster instance")
     const cluster = await getClusterInstance();
+
+    console.log("cluster Instance getting")
 
     cluster.on('taskerror', (err, data) => {
         console.error(`Error crawling ${data}: ${err.message}`);
@@ -45,9 +48,7 @@ export const clusterTask = async (w, shop, pages) => {
         }
 
         for (const u of TT_urls) {
-            cluster.queue({ url: u, database: w }, async ({ page, data }) => {
-                // Define your scraping logic here
-            });
+            cluster.queue({ url: u, database: w }, TT_main);
         }
     }
 
