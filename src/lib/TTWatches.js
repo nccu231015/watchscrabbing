@@ -1,5 +1,6 @@
 "use server"
 import puppeteer from "puppeteer-core";
+import Chromium from "@sparticuz/chromium";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js"
 import createBrowser from "./Hook/Browser.js"
