@@ -1,5 +1,5 @@
 
-"use server"
+
 import {Cluster} from 'puppeteer-cluster';
 import { YC,url_YC, YC_count } from './YongChang.js';
 import { XinRue_main, XR_count, url_XR } from './XinRue.js';
@@ -44,7 +44,6 @@ const getpages = async (shop)=>{
 
 
 async function createCluster() {
-    const executablePath = await chromium.executablePath();
 
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
@@ -53,7 +52,7 @@ async function createCluster() {
         puppeteerOptions: {
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: executablePath,
+            executablePath: await chromium.executablePath(),
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         },
