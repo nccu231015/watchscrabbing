@@ -58,7 +58,7 @@ async function getClusterInstance() {
 async function Scrapping (count,url,main,w,cluster){
     var url_list=[]
     try{
-        cluster.queue({url:null,database:w},count().then(
+        cluster.queue({url:null,database:w},count.then(
             value=>{
                 for(let i=0; i<value;i++){
                     url_list.push(url(i+1))
@@ -75,6 +75,18 @@ async function Scrapping (count,url,main,w,cluster){
 }
 
 const clusterTask = async (w,shop)=>{
+
+    const pages = {}
+
+    if(shop=="TT"){
+        try{
+            await TT_count().then(value=>{
+                pages['TT'] = value
+            })}catch(error){
+                console.log(`爬取 TT 頁面時出錯 ${error}`)
+            }
+    }
+
     const cluster = await getClusterInstance();
 
     cluster.on('taskerror', (err, data) => {
@@ -82,34 +94,28 @@ const clusterTask = async (w,shop)=>{
         return
     });
 
-    const pages = {}
-
+ 
 
     console.log("爬取開始")
 
-    if(shop=="TT"){
-        Scrapping(TT_count,TT_url,TT_main,w,cluster)
-    }
-    
     // if(shop=="TT"){
-    //     // Get Total pages
-    //     try{
-    //     await TT_count().then(value=>{
-    //         pages['TT'] = value
-    //     })}catch(error){
-    //         console.log(`爬取 TT 頁面時出錯 ${error}`)
-    //     }
-
-    //     const TT_urlss= []
-        
-    //     for(let i=0; i<pages["TT"];i++){
-    //         TT_urlss.push(TT_url(i+1));
-    //     }
-        
-    //     for(const u of TT_urlss){
-    //         cluster.queue({url:u, database:w},TT_main)
-    //     }
+    //     Scrapping(TT_count,TT_url,TT_main,w,cluster)
     // }
+    
+    if(shop=="TT"){
+        // Get Total pages
+       
+
+        const TT_urlss= []
+        
+        for(let i=0; i<pages["TT"];i++){
+            TT_urlss.push(TT_url(i+1));
+        }
+        
+        for(const u of TT_urlss){
+            cluster.queue({url:u, database:w},TT_main)
+        }
+    }
     // else if (shop == "YS"){
     //     try{
     //     await YS_count().then(value=>{

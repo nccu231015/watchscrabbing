@@ -5,9 +5,11 @@ import { checkDB } from "./Hook/CheckDB.js"
 import createBrowser from "./Hook/Browser.js"
 
 export const TT_url = (pg) =>{ return `https://ttwatches.com/products.php?&page=${pg}` }
-
-export const TT_count = async ({page,data}) =>{
-    const {url,database} = data
+//{page,data}
+export const TT_count = async () =>{
+    // const {url,database} = data
+    const browser = await createBrowser();
+    const page = await browser.newPage();
     FastLoad(page)
     await page.goto(TT_url(1))
     const pages = page.evaluate(()=>{
@@ -16,6 +18,7 @@ export const TT_count = async ({page,data}) =>{
     })
 
     return pages
+    await browser.close()
 }
 
 

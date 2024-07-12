@@ -9,10 +9,7 @@ async function fetchWatchMiddleware() {
     if (!isConnected) {
         try {
             console.log("Attempting to connect to MongoDB...");
-            await mongoose.connect(process.env.MONGODB_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            });
+            await mongoose.connect(process.env.MONGODB_URI);
             isConnected = true;
             console.log('MongoDB connected');
         } catch (error) {
