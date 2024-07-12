@@ -1,4 +1,5 @@
 
+"use server"
 import {Cluster} from 'puppeteer-cluster';
 import { YC,url_YC, YC_count } from './YongChang.js';
 import { XinRue_main, XR_count, url_XR } from './XinRue.js';
@@ -57,11 +58,14 @@ async function getClusterInstance() {
 async function Scrapping (count,url,main,w){
     var url_list=[]
     try{
-        await count().then(value=>{
-            for(let i=0; i<value;i++){
-                url_list.push(url(i+1))
+        cluster.queue({url:null,database:w},count().then(
+            value=>{
+                for(let i=0; i<value;i++){
+                    url_list.push(url(i+1))
+                }
             }
-        })
+        ))
+        // await count().then()
         for(const u of url_list){
             cluster.queue({url:u, database:w},main)
         }
