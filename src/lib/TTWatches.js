@@ -1,5 +1,5 @@
 
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import Chromium from "@sparticuz/chromium";
 import { FastLoad } from "./Hook/FastLoad.js"
 
@@ -8,7 +8,7 @@ export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page
 export const TT_count = async () => {
     let browser;
     try {
-        browser = await puppeteer.launch({
+        browser = await puppeteerCore.launch({
             args: Chromium.args,
             defaultViewport: Chromium.defaultViewport,
             executablePath: await Chromium.executablePath(),

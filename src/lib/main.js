@@ -40,61 +40,61 @@ const getpages = async (shop) => {
     }
 }
 
-const createCluster = async () => {
-    return await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_CONTEXT,
-        maxConcurrency: 5,
-        puppeteer,
-        puppeteerOptions: {
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(),
-            headless: Chromium.headless,
-            ignoreHTTPSErrors: true,
-        },
-        monitor: true,
-        timeout: 360000,
-    });
-}
+// const createCluster = async () => {
+//     return await Cluster.launch({
+//         concurrency: Cluster.CONCURRENCY_CONTEXT,
+//         maxConcurrency: 5,
+//         puppeteer,
+//         puppeteerOptions: {
+//             args: Chromium.args,
+//             defaultViewport: Chromium.defaultViewport,
+//             executablePath: await Chromium.executablePath(),
+//             headless: Chromium.headless,
+//             ignoreHTTPSErrors: true,
+//         },
+//         monitor: true,
+//         timeout: 360000,
+//     });
+// }
 
-const getClusterInstance = async () => {
-    if (!clusterInstance) {
-        clusterInstance = await createCluster();
-    }
-    return clusterInstance;
-}
+// const getClusterInstance = async () => {
+//     if (!clusterInstance) {
+//         clusterInstance = await createCluster();
+//     }
+//     return clusterInstance;
+// }
 
-const clusterTask = async (w, shop) => {
-    const cluster = await getClusterInstance();
+// const clusterTask = async (w, shop) => {
+//     const cluster = await getClusterInstance();
 
-    cluster.on('taskerror', (err, data) => {
-        console.error(`Error crawling ${data}: ${err.message}`);
-    });
+//     cluster.on('taskerror', (err, data) => {
+//         console.error(`Error crawling ${data}: ${err.message}`);
+//     });
 
-    console.log("Starting crawl");
+//     console.log("Starting crawl");
 
-    if (shop === "TT") {
-        const TT_urls = [];
-        for (let i = 0; i < pages["TT"]; i++) {
-            TT_urls.push(TT_url(i + 1));
-        }
+//     if (shop === "TT") {
+//         const TT_urls = [];
+//         for (let i = 0; i < pages["TT"]; i++) {
+//             TT_urls.push(TT_url(i + 1));
+//         }
 
-        for (const u of TT_urls) {
-            cluster.queue({ url: u, database: w }, async ({ page, data }) => {
-                // Define your scraping logic here
-            });
-        }
-    }
+//         for (const u of TT_urls) {
+//             cluster.queue({ url: u, database: w }, async ({ page, data }) => {
+//                 // Define your scraping logic here
+//             });
+//         }
+//     }
 
-    await cluster.idle();
-    await cluster.close();
-    console.log("Crawling done");
-}
+//     await cluster.idle();
+//     await cluster.close();
+//     console.log("Crawling done");
+// }
 
 export default async function main(shop) {
     await fetchWatchMiddleware();
     await getpages(shop);
-    await clusterTask(watchesss, shop);
+    // await clusterTask(watchesss, shop);
 }
 
 // async function createCluster() {
