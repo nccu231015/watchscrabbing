@@ -28,6 +28,21 @@ import puppeteer from 'puppeteer-core';
 
 let clusterInstance = null;
 
+
+var pages = {}
+
+const getpages = async (shop)=>{
+    if(shop=="TT"){
+        try{
+            await TT_count().then(value=>{
+                pages['TT'] = value
+            })}catch(error){
+                console.log(`爬取 TT 頁面時出錯 ${error}`)
+            }
+    }
+}
+
+
 async function createCluster() {
     const executablePath = await chromium.executablePath();
 
@@ -38,7 +53,7 @@ async function createCluster() {
         puppeteerOptions: {
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: "./tmp/scrapping-session" || executablePath,
+            executablePath: executablePath,
             headless: chromium.headless,
             ignoreHTTPSErrors: true,
         },
@@ -54,38 +69,6 @@ async function getClusterInstance() {
     return clusterInstance;
 }
 
-
-async function Scrapping (count,url,main,w,cluster){
-    var url_list=[]
-    try{
-        cluster.queue({url:null,database:w},count.then(
-            value=>{
-                for(let i=0; i<value;i++){
-                    url_list.push(url(i+1))
-                }
-            }
-        ))
-        // await count().then()
-        for(const u of url_list){
-            cluster.queue({url:u, database:w},main)
-        }
-    } catch(error){
-        console.log(`error when crapping TT ${error}`)
-    }
-}
-
-var pages = {}
-
-const getpages = async (shop)=>{
-    if(shop=="TT"){
-        try{
-            await TT_count().then(value=>{
-                pages['TT'] = value
-            })}catch(error){
-                console.log(`爬取 TT 頁面時出錯 ${error}`)
-            }
-    }
-}
 const clusterTask = async (w,shop)=>{
 
     const cluster = await getClusterInstance();
