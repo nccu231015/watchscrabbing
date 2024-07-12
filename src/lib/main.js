@@ -29,16 +29,16 @@ let clusterInstance = null;
 
 const pages = {};
 
-export const getpages = async (shop) => {
-    if (shop === "TT") {
-        try {
-            const value = await TT_count();
-            pages['TT'] = value;
-        } catch (error) {
-            console.error(`Error getting TT pages: ${error}`);
-        }
-    }
-}
+// export const getpages = async (shop) => {
+//     if (shop === "TT") {
+//         try {
+//             const value = await TT_count();
+//             pages['TT'] = value;
+//         } catch (error) {
+//             console.error(`Error getting TT pages: ${error}`);
+//         }
+//     }
+// }
 
 const createCluster = async () => {
     return await Cluster.launch({

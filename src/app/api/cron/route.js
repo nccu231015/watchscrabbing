@@ -1,7 +1,8 @@
-import main, { getpages } from "@/lib/main";
+
 import { NextResponse } from "next/server";
 import dotenv from 'dotenv';
 import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
+import { getpages } from "@/lib/Hook/GetPages";
 
 dotenv.config();
 

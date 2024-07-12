@@ -15,7 +15,6 @@ export const TT_count = async () => {
             defaultViewport: Chromium.defaultViewport,
             executablePath: await Chromium.executablePath(CHROMIUM_PATH),
             headless: Chromium.headless,
-            ignoreHTTPSErrors: true,
         });
         const page = await browser.newPage();
         FastLoad(page);
