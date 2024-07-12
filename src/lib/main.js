@@ -371,5 +371,5 @@ const clusterTask = async (w,shop)=>{
 
 export default async function main(shop){
     await fetchWatchMiddleware();
-    await clusterTask(watchess,shop);
+    await clusterTask(watchesss,shop);
 }
