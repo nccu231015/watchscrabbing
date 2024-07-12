@@ -1,6 +1,6 @@
 import { Cluster } from 'puppeteer-cluster';
 import Chromium from "@sparticuz/chromium";
-import puppeteerCore from 'puppeteer-core';
+import puppeteer from 'puppeteer-core';
 import { TT_main,TT_url } from '../TTWatches.js';
 
 let clusterInstance = null;
@@ -9,7 +9,7 @@ const createCluster = async () => {
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
-        puppeteerCore,
+        puppeteer,
         puppeteerOptions: {
             args: Chromium.args,
             defaultViewport: Chromium.defaultViewport,
