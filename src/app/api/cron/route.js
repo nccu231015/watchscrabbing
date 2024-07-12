@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const maxDuration = 59;
+// export const maxDuration = 59;
 
 export async function GET(req) {
 
