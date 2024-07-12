@@ -1,8 +1,8 @@
 // lib/taskQueue.js
 import { Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
-import { clusterTask } from './Hook/StartScrabbing';
-import { watchesss } from './Database/database';
+import { clusterTask } from './StartScrabbing';
+import { watchesss } from '../Database/database';
 
 const connection = new Redis();
 
