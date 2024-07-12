@@ -5,6 +5,7 @@ import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
 import { getpages } from "@/lib/Hook/GetPages";
 import { clusterTask } from "@/lib/Hook/StartScrabbing";
 import { watchesss } from "@/lib/Database/database";
+import { queueTask } from "@/lib/Hook/TaskQue";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export async function GET(req) {
         const shop = req.headers.get('shop')
         await fetchWatchMiddleware();
         const pages = await getpages(shop);
-        await clusterTask(watchesss,shop,pages);
+        await queueTask(shop,pages);
         return NextResponse.json({ data: 'Success', status: 200 });
     } catch (error) {
         console.error(error);
