@@ -74,6 +74,7 @@ async function Scrapping (count,url,main,w,cluster){
     }
 }
 
+
 const clusterTask = async (w,shop)=>{
 
     const pages = {}
