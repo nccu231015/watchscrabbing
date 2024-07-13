@@ -5,7 +5,7 @@ import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import Chromium from "@sparticuz/chromium";
 
-
+import puppeteer from "puppeteer";
 // const url = "https://watchstore.tw/newproduct.asp?keywords=&larcode=&newsclass=&page=1"
 
 export const WS_url = (pg) =>{
@@ -14,16 +14,17 @@ export const WS_url = (pg) =>{
 
 
 export const WS_count = async () =>{
-    const CHROMIUM_PATH =
-  "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    let browser;
+//     const CHROMIUM_PATH =
+//   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+//     let browser;
     try{
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch();
     const page = await browser.newPage()
     await page.goto(WS_url(0))
     while(page.url() == WS_url(0)){
@@ -39,11 +40,7 @@ export const WS_count = async () =>{
     return last_pages
 } catch (error) {
     console.error('Error in TT_count:', error);
-} finally {
-    if (browser) {
-        await browser.close();
-    }
-}
+} 
 }
 
 

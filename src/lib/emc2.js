@@ -4,22 +4,24 @@ import { FastLoad } from './Hook/FastLoad.js'
 
 import puppeteerCore from "puppeteer-core";
 import Chromium from '@sparticuz/chromium';
+import puppeteer from 'puppeteer'
 
 export const url_emc2 = (pg)=>{
     return `https://www.emc2watches.com/product/index/is_featured2/1/page/${pg}.html`
 }
 
 export const emc2_count = async ()=>{
-    const CHROMIUM_PATH =
-    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-      let browser;
+    // const CHROMIUM_PATH =
+    // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+    //   let browser;
       try{
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch()
     const page = await browser.newPage()
     
     let  currentpages = 10
@@ -56,11 +58,7 @@ export const emc2_count = async ()=>{
     return currentpages
       } catch (error) {
         console.error('Error in emc2_count:', error);
-    } finally {
-        if (browser) {
-            await browser.close();
-        }
-    }
+    } 
 
 }
 

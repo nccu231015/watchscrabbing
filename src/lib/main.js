@@ -32,7 +32,7 @@ const pages = {};
 
 const createCluster = async () => {
     return await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_BROWSER,
+        concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
         monitor: true,
         timeout: 360000,
@@ -101,113 +101,114 @@ const clusterTask = async (w,shop)=>{
     }
  
 
-    // try{
-    // await PW_count().then(value=>{
-    //     pages['PW'] = value
-    // })}catch(error){
-    //     console.log(`爬取 PW 頁面時出錯 ${error}`)
-    // }
+    try{
+    await PW_count().then(value=>{
+        pages['PW'] = value
+    })}catch(error){
+        console.log(`爬取 PW 頁面時出錯 ${error}`)
+    }
     
 
-    // try{
-    //     await YS_count().then(value=>{
-    //         pages['YS'] = value
-    //     })}catch(error){
-    //         console.log(`爬取 YS 頁面時出錯 ${error}`)
-    //     }
+    try{
+        await YS_count().then(value=>{
+            pages['YS'] = value
+        })}catch(error){
+            console.log(`爬取 YS 頁面時出錯 ${error}`)
+        }
 
-    // try{
-    // await MBW_count().then(value=>{
-    //     pages['MBW'] = value
-    // })}catch(error){
-    //     console.log(`爬取 MBW 頁面時出錯 ${error}`)
-    // }
+    try{
+    await MBW_count().then(value=>{
+        pages['MBW'] = value
+    })}catch(error){
+        console.log(`爬取 MBW 頁面時出錯 ${error}`)
+    }
   
 
-    // try{
-    //     await TNJ_count().then(value=>{
-    //         pages['TNJ'] = value
-    //     })}catch(error){
-    //         console.log(`爬取 TNJ 頁面時出錯 ${error}`)
-    //     }
+    try{
+        await TNJ_count().then(value=>{
+            pages['TNJ'] = value
+        })}catch(error){
+            console.log(`爬取 TNJ 頁面時出錯 ${error}`)
+        }
 
-    // try{
-    // await JC_count().then(value=>{
-    //     pages['JC'] = value
-    // })}catch(error){
-    //     console.log(`爬取 JC 頁面時出錯 ${error}`)
-    // }
+    try{
+    await JC_count().then(value=>{
+        pages['JC'] = value
+    })}catch(error){
+        console.log(`爬取 JC 頁面時出錯 ${error}`)
+    }
    
 
-    // try{
-    // await HSe_count().then(value=>{
-    //     pages['HSe'] = value
-    // })}catch(error){
-    //     console.log(`爬取 HSe 頁面時出錯 ${error}`)
-    // }
+    try{
+    await HSe_count().then(value=>{
+        pages['HSe'] = value
+    })}catch(error){
+        console.log(`爬取 HSe 頁面時出錯 ${error}`)
+    }
     
 
-    // try{
-    // await YC_count().then(value=>{
-    //     pages["YC"] = value
-    // })}catch(error){
-    //     console.log(`爬取 YC 頁面時出錯 ${error}`)
-    // }
+    try{
+    await YC_count().then(value=>{
+        pages["YC"] = value
+    })}catch(error){
+        console.log(`爬取 YC 頁面時出錯 ${error}`)
+    }
   
 
-    // try{
-    // await WS_count().then(value=>{
-    //     pages["WS"] = value
-    // })}catch(error){
-    //     console.log(`爬取 WS 頁面時出錯 ${error}`)
-    // }
+    try{
+    await WS_count().then(value=>{
+        pages["WS"] = value
+    })}catch(error){
+        console.log(`爬取 WS 頁面時出錯 ${error}`)
+    }
   
 
-    // try{
-    // await XR_count().then(value=>{
-    //     pages["XR"] = value
-    // })}catch(error){
-    //     console.log(`爬取 XR 頁面時出錯 ${error}`)
-    // }
+    try{
+    await XR_count().then(value=>{
+        pages["XR"] = value
+    })}catch(error){
+        console.log(`爬取 XR 頁面時出錯 ${error}`)
+    }
     
 
-    // try{
-    // await AG_count().then(value=>{
-    //     pages["AG"] = value
-    // })}catch(error){
-    //     console.log(`爬取 AG 頁面時出錯 ${error}`)
-    // }
+    try{
+    await AG_count().then(value=>{
+        pages["AG"] = value
+    })}catch(error){
+        console.log(`爬取 AG 頁面時出錯 ${error}`)
+    }
    
 
-    // try{
-    // await BL_count().then(value=>{
-    //     pages["BL"] = value
-    // })}catch(error){
-    //     console.log(`爬取 BL 頁面時出錯 ${error}`)
-    // }
+    try{
+    await BL_count().then(value=>{
+        pages["BL"] = value
+    })}catch(error){
+        console.log(`爬取 BL 頁面時出錯 ${error}`)
+    }
     
-    // try{
-    // await emc2_count().then(value=>{
-    //     pages["emc2"] = value
-    // })}catch(error){
-    //     console.log(`爬取 emc2 頁面時出錯 ${error}`)
-    // }
+    try{
+    await emc2_count().then(value=>{
+        pages["emc2"] = value
+    })}catch(error){
+        console.log(`爬取 emc2 頁面時出錯 ${error}`)
+    }
+
+    console.log("一半了！")
  
-    // try{
-    // await HS_count().then(value=>{
-    //     pages["HS"] = value
-    // })}catch(error){
-    //     console.log(`爬取 HS 頁面時出錯 ${error}`)
-    // }
+    try{
+    await HS_count().then(value=>{
+        pages["HS"] = value
+    })}catch(error){
+        console.log(`爬取 HS 頁面時出錯 ${error}`)
+    }
    
-    // try{
-    //     await RD_count().then(value=>{
-    //         pages['RD'] = value
-    //     })}catch(error){
-    //         console.log(`爬取 RD 頁面時出錯 ${error}`)
-    //     }
+    try{
+        await RD_count().then(value=>{
+            pages['RD'] = value
+        })}catch(error){
+            console.log(`爬取 RD 頁面時出錯 ${error}`)
+        }
    
-    //YC
    
 
     
@@ -222,7 +223,7 @@ const clusterTask = async (w,shop)=>{
             cluster.queue({url:u, database:w},TT_main)
         }
 
-   
+    console.log("開始爬蟲")
 
     const PW_urlss= []
     
@@ -365,3 +366,4 @@ export default async function main(shop) {
     await fetchWatchMiddleware();
     await clusterTask(watchesss, shop);
 }
+main();

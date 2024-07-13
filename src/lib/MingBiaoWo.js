@@ -4,7 +4,7 @@ import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import Chromium from "@sparticuz/chromium";
-
+import puppeteer from "puppeteer";
 
 
 export const url_MBW = (pg)=>{
@@ -13,16 +13,17 @@ export const url_MBW = (pg)=>{
 
 
 export const MBW_count = async ()=>{
-    const CHROMIUM_PATH =
-    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-      let browser;
+    // const CHROMIUM_PATH =
+    // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+    //   let browser;
     try{
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch();
     const page = await browser.newPage()
     await page.goto(url_MBW(1),{waitUntil:'networkidle0'});
    
@@ -34,11 +35,7 @@ export const MBW_count = async ()=>{
     return pages
 }catch (error) {
     console.error('Error in TT_count:', error);
-} finally {
-    if (browser) {
-        await browser.close();
-    }
-}
+} 
 }
 
 //{page, data}
