@@ -55,7 +55,7 @@ export const clusterTask = async (w, shop, pages) => {
     if(shop === "AG") {
         const AG_urls = [];
         for (let i = 0; i < pages; i++) {
-            AG_urls.push(AG_urls(i + 1));
+            AG_urls.push(url_AG(i + 1));
         }
 
         for (const u of AG_urls) {
