@@ -2,12 +2,13 @@ import { Cluster } from 'puppeteer-cluster';
 import Chromium from "@sparticuz/chromium";
 import puppeteer from 'puppeteer-core';
 import { TT_main,TT_url } from '../TTWatches.js';
+import { AGan_main, url_AG } from '../AGan.js';
 
 let clusterInstance = null;
 
 const createCluster = async () => {
     return await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_PAGE,
+        concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 5,
         puppeteer,
         puppeteerOptions: {
@@ -51,7 +52,19 @@ export const clusterTask = async (w, shop, pages) => {
         }
     }
 
+    if(shop === "AG") {
+        const AG_urls = [];
+        for (let i = 0; i < pages; i++) {
+            AG_urls.push(TT_url(i + 1));
+        }
+
+        for (const u of TT_urls) {
+            cluster.queue({ url: u, database: w }, AGan_main);
+        }
+    }
+
     await cluster.idle();
     await cluster.close();
+    await process.abort();
     console.log("Crawling done");
 }

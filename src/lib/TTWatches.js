@@ -37,8 +37,6 @@ export const TT_count = async () => {
 
 
 export const TT_main = async ({page, data})=>{
-
-
     const {url,database} = data
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
