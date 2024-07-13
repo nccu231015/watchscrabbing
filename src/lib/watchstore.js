@@ -3,6 +3,8 @@ import puppeteerCore from "puppeteer-core";
 import mongoose from "mongoose";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import Chromium from "@sparticuz/chromium";
+
 
 // const url = "https://watchstore.tw/newproduct.asp?keywords=&larcode=&newsclass=&page=1"
 

@@ -28,11 +28,14 @@ const pagesBlock = async (countfunc,shop,database) =>{
                 pages: value
             })
             console.log(`sucessfully add with ${value}`)
-        }else{
+        }
+
+        else{
             watch[0].pages = value
             await watch[0].save();
             console.log(`already exists with new value ${value}`)
         }
+
     } catch (error) {
         console.error(`Error getting ${shop} pages: ${error}`);
     }
@@ -40,10 +43,10 @@ const pagesBlock = async (countfunc,shop,database) =>{
 
 export const getpages = async (shop) => {
     if (shop === "TT") {
-       pagesBlock(TT_count,"TT",watchpage)
+       await pagesBlock(TT_count,"TT",watchpage)
     }
     if (shop === "YC") {
-        pagesBlock(YC_count,"YC",watchpage)
+        await pagesBlock(YC_count,"YC",watchpage)
     }if (shop === "XR") {
        pagesBlock(XR_count,"XR",watchpage)
     }if (shop === "WS") {
