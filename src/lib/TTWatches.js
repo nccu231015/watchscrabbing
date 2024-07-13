@@ -7,14 +7,14 @@ import Chromium from "@sparticuz/chromium";
 export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page=${pg}` }
 
 export const TT_count = async () => {
-    const CHROMIUM_PATH =
-  "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+//     const CHROMIUM_PATH =
+//   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
     let browser;
     try {
         browser = await puppeteerCore.launch({
             args: Chromium.args,
             defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            executablePath: await Chromium.executablePath(),
             headless: Chromium.headless,
         });
         const page = await browser.newPage();
