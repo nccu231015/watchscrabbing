@@ -58,7 +58,7 @@ export const clusterTask = async (w, shop, pages) => {
             AG_urls.push(TT_url(i + 1));
         }
 
-        for (const u of TT_urls) {
+        for (const u of AG_urls) {
             cluster.queue({ url: u, database: w }, AGan_main);
         }
     }
