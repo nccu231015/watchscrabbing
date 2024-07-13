@@ -48,7 +48,7 @@ export const TT_main = async ({page, data})=>{
     })
     
     for (let i=0 ; i<wachtes ; i++){
-        
+        try{
         while(await page.url()==url){
             await page.click(`#boxWidth > div.proBox > div:nth-child(${i+2})`);
         }
@@ -83,8 +83,13 @@ export const TT_main = async ({page, data})=>{
         })
     
         checkDB(database,Info,"TTWatches 台北腕錶",url)
-
+    }catch(error){
+        console.log(error)
+    }finally{
         await page.goto(url,{waitUntil:'domcontentloaded'});
+    }
+
+      
         
 
     }    

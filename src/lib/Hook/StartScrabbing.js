@@ -10,14 +10,15 @@ const createCluster = async () => {
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_PAGE,
         maxConcurrency: 5,
-        puppeteer,
-        puppeteerOptions: {
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(),
-            headless: Chromium.headless,
-        },
+        // puppeteer,
+        // puppeteerOptions: {
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(),
+        //     headless: Chromium.headless,
+        // },
         timeout: 360000,
+        monitor: true
     });
 }
 
