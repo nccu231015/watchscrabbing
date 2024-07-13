@@ -48,30 +48,30 @@ export const getpages = async (shop) => {
     if (shop === "YC") {
         await pagesBlock(YC_count,"YC",watchpage)
     }if (shop === "XR") {
-       pagesBlock(XR_count,"XR",watchpage)
+        await pagesBlock(XR_count,"XR",watchpage)
     }if (shop === "WS") {
-       pagesBlock(WS_count,"WS",watchpage)
+        await pagesBlock(WS_count,"WS",watchpage)
     }if (shop === "AG") {
-       pagesBlock(AG_count,"AG",watchpage)
+        await pagesBlock(AG_count,"AG",watchpage)
     }if (shop === "BL") {
-        pagesBlock(BL_count,"BL",watchpage)
+        await pagesBlock(BL_count,"BL",watchpage)
     }if (shop === "emc2") {
-        pagesBlock(emc2_count,"emc2",watchpage)
+        await pagesBlock(emc2_count,"emc2",watchpage)
     }if (shop === "HS") {
-        pagesBlock(HS_count,"HS",watchpage)
+        await pagesBlock(HS_count,"HS",watchpage)
     }if (shop === "HSe") {
-        pagesBlock(HSe_count,"HSe",watchpage)
+        await pagesBlock(HSe_count,"HSe",watchpage)
     }if (shop === "JC") {
-        pagesBlock(JC_count,"JS",watchpage)
+        await pagesBlock(JC_count,"JS",watchpage)
     }if (shop === "MBW") {
-        pagesBlock(MBW_count,"WBW",watchpage)
+        await pagesBlock(MBW_count,"WBW",watchpage)
     }if (shop === "PW") {
-        pagesBlock(PW_count,"PW",watchpage)
+        await pagesBlock(PW_count,"PW",watchpage)
     }if (shop === "RD") {
-        pagesBlock(RD_count,"RD",watchpage)
+        await pagesBlock(RD_count,"RD",watchpage)
     }if (shop === "TNJ") {
-        pagesBlock(TNJ_count,"TNJ",watchpage)
+        await pagesBlock(TNJ_count,"TNJ",watchpage)
     }if (shop === "YS") {
-        pagesBlock(YS_count,"YS",watchpage)
+        await pagesBlock(YS_count,"YS",watchpage)
     }
 }
