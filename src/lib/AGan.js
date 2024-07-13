@@ -40,7 +40,6 @@ export const AG_count = async ()=>{
 }
 
 export const AGan_main = async ({page, data})=>{
-
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     // const url = url_AG(1);
@@ -48,7 +47,6 @@ export const AGan_main = async ({page, data})=>{
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
     await scrollToBottom(page);
-    await page.waitForSelector('div.sc-1drl28c-4.njFQL > span')
     const Info = await yahooscrab(page);
     for (let i=0; i<Info.length; i++){
         await checkDB(database,Info[i],"阿甘精品",url)
