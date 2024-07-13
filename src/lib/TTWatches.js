@@ -1,5 +1,6 @@
 
 import puppeteerCore from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js";
 import Chromium from "@sparticuz/chromium";
