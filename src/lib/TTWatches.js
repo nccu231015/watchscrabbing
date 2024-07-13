@@ -1,8 +1,8 @@
 
 import puppeteerCore from "puppeteer-core";
-import Chromium from "@sparticuz/chromium";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js";
+import Chromium from "@sparticuz/chromium";
 
 export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page=${pg}` }
 
