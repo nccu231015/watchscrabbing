@@ -9,7 +9,7 @@ let clusterInstance = null;
 const createCluster = async () => {
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_BROWSER,
-        maxConcurrency: 3,
+        maxConcurrency: 5,
         puppeteer,
         puppeteerOptions: {
             args: Chromium.args,
@@ -17,7 +17,6 @@ const createCluster = async () => {
             executablePath: await Chromium.executablePath(),
             headless: Chromium.headless,
         },
-        monitor: true,
         timeout: 360000,
     });
 }
@@ -47,7 +46,7 @@ export const clusterTask = async (w, shop, pages) => {
             TT_urls.push(TT_url(i + 1));
         }
 
-        for (const u of TT_urls) {
+        for (const u of TT_url) {
             cluster.queue({ url: u, database: w }, TT_main);
         }
     }
