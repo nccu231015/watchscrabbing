@@ -31,4 +31,4 @@ const watchpageSchema = new mongoose.Schema({
     },
 })
 
-export const watchpage = mongoose.models.watchpage || mongoose.model('watchpage', watchSchema)
+export const watchpage = mongoose.models.watchpage || mongoose.model('watchpage', watchpageSchema)
