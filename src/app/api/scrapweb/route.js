@@ -15,7 +15,8 @@ export async function GET(req) {
     // return req.status(401).end('Unauthorized');
     // }
     try {
-        const shop = req.headers.get('shop')
+        // const shop = req.headers.get('shop')
+        const shop = "TT"
         await fetchWatchMiddleware();
         const _pages = await watchpage.where("name").equals(shop)
         const p = _pages[0].pages
