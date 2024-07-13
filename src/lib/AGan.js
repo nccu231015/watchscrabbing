@@ -1,4 +1,5 @@
 import puppeteerCore from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js";
 import { yahooscrab } from "./Hook/yahooScrabbing.js";
 import { checkDB } from "./Hook/CheckDB.js";
@@ -10,16 +11,17 @@ export const url_AG = (pg)=>{
 }
 
 export const AG_count = async ()=>{
-    const CHROMIUM_PATH =
-    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-      let browser;
+    // const CHROMIUM_PATH =
+    // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+    //   let browser;
     try{
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        //     headless: Chromium.headless,
+        // });
+        browser = await puppeteer.launch();
     const page = await browser.newPage()
     await page.goto(url_AG(1),{waitUntil:'networkidle0'});
    
@@ -31,10 +33,6 @@ export const AG_count = async ()=>{
     console.log("AGan 頁面總數爬取完畢")
 }catch(error){
     console.log("當爬取 AGan 頁面時出錯")
-}finally {
-    if (browser) {
-        await browser.close();
-    }
 }
 
 }

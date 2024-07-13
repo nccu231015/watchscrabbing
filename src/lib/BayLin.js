@@ -1,4 +1,5 @@
 import puppeteerCore from "puppeteer-core";
+import puppeteer from "puppeteer";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js";
 import { yahooscrab } from "./Hook/yahooScrabbing.js";
 import { checkDB } from "./Hook/CheckDB.js";
@@ -11,16 +12,17 @@ export const url_BL = (pg)=>{
 }
 
 export const BL_count = async ()=>{
-    const CHROMIUM_PATH =
-    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-      let browser;
+    // const CHROMIUM_PATH =
+    // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+    //   let browser;
       try{
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage()
         await page.goto(url_BL(1),{waitUntil:'networkidle0'});
     
@@ -32,11 +34,7 @@ export const BL_count = async ()=>{
         return pages
     }   catch (error) {
         console.error('Error in BayLin_count:', error);
-    } finally {
-        if (browser) {
-            await browser.close();
-        }
-    }
+    } 
 }
 
 export const BayLin_main = async ({page, data})=>{

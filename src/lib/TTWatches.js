@@ -1,24 +1,24 @@
 
-import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js";
 import Chromium from "@sparticuz/chromium";
+
 
 export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page=${pg}` }
 
 export const TT_count = async () => {
 //     const CHROMIUM_PATH =
 //   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    let browser;
+    // let browser;
     try {
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(),
-            headless: Chromium.headless,
-        });
-        // const browser = await puppeteer.launch();
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         FastLoad(page);
         await page.goto("https://ttwatches.com/products.php");
@@ -29,11 +29,7 @@ export const TT_count = async () => {
         return pages;
     } catch (error) {
         console.error('Error in TT_count:', error);
-    } finally {
-        if (browser) {
-            await browser.close();
-        }
-    }
+    } 
 }
 
 
