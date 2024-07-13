@@ -12,12 +12,13 @@ export const TT_count = async () => {
 //   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
     let browser;
     try {
-        browser = await puppeteerCore.launch({
-            args: Chromium.args,
-            defaultViewport: Chromium.defaultViewport,
-            executablePath: await Chromium.executablePath(),
-            headless: Chromium.headless,
-        });
+        // browser = await puppeteerCore.launch({
+        //     args: Chromium.args,
+        //     defaultViewport: Chromium.defaultViewport,
+        //     executablePath: await Chromium.executablePath(),
+        //     headless: Chromium.headless,
+        // });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         FastLoad(page);
         await page.goto("https://ttwatches.com/products.php");
