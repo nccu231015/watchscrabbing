@@ -1,0 +1,6 @@
+{
+    "crons": [{
+      "path": "/api/scrapweb",
+      "schedule": "30 * * * *"
+    }]
+  }
