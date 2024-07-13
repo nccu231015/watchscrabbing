@@ -22,13 +22,16 @@ const pagesBlock = async (countfunc,shop,database) =>{
         const exists = await database.exists({name:shop})
         const watch = await database.where("name").equals(shop)
         if(!exists){
+            console.log(`${shop} not exists ready to add}`)
             await database.create({
                 name: shop,
                 pages: value
             })
+            console.log(`sucessfully add with ${value}`)
         }else{
             watch[0].pages = value
             await watch[0].save();
+            console.log(`already exists with new value ${value}`)
         }
     } catch (error) {
         console.error(`Error getting ${shop} pages: ${error}`);
