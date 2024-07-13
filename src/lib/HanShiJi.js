@@ -1,17 +1,25 @@
 import mongoose from "mongoose";
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { watchesss } from "./Database/database.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import moment from "moment";
 import { checkDB } from "./Hook/CheckDB.js";
-import createBrowser from "./Hook/Browser.js";
 
 export const url_HS = (pg) => {
     return `https://www.goodtimezone.com.tw/index.asp?index=${pg}`;
 };
 
 export const HS_count = async () => {
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+      try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage();
     await page.goto("https://www.goodtimezone.com.tw/", { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');
@@ -19,8 +27,14 @@ export const HS_count = async () => {
         const _pg = document.querySelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');
         return _pg.innerText;
     });
-    await browser.close();
     return l_pages;
+}catch (error) {
+    console.error('Error in HanshiJI_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 };
 
 export const HS_Main = async ({ page, data }) => {

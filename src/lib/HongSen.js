@@ -1,14 +1,23 @@
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
-import createBrowser from "./Hook/Browser.js";
 
 export const HSe_url = (pg)=>{
     return `https://www.999watch.com/index.asp?index=${pg}`
 }
 
+
 export const HSe_count = async () =>{
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+    try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage();
     await page.goto('https://www.999watch.com/')
     await page.goto(HSe_url(1), { waitUntil: 'domcontentloaded' })
@@ -18,7 +27,13 @@ export const HSe_count = async () =>{
         return _p.innerText
     })
     return pg
-    await browser.close()
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 }
 
 HSe_count().then(value=>{
