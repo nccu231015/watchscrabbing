@@ -16,7 +16,7 @@ export async function GET(req) {
     try {
         const shop = req.headers.get('shop')
         await fetchWatchMiddleware();
-        const _pages = await database.where("name").equals(shop)
+        const _pages = await watchpage.where("name").equals(shop)
         const p = _pages[0].pages
         await clusterTask(watchesss,shop,p);
         return NextResponse.json({ data: 'Success', status: 200 });
