@@ -9,7 +9,7 @@ let clusterInstance = null;
 const createCluster = async () => {
     return await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_BROWSER,
-        maxConcurrency: 3,
+        maxConcurrency: 5,
         puppeteer,
         puppeteerOptions: {
             args: Chromium.args,
@@ -17,7 +17,6 @@ const createCluster = async () => {
             executablePath: await Chromium.executablePath(),
             headless: Chromium.headless,
         },
-        monitor: true,
         timeout: 360000,
     });
 }

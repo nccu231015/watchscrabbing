@@ -52,7 +52,7 @@ export const TT_main = async ({page, data})=>{
         while(await page.url()==url){
             await page.click(`#boxWidth > div.proBox > div:nth-child(${i+2})`);
         }
-       await page.waitForSelector('#boxWidth > div.prodedata > div.datatxts > h1 > a')
+       await page.waitForSelector('#boxWidth > div.prodedata > div.datatxts > h1 > a',{timeout: 60000})
        
         const Info = await page.evaluate(()=>{
             const name_Chn = document.querySelector('#boxWidth > div.prodedata > div.datatxts > h1 > a')|| false
