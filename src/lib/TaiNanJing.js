@@ -12,6 +12,9 @@ export const url_TNJ = (pg)=>{
 
 
 export const TNJ_count = async ()=>{
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
     try{
         browser = await puppeteerCore.launch({
             args: Chromium.args,
