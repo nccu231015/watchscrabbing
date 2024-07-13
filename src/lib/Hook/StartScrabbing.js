@@ -65,6 +65,5 @@ export const clusterTask = async (w, shop, pages) => {
 
     await cluster.idle();
     await cluster.close();
-    await process.abort();
     console.log("Crawling done");
 }
