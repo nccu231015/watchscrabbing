@@ -2,16 +2,23 @@ import moment from 'moment'
 import { watchesss } from './Database/database.js'
 import { FastLoad } from './Hook/FastLoad.js'
 
-import puppeteer from "puppeteer-core";
-import createBrowser from './Hook/Browser.js'
+import puppeteerCore from "puppeteer-core";
 
 export const url_emc2 = (pg)=>{
     return `https://www.emc2watches.com/product/index/is_featured2/1/page/${pg}.html`
 }
 
 export const emc2_count = async ()=>{
-
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+      try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage()
     
     let  currentpages = 10
@@ -45,8 +52,14 @@ export const emc2_count = async ()=>{
             }
         }
 
-    await browser.close();
     return currentpages
+      } catch (error) {
+        console.error('Error in emc2_count:', error);
+    } finally {
+        if (browser) {
+            await browser.close();
+        }
+    }
 
 }
 

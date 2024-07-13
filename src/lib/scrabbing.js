@@ -1,11 +1,14 @@
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js"
-import createBrowser from "./Hook/Browser.js"
 
 export const YS_url = (pg)=>{ return  `https://www.egps.com.tw/index.asp?index=${pg}`}
 
 export const YS_count = async()=>{
+    const CHROMIUM_PATH =
+  "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+    let browser;
+    try{
     const browser = await createBrowser();
     const page = await browser.newPage();
     await page.goto("https://www.egps.com.tw/", { waitUntil: 'domcontentloaded' })
@@ -15,7 +18,13 @@ export const YS_count = async()=>{
         return _pg[0].innerText
     })
     return l_pages
-    await browser.close()
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 }
 //{page,data}
 export const YS_main = async ({page,data})=>{

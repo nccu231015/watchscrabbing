@@ -9,7 +9,7 @@ import { watchesss } from "@/lib/Database/database";
 
 dotenv.config();
 
-export const maxDuration = 300;
+export const maxDuration = 60;
 export const dynamic = "force-dynamic"
 
 export async function GET(req) {
@@ -22,7 +22,8 @@ export async function GET(req) {
         const shop = req.headers.get('shop')
         await fetchWatchMiddleware();
         const pages = await getpages(shop);
-        await clusterTask(watchesss,shop,pages);
+        // await clusterTask(watchesss,shop,pages);
+        console.log(`${shop} 目前有 ${pages} 頁`)
         return NextResponse.json({ data: 'Success', status: 200 });
     } catch (error) {
         console.error(error);

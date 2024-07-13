@@ -1,10 +1,9 @@
 
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"
 import { FastLoad } from "./Hook/FastLoad.js"
-import createBrowser from "./Hook/Browser.js"
 // const url = "https://tw.bid.yahoo.com/booth/Y0921170303"
 
 export const url_XR = (pg)=>{
@@ -12,7 +11,16 @@ export const url_XR = (pg)=>{
 }
 
 export const XR_count = async ()=>{
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+    try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage()
     await page.goto(url_XR(1),{waitUntil:'networkidle0'});
    
@@ -20,9 +28,14 @@ export const XR_count = async ()=>{
         const pgs = document.querySelector("div.sc-16fedlx-0.gZkaGA.sc-5ehcvq-5.fpEedn > div > a:nth-last-child(1)")
         return pgs.innerText
     })
-
     return pages
-    browser.close();
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 }
 
 

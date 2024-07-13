@@ -1,11 +1,10 @@
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import {Cluster} from 'puppeteer-cluster';
 import { watchesss } from './Database/database.js';
 
 import mongoose from 'mongoose';
 import { FastLoad } from './Hook/FastLoad.js';
 import moment from 'moment';
-import createBrowser from './Hook/Browser.js';
 
 
 export const url_YC = (pg) => {
@@ -17,8 +16,16 @@ export const url_YC = (pg) => {
 
 
 export const YC_count = async ()=>{
-
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+try{
+    browser = await puppeteerCore.launch({
+        args: Chromium.args,
+        defaultViewport: Chromium.defaultViewport,
+        executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+        headless: Chromium.headless,
+    });
     const page = await browser.newPage()
     
     let  currentpages = 11
@@ -49,8 +56,14 @@ export const YC_count = async ()=>{
 
             }
         }
-        await browser.close();
     return currentpages
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 
 }
 

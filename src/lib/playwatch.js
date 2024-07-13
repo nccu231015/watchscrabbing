@@ -1,12 +1,20 @@
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
-import createBrowser from "./Hook/Browser.js";
 
 export const PW_url = (pg)=>{ return `http://www.playwatch.com.tw/index.asp?index=${pg}`}
 
 export const PW_count = async () => {
-    const browser = await createBrowser();
+    const CHROMIUM_PATH =
+    "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
+      let browser;
+    try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage();
     await page.goto('http://www.playwatch.com.tw/')
     
@@ -15,7 +23,14 @@ export const PW_count = async () => {
         return _p.innerText
     })
     return pg
-    await browser.close()
+
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 }
 
 

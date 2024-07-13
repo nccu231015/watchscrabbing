@@ -1,10 +1,9 @@
 
-import puppeteer from "puppeteer-core";
+import puppeteerCore from "puppeteer-core";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"
-import createBrowser from "./Hook/Browser.js"
 
 export const url_TNJ = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y8401229000?pg=${pg+1}`
@@ -12,7 +11,13 @@ export const url_TNJ = (pg)=>{
 
 
 export const TNJ_count = async ()=>{
-    const browser = await createBrowser();
+    try{
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage()
     await page.goto(url_TNJ(1),{waitUntil:'networkidle0'});
    
@@ -22,7 +27,13 @@ export const TNJ_count = async ()=>{
     })
 
     return pages
-    await browser.close()
+}catch (error) {
+    console.error('Error in TT_count:', error);
+} finally {
+    if (browser) {
+        await browser.close();
+    }
+}
 }
 
 
