@@ -1,6 +1,7 @@
 import puppeteerCore from "puppeteer-core";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
+import Chromium from "@sparticuz/chromium";
 
 export const PW_url = (pg)=>{ return `http://www.playwatch.com.tw/index.asp?index=${pg}`}
 

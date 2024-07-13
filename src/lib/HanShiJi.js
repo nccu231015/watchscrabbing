@@ -4,6 +4,8 @@ import { watchesss } from "./Database/database.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import moment from "moment";
 import { checkDB } from "./Hook/CheckDB.js";
+import Chromium from "@sparticuz/chromium";
+
 
 export const url_HS = (pg) => {
     return `https://www.goodtimezone.com.tw/index.asp?index=${pg}`;

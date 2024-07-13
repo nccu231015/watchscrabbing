@@ -3,6 +3,7 @@ import { watchesss } from './Database/database.js'
 import { FastLoad } from './Hook/FastLoad.js'
 
 import puppeteerCore from "puppeteer-core";
+import Chromium from '@sparticuz/chromium';
 
 export const url_emc2 = (pg)=>{
     return `https://www.emc2watches.com/product/index/is_featured2/1/page/${pg}.html`

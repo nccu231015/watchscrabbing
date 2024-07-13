@@ -4,6 +4,7 @@ import { scrollToBottom } from "./Hook/ScrollToBottom.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import { yahooscrab } from "./Hook/yahooScrabbing.js"
 import { checkDB } from "./Hook/CheckDB.js"
+import Chromium from "@sparticuz/chromium";
 
 export const url_TNJ = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y8401229000?pg=${pg+1}`

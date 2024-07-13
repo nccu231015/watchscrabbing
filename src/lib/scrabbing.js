@@ -1,6 +1,8 @@
 import puppeteerCore from "puppeteer-core";
 import { FastLoad } from "./Hook/FastLoad.js"
 import { checkDB } from "./Hook/CheckDB.js"
+import Chromium from "@sparticuz/chromium";
+
 
 export const YS_url = (pg)=>{ return  `https://www.egps.com.tw/index.asp?index=${pg}`}
 
