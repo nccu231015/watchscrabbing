@@ -366,4 +366,3 @@ export default async function main(shop) {
     await fetchWatchMiddleware();
     await clusterTask(watchesss, shop);
 }
-main();
