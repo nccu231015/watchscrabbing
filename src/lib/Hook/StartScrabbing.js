@@ -16,9 +16,10 @@ const createCluster = async () => {
             defaultViewport: Chromium.defaultViewport,
             executablePath: await Chromium.executablePath(),
             headless: Chromium.headless,
+            timeout: 180000
         },
+        // monitor: true,
         timeout: 360000,
-        monitor: true
     });
 }
 
