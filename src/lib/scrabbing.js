@@ -11,7 +11,12 @@ export const YS_count = async()=>{
   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
     let browser;
     try{
-    const browser = await createBrowser();
+        browser = await puppeteerCore.launch({
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(CHROMIUM_PATH),
+            headless: Chromium.headless,
+        });
     const page = await browser.newPage();
     await page.goto("https://www.egps.com.tw/", { waitUntil: 'domcontentloaded' })
     
