@@ -13,12 +13,12 @@ export const TT_count = async () => {
     let browser;
     try {
         // browser = await puppeteerCore.launch({
-        //     args: Chromium.args,
-        //     defaultViewport: Chromium.defaultViewport,
-        //     executablePath: await Chromium.executablePath(),
-        //     headless: Chromium.headless,
-        // });
-        const browser = await puppeteer.launch();
+            args: Chromium.args,
+            defaultViewport: Chromium.defaultViewport,
+            executablePath: await Chromium.executablePath(),
+            headless: Chromium.headless,
+        });
+        // const browser = await puppeteer.launch();
         const page = await browser.newPage();
         FastLoad(page);
         await page.goto("https://ttwatches.com/products.php");
