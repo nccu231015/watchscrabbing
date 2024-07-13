@@ -3,7 +3,7 @@ import { scrollToBottom } from "./Hook/ScrollToBottom.js";
 import { yahooscrab } from "./Hook/yahooScrabbing.js";
 import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
-
+import Chromium from "@sparticuz/chromium";
 
 export const url_AG = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y9321626809?pg=${pg+1}`
