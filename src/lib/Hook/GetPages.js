@@ -16,157 +16,56 @@ import { YS_count, YS_url, YS_main } from '../scrabbing.js';
 
 import { watchpage } from "../Database/database";
 
+const pagesBlock = async (countfunc,shop,database) =>{
+    try {
+        const value = await countfunc();
+        const exists = await database.exists({name:shop})
+        const watch = await database.where("name").equals(shop)
+        if(!exists){
+            await database.create({
+                name: shop,
+                pages: value
+            })
+        }else{
+            watch[0].pages = value
+            await watch[0].save();
+        }
+    } catch (error) {
+        console.error(`Error getting ${shop} pages: ${error}`);
+    }
+}
+
 export const getpages = async (shop) => {
     if (shop === "TT") {
-        try {
-            const value = await TT_count();
-            await watchpage.create({
-                name: "TT",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting TT pages: ${error}`);
-        }
+       pagesBlock(TT_count,"TT",watchpage)
     }
     if (shop === "YC") {
-        try {
-            const value = await YC_count();
-            await watchpage.create({
-                name: "YC",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting YC pages: ${error}`);
-        }
+        pagesBlock(YC_count,"YC",watchpage)
     }if (shop === "XR") {
-        try {
-            const value = await XR_count();
-            await watchpage.create({
-                name: "XR",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting XR pages: ${error}`);
-        }
+       pagesBlock(XR_count,"XR",watchpage)
     }if (shop === "WS") {
-        try {
-            const value = await WS_count();
-            await watchpage.create({
-                name: "WS",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting WS pages: ${error}`);
-        }
+       pagesBlock(WS_count,"WS",watchpage)
     }if (shop === "AG") {
-        try {
-            const value = await AG_count();
-            await watchpage.create({
-                name: "AG",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting AG pages: ${error}`);
-        }
+       pagesBlock(AG_count,"AG",watchpage)
     }if (shop === "BL") {
-        try {
-            const value = await BL_count();
-            await watchpage.create({
-                name: "BL",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting BL pages: ${error}`);
-        }
+        pagesBlock(BL_count,"BL",watchpage)
     }if (shop === "emc2") {
-        try {
-            const value = await emc2_count();
-            await watchpage.create({
-                name: "emc2",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting emc2 pages: ${error}`);
-        }
+        pagesBlock(emc2_count,"emc2",watchpage)
     }if (shop === "HS") {
-        try {
-            const value = await HS_count();
-            await watchpage.create({
-                name: "HS",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting HS pages: ${error}`);
-        }
-    }if (shop === "HS2") {
-        try {
-            const value = await HSe_count();
-            await watchpage.create({
-                name: "HSe",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting HS2 pages: ${error}`);
-        }
+        pagesBlock(HS_count,"HS",watchpage)
+    }if (shop === "HSe") {
+        pagesBlock(HSe_count,"HSe",watchpage)
     }if (shop === "JC") {
-        try {
-            const value = await JC_count();
-            await watchpage.create({
-                name: "JC",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting JC pages: ${error}`);
-        }
+        pagesBlock(JC_count,"JS",watchpage)
     }if (shop === "MBW") {
-        try {
-            const value = await MBW_count();
-            await watchpage.create({
-                name: "MBW",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting MBW pages: ${error}`);
-        }
+        pagesBlock(MBW_count,"WBW",watchpage)
     }if (shop === "PW") {
-        try {
-            const value = await PW_count();
-            await watchpage.create({
-                name: "PW",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting PW pages: ${error}`);
-        }
+        pagesBlock(PW_count,"PW",watchpage)
     }if (shop === "RD") {
-        try {
-            const value = await RD_count();
-            await watchpage.create({
-                name: "RD",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting RD pages: ${error}`);
-        }
+        pagesBlock(RD_count,"RD",watchpage)
     }if (shop === "TNJ") {
-        try {
-            const value = await TNJ_count();
-            await watchpage.create({
-                name: "TNJ",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting TNJ pages: ${error}`);
-        }
+        pagesBlock(TNJ_count,"TNJ",watchpage)
     }if (shop === "YS") {
-        try {
-            const value = await YS_count();
-            await watchpage.create({
-                name: "YS",
-                pages: value
-            })
-        } catch (error) {
-            console.error(`Error getting YS pages: ${error}`);
-        }
+        pagesBlock(YS_count,"YS",watchpage)
     }
 }
