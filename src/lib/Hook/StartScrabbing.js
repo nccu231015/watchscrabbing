@@ -8,8 +8,8 @@ let clusterInstance = null;
 
 const createCluster = async () => {
     return await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_CONTEXT,
-        maxConcurrency: 5,
+        concurrency: Cluster.CONCURRENCY_PAGE,
+        maxConcurrency: 3,
         puppeteer,
         puppeteerOptions: {
             args: Chromium.args,
@@ -55,7 +55,7 @@ export const clusterTask = async (w, shop, pages) => {
     if(shop === "AG") {
         const AG_urls = [];
         for (let i = 0; i < pages; i++) {
-            AG_urls.push(TT_url(i + 1));
+            AG_urls.push(AG_urls(i + 1));
         }
 
         for (const u of AG_urls) {
