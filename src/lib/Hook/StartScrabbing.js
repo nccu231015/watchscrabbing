@@ -8,7 +8,7 @@ let clusterInstance = null;
 
 const createCluster = async () => {
     return await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_BROWSER,
+        concurrency: Cluster.CONCURRENCY_PAGE,
         maxConcurrency: 5,
         puppeteer,
         puppeteerOptions: {
