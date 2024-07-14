@@ -15,7 +15,7 @@ export const url_HS = (pg) => {
 export const HS_count = async () => {
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    //   let browser;
+      let browser;
       try{
         // browser = await puppeteerCore.launch({
         //     args: Chromium.args,
@@ -23,7 +23,7 @@ export const HS_count = async () => {
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        const browser = await puppeteer.launch()
+        browser = await puppeteer.launch()
     const page = await browser.newPage();
     await page.goto("https://www.goodtimezone.com.tw/", { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');
@@ -32,10 +32,12 @@ export const HS_count = async () => {
         return _pg.innerText;
     });
     return l_pages;
-    await browser.close();
+    
 }catch (error) {
     console.error('Error in HanshiJI_count:', error);
-} 
+} finally{
+    await browser.close();
+}
 };
 
 export const HS_Main = async ({ page, data }) => {

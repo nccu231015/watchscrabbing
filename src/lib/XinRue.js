@@ -16,7 +16,7 @@ export const url_XR = (pg)=>{
 export const XR_count = async ()=>{
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    //   let browser;
+      let browser;
     try{
         // browser = await puppeteerCore.launch({
         //     args: Chromium.args,
@@ -24,7 +24,7 @@ export const XR_count = async ()=>{
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        const browser= await puppeteer.launch();
+        browser= await puppeteer.launch();
     const page = await browser.newPage()
     await page.goto(url_XR(1),{waitUntil:'networkidle0'});
    
@@ -33,10 +33,12 @@ export const XR_count = async ()=>{
         return pgs.innerText
     })
     return pages
-    await browser.close();
+  
 }catch (error) {
     console.error('Error in TT_count:', error);
-} 
+}  finally {
+    await browser.close();
+}
 }
 
 
