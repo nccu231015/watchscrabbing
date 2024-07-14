@@ -33,6 +33,7 @@ export const TNJ_count = async ()=>{
     })
 
     return pages
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -56,7 +57,7 @@ export const TNJ_count = async ()=>{
             checkDB(database,Info[i],"台南仁德仁川精品",url) 
           
         }
-
+        await page.close();
 
     }
 

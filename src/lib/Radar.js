@@ -18,7 +18,7 @@ export const RD_count = async () => {
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        const browser = puppeteer.launch();
+        const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
@@ -35,6 +35,7 @@ export const RD_count = async () => {
         return _p.innerText
     })
     return pg
+    browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -82,4 +83,5 @@ export const RD_main = async ({page, data})=>{
         const [name,price,photo,shop] = Information[0][i]
         checkDB(database,Information[0][i],`名錶雷達站${shop}`,url)
 }
+await page.close();
 }

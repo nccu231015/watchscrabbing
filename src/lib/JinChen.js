@@ -25,6 +25,7 @@ export const JC_count = async() => {
         return _p.innerText
     })
     return pg
+    await browser.close();
 } catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -68,6 +69,7 @@ export const JC_main = async ({page,data})=>{
 
             checkDB(database,Information[0][i],"金宸名表",url)
     }
+    await page.close();
     
 }
 

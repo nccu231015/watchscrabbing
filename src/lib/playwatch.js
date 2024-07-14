@@ -16,7 +16,7 @@ export const PW_count = async () => {
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto('http://www.playwatch.com.tw/')
     
@@ -25,7 +25,7 @@ export const PW_count = async () => {
         return _p.innerText
     })
     return pg
-
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 }
@@ -72,4 +72,5 @@ export const PW_main = async ({page, data})=>{
       
       
 }
+await page.close();
 }

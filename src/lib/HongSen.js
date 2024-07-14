@@ -30,6 +30,7 @@ export const HSe_count = async () =>{
         return _p.innerText
     })
     return pg
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -76,6 +77,7 @@ export const HSe_main = async ({page,data})=>{
     for (let i=0; i<Information[1]; i++){
         checkDB(database,Information[0][i],"鴻昇名表",url) 
     }
+    await page.close();
     
     
 }
