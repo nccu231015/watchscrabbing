@@ -19,7 +19,7 @@ export const url_YC = (pg) => {
 export const YC_count = async ()=>{
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    //   let browser;
+      let browser;
 try{
     // browser = await puppeteerCore.launch({
     //     args: Chromium.args,
@@ -27,7 +27,7 @@ try{
     //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
     //     headless: Chromium.headless,
     // });
-    const browser = await puppeteer.launch();
+    browser = await puppeteer.launch();
     const page = await browser.newPage()
     
     let  currentpages = 11
@@ -59,10 +59,12 @@ try{
             }
         }
     return currentpages
-    await browser.close();
+   
 }catch (error) {
     console.error('Error in TT_count:', error);
-} 
+} finally {
+    await browser.close();
+}
 
 }
 

@@ -7,8 +7,9 @@ import { checkDB } from "./Hook/CheckDB.js";
 export const TT_url = (pg) => { return `https://ttwatches.com/products.php?&page=${pg}` }
 
 export const TT_count = async () => {
+    let browser;
     try {
-        const browser = await puppeteer.launch();
+        browser = await puppeteer.launch();
         const page = await browser.newPage();
         FastLoad(page);
         await page.goto("https://ttwatches.com/products.php");
@@ -17,10 +18,12 @@ export const TT_count = async () => {
             return pg.innerText;
         });
         return pages;
-        await browser.close();
+       
     } catch (error) {
         console.error('Error in TT_count:', error);
-    } 
+    } finally{
+        await browser.close();
+    }
 }
 
 

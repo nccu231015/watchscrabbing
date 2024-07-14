@@ -13,7 +13,7 @@ export const url_AG = (pg)=>{
 export const AG_count = async ()=>{
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-    //   let browser;
+      let browser;
     try{
         // browser = await puppeteerCore.launch({
         //     args: Chromium.args,
@@ -31,9 +31,11 @@ export const AG_count = async ()=>{
     })
     return pages
     console.log("AGan 頁面總數爬取完畢")
-    await browser.close();
+    
 }catch(error){
     console.log("當爬取 AGan 頁面時出錯")
+}finally{
+    await browser.close();
 }
 
 }
@@ -42,13 +44,14 @@ export const AGan_main = async ({page, data})=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     // const url = url_AG(1);
-    const {url,database} = data
-    FastLoad(page);
-    await page.goto(url,{waitUntil:'networkidle0'})
-    await scrollToBottom(page);
-    const Info = await yahooscrab(page);
-    for (let i=0; i<Info.length; i++){
-        await checkDB(database,Info[i],"阿甘精品",url)
-    }
+
+        const {url,database} = data
+        FastLoad(page);
+        await page.goto(url,{waitUntil:'networkidle0'})
+        await scrollToBottom(page);
+        const Info = await yahooscrab(page);
+        for (let i=0; i<Info.length; i++){
+            await checkDB(database,Info[i],"阿甘精品",url)
+        }
     await page.close();
 }

@@ -9,7 +9,7 @@ export const YS_url = (pg)=>{ return  `https://www.egps.com.tw/index.asp?index=$
 export const YS_count = async()=>{
 //     const CHROMIUM_PATH =
 //   "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
-//     let browser;
+    let browser;
     try{
         // browser = await puppeteerCore.launch({
         //     args: Chromium.args,
@@ -17,7 +17,7 @@ export const YS_count = async()=>{
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        const browser = await puppeteer.launch();
+        browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto("https://www.egps.com.tw/", { waitUntil: 'domcontentloaded' })
     
@@ -26,9 +26,11 @@ export const YS_count = async()=>{
         return _pg[0].innerText
     })
     return l_pages
-    await browser.close();
+  
 }catch (error) {
     console.error('Error in TT_count:', error);
+}finally{
+    await browser.close();
 }
 }
 //{page,data}
