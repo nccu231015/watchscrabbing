@@ -100,14 +100,14 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 TT 頁面時出錯 ${error}`)
     }
  
-
+    console.log("TT END")
     try{
     await PW_count().then(value=>{
         pages['PW'] = value
     })}catch(error){
         console.log(`爬取 PW 頁面時出錯 ${error}`)
     }
-    
+    console.log("PW END")
 
     try{
         await YS_count().then(value=>{
@@ -115,14 +115,14 @@ const clusterTask = async (w,shop)=>{
         })}catch(error){
             console.log(`爬取 YS 頁面時出錯 ${error}`)
         }
-
+        console.log("YS END")
     try{
     await MBW_count().then(value=>{
         pages['MBW'] = value
     })}catch(error){
         console.log(`爬取 MBW 頁面時出錯 ${error}`)
     }
-  
+    console.log("MBW END")
 
     try{
         await TNJ_count().then(value=>{
@@ -130,7 +130,7 @@ const clusterTask = async (w,shop)=>{
         })}catch(error){
             console.log(`爬取 TNJ 頁面時出錯 ${error}`)
         }
-
+        console.log("TNJ END")
     try{
     await JC_count().then(value=>{
         pages['JC'] = value
@@ -138,14 +138,14 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 JC 頁面時出錯 ${error}`)
     }
    
-
+    console.log("JC END")
     try{
     await HSe_count().then(value=>{
         pages['HSe'] = value
     })}catch(error){
         console.log(`爬取 HSe 頁面時出錯 ${error}`)
     }
-    
+    console.log("HSe END")
 
     try{
     await YC_count().then(value=>{
@@ -153,7 +153,7 @@ const clusterTask = async (w,shop)=>{
     })}catch(error){
         console.log(`爬取 YC 頁面時出錯 ${error}`)
     }
-  
+    console.log("YC END")
 
     try{
     await WS_count().then(value=>{
@@ -162,7 +162,7 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 WS 頁面時出錯 ${error}`)
     }
   
-
+    console.log("WS END")
     try{
     await XR_count().then(value=>{
         pages["XR"] = value
@@ -170,7 +170,7 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 XR 頁面時出錯 ${error}`)
     }
     
-
+    console.log("XR END")
     try{
     await AG_count().then(value=>{
         pages["AG"] = value
@@ -178,7 +178,7 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 AG 頁面時出錯 ${error}`)
     }
    
-
+    console.log("AG END")
     try{
     await BL_count().then(value=>{
         pages["BL"] = value
@@ -186,6 +186,7 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 BL 頁面時出錯 ${error}`)
     }
     
+    console.log("BL END")
     try{
     await emc2_count().then(value=>{
         pages["emc2"] = value
@@ -202,6 +203,7 @@ const clusterTask = async (w,shop)=>{
         console.log(`爬取 HS 頁面時出錯 ${error}`)
     }
    
+    console.log("HS END")
     try{
         await RD_count().then(value=>{
             pages['RD'] = value
@@ -210,7 +212,8 @@ const clusterTask = async (w,shop)=>{
         }
    
    
-
+        console.log("RD END")
+        console.log("開始爬蟲")
     
 
     const TT_urlss= []
@@ -222,8 +225,6 @@ const clusterTask = async (w,shop)=>{
         for(const u of TT_urlss){
             cluster.queue({url:u, database:w},TT_main)
         }
-
-    console.log("開始爬蟲")
 
     const PW_urlss= []
     
