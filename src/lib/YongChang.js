@@ -182,10 +182,10 @@ export const YC = async ({page,data}) => {
                
             }catch (error){
                 console.log(`Error when checking for duplicated: ${error}`)
-            }finally{
-                await page.close();
             }
     }
+
+    await page.close();
 }
 
 
