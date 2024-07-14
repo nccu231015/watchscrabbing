@@ -33,6 +33,7 @@ export const MBW_count = async ()=>{
     })
 
     return pages
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -58,6 +59,7 @@ export const MBW_main = async ({page, data})=>{
         for (let i=0; i<Info.length; i++){
             checkDB(database,Info[i],"名錶窩Yahoo",url) 
         }
+        await page.close();
 
 
     }

@@ -33,6 +33,7 @@ export const XR_count = async ()=>{
         return pgs.innerText
     })
     return pages
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -58,7 +59,7 @@ export const XinRue_main = async ({page, data})=>{
         for (let i=0; i<Info.length; i++){
             checkDB(database,Info[i],"鑫瑞名錶精品",url);
         }
-
+        await page.close();
 
     }
 

@@ -26,6 +26,7 @@ export const YS_count = async()=>{
         return _pg[0].innerText
     })
     return l_pages
+    await browser.close();
 }catch (error) {
     console.error('Error in TT_count:', error);
 }
@@ -84,5 +85,6 @@ export const YS_main = async ({page,data})=>{
         // console.log(Information[0][i])
         checkDB(database,Information[0][i],'永生名錶'+shop,url)
 }
+await page.close();
 }
 

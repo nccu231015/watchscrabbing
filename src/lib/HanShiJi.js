@@ -32,6 +32,7 @@ export const HS_count = async () => {
         return _pg.innerText;
     });
     return l_pages;
+    await browser.close();
 }catch (error) {
     console.error('Error in HanshiJI_count:', error);
 } 
@@ -139,5 +140,6 @@ export const HS_Main = async ({ page, data }) => {
             
             await page.goto(url, { waitUntil: 'domcontentloaded' });
         }
+        await page.close();
    
 };

@@ -38,6 +38,7 @@ export const WS_count = async () =>{
     })
 
     return last_pages
+    await browser.close();
 } catch (error) {
     console.error('Error in TT_count:', error);
 } 
@@ -117,10 +118,8 @@ export const WS_main = async ({page,data})=>{
         // }catch (error){
         //     console.log(`Error when checking for duplicated: ${error}`)
         // }
-
-       
-    
 }
+await page.close();
 }
 
     

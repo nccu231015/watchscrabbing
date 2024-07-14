@@ -32,6 +32,7 @@ export const BL_count = async ()=>{
         })
 
         return pages
+        await browser.close();
     }   catch (error) {
         console.error('Error in BayLin_count:', error);
     } 
@@ -55,6 +56,7 @@ export const BayLin_main = async ({page, data})=>{
         for (let i=0; i<Info.length; i++){
             checkDB(database,Info[i],"北林精品當鋪",url)
         }
+        await page.close();
     }
 
 

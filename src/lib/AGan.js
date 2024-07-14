@@ -31,6 +31,7 @@ export const AG_count = async ()=>{
     })
     return pages
     console.log("AGan 頁面總數爬取完畢")
+    await browser.close();
 }catch(error){
     console.log("當爬取 AGan 頁面時出錯")
 }
@@ -49,4 +50,5 @@ export const AGan_main = async ({page, data})=>{
     for (let i=0; i<Info.length; i++){
         await checkDB(database,Info[i],"阿甘精品",url)
     }
+    await page.close();
 }

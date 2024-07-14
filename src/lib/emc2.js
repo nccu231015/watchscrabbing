@@ -56,6 +56,7 @@ export const emc2_count = async ()=>{
         }
 
     return currentpages
+    await browser.close();
       } catch (error) {
         console.error('Error in emc2_count:', error);
     } 
@@ -187,6 +188,6 @@ export const emc2_main = async ({page,data}) => {
                 console.log(`Error when checking for duplicated: ${error}`)
             }
         }
-
+        await page.close();
        
     }
