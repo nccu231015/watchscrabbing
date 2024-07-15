@@ -4,6 +4,7 @@ import Title from "@/components/Title/title";
 import FilterBar from "@/components/FilterBar/FilterBar";
 import { useEffect, useState } from "react";
 
+
 export default function Home() {
   const [product, setProduct] = useState([]);
   const [stores, setStores] = useState([]);
@@ -53,7 +54,11 @@ export default function Home() {
   }, [currentStores, inputValue]);
 
   return (
+
+          
+
     <div>
+      <title>終點站 搜尋器</title>
       <Title />
       <FilterBar
         store={stores}

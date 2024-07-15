@@ -57,11 +57,15 @@ export const TT_main = async ({page, data})=>{
             const box = box_placeholder=="無"?"":"有附盒"
             const sereis_number = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-child(4) > span.txts')
             
-            var _price = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-last-child(2) > span.txts')|| false
-            var price = parseInt(_price.innerText.replace(/[^0-9]/g, ''), 10)
+            const price_detector = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-last-child(2)').innerText
+           
             
-            if(price<200){
-                _price = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-last-child(1) > span.txts')|| false
+            var price
+            if(!price_detector.includes('價')){
+                const _price = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-last-child(1) > span.txts')|| false
+                price = parseInt(_price.innerText.replace(/[^0-9]/g, ''), 10)
+            }else{
+                const _price = document.querySelector('#boxWidth > div.prodedata > div.datatxts > div:nth-last-child(2) > span.txts')|| false
                 price = parseInt(_price.innerText.replace(/[^0-9]/g, ''), 10)
             }
 

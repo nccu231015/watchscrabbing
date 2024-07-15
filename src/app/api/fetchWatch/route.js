@@ -20,8 +20,15 @@ export async function GET(request) {
     }
 
     const products = await watchesss.find(filter);
+    
     products.forEach(product => {
       product.prices.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    });
+    
+    products.sort((a, b) => {
+      const aLatestUpdate = a.prices.length > 0 ? new Date(a.prices[0].updatedAt) : new Date(0);
+      const bLatestUpdate = b.prices.length > 0 ? new Date(b.prices[0].updatedAt) : new Date(0);
+      return bLatestUpdate - aLatestUpdate;
     });
 
     return NextResponse.json(products);
