@@ -14,7 +14,6 @@ export default function FilterSearch({ inputValue, handleInputChange,startloadin
 
   // Debounced input change handler to call the parent handler after 500ms of inactivity
   const debouncedHandleInputChange = useCallback(debounce((value) => {
-    
     handleInputChange(value);
   }, 1500), [handleInputChange]);
 

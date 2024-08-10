@@ -3,13 +3,14 @@ import CardComponent from "@/components/Card Component/CardComponent";
 import Title from "@/components/Title/title";
 import FilterBar from "@/components/FilterBar/FilterBar";
 import { useEffect, useState } from "react";
+import moment from "moment";
 
 export default function Home() {
   const [initproduct, setInitProducts] = useState([]); // Initial list of products
   const [product, setProduct] = useState([]);          // Current displayed products
   const [stores, setStores] = useState([]);            // Available stores
   const [currentStores, setCurrentStores] = useState("");// Current store filter
-  const [bought, setBought] = useState(false);         // Bought filter
+  const [bought, setBought] = useState("");            // Bought filter
   const [loading, setLoading] = useState(false);       // Loading state
   const [inputValue, setInputValue] = useState("");    // Search input
 
@@ -20,7 +21,7 @@ export default function Home() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/fetchWatch`);
+      const res = await fetch("/api/fetchWatch");
       const data = await res.json();
 
       if (Array.isArray(data)) {
@@ -44,7 +45,7 @@ export default function Home() {
 
     // Filter by stores if selected
     if (currentStores !== "") {
-      filteredData = filteredData.filter((item) => item.stores === currentStores);
+        filteredData = filteredData.filter((item) => item.stores === currentStores);
     }
 
     // Filter by input value (search term)
@@ -55,7 +56,24 @@ export default function Home() {
             return searchTerms.every((term) => itemName.includes(term));
         });
     }
-    setLoading(false)
+
+    // Filter by latest update time if bought === "unsale"
+    if (bought === "unsale") {
+        const now = moment();
+        filteredData = filteredData.filter((item) => {
+            const latestUpdate = moment(item.latestUpdate).utc();
+            const differenceInMinutes = now.diff(latestUpdate, 'minutes');
+            return differenceInMinutes <= 60; // Only include items updated within the last hour
+        });
+    } else if (bought === "sale") {
+      const now = moment();
+      filteredData = filteredData.filter((item) => {
+          const latestUpdate = moment(item.latestUpdate).utc();
+          const differenceInMinutes = now.diff(latestUpdate, 'minutes');
+          return differenceInMinutes >= 60; // Only include items updated more than an hour ago
+      });
+    }
+
     return filteredData;
   };
 
@@ -75,16 +93,26 @@ export default function Home() {
     }
   };
 
-  // Filter products when currentStores, inputValue, or initproduct changes
-  useEffect(() => {
-    const filteredData = filterProducts();
-    setProduct(filteredData);
-  }, [currentStores, inputValue, initproduct]);
-
   useEffect(() => {
     fetchProducts();
     fetchStores();
   }, []); // Only run once on initial load
+
+  useEffect(() => {
+    const filteredData = filterProducts();
+    setProduct(filteredData);
+    setLoading(false); // Stop loading once filtering is complete
+  }, [currentStores, inputValue, initproduct, bought]);
+
+  const handleShopChange = (value) => {
+    setLoading(true);
+    setCurrentStores(value);
+  };
+
+  const handleBoughtChange = (value) => {
+    setLoading(true);
+    setBought(value);
+  };
 
   return (
     <div>
@@ -92,8 +120,8 @@ export default function Home() {
       <Title />
       <FilterBar
         store={stores}
-        onshopchange={(value) => setCurrentStores(value)}
-        onboughtchange={(value) => setBought(value)}
+        onshopchange={handleShopChange}
+        onboughtchange={handleBoughtChange}
         inputValue={inputValue}
         handleInputChange={handleInputChange}
         startloading={() => setLoading(true)}

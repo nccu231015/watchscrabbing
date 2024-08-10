@@ -119,6 +119,7 @@ export const HS_Main = async ({ page, data }) => {
         
         if (_exists){
             _watch[0].latestUpdate = moment()
+            await _watch[0].save();
             if(_watch[0].prices[_watch[0].prices.length-1].price == price){
                 await _watch[0].save();
             } else{
