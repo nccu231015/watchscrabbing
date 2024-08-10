@@ -5,15 +5,23 @@ import moment from 'moment';
 export default function CardComponent({ wt = [], bought }) {
   const now = moment();
 
+  if (!wt || wt.length === 0) {
+    return <div>沒有資料...</div>;
+  }
+
   return (
-    wt.length==0? <div>沒有資料...</div>:
     <div className="flex">
-      {wt==[]?<div></div>:wt.map((watch, index) => {
+      {wt.map((watch, index) => {
         const lastUpdatedAt = moment(watch.latestUpdate);
         const difference = now.diff(lastUpdatedAt, 'minutes');
-        if ((bought && difference < 60) || (!bought && difference > 60) || bought === 'all') {
+        if (
+          (bought === "unsale" && difference < 60) ||
+          (bought === "sale" && difference > 60) ||
+          !bought
+        ) {
           return <Card key={index} watch={watch} />;
         }
+
         return null;
       })}
     </div>
