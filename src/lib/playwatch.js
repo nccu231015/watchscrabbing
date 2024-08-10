@@ -59,18 +59,21 @@ export const PW_main = async ({page, data})=>{
             const _situation = articles[i].querySelectorAll('table > tbody > tr:nth-child(6)')
             const _number = articles[i].querySelectorAll('table > tbody > tr:nth-child(4)')
             if(name[0]){
+                const link = "http://www.playwatch.com.tw/"+articles[i].querySelector('table > tbody > tr:nth-child(3) a').getAttribute('href')
                 const situation = _situation[0] != undefined? _situation[0].innerText:""
                 const price = parseInt(_price[0].innerText.replace(/[^0-9]/g, ''), 10);
                 const number = _number[0] != undefined? _number[0].innerText:""
-                info.push([name[0].innerText+situation+number,price,cleanedImage])
+                info.push([name[0].innerText+situation+number,price,cleanedImage,link])
             }
         }
         return [info,info.length]
     })
+
+    console.log(Information[0])
     
     for (let i=0; i<Information[1]; i++){
 
-        checkDB(database,Information[0][i],"玩錶舍",url)
+        checkDB(database,Information[0][i],"玩錶舍",Information[0][i][3])
       
       
 }

@@ -59,17 +59,19 @@ export const JC_main = async ({page,data})=>{
             
             const situation = articles[i].querySelectorAll('table  tbody tr:nth-child(6)')
             if(name[0]){
+                const link = 'https://www.369rolexwatch.com/'+articles[i].querySelector('table  tbody  tr:nth-child(3) a').getAttribute('href')
                 const price = parseInt(_price[0].innerText.replace(/[^0-9]/g, ''), 10);
-                info.push([name[0].innerText+situation[0].innerText,price,cleanedImage])
+                info.push([name[0].innerText+situation[0].innerText,price,cleanedImage,link])
             }
         }
         return [info,info.length]
     })
+    // console.log(Information[0])
         
 
         for (let i=0; i<Information[1]; i++){
 
-            checkDB(database,Information[0][i],"金宸名表",url)
+            checkDB(database,Information[0][i],"金宸名表",Information[0][i][3])
     }
     await page.close();
     

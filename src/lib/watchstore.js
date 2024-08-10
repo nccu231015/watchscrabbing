@@ -80,7 +80,8 @@ export const WS_main = async ({page,data})=>{
             const _images = articles[i].querySelector('table > tbody > tr:nth-child(1) > td a > img').getAttribute('src');
             const full_images = "https://watchstore.tw/"+_images;
 
-            info.push([shop,name.innerText,price_number,full_images])
+            const link = "https://watchstore.tw/" + articles[i].querySelector('table > tbody > tr:nth-child(1) > td a').getAttribute('href');
+            info.push([shop,name.innerText,price_number,full_images,link])
 
            
         }
@@ -90,9 +91,9 @@ export const WS_main = async ({page,data})=>{
         console.log(error)
     }
     })
-
+    console.log(Information)
     for (let i=0 ; i<Information.length; i++){
-        checkDB(database,[Information[i][1],Information[i][2],Information[i][3]],Information[i][0],url)
+        checkDB(database,[Information[i][1],Information[i][2],Information[i][3]],Information[i][0],Information[i][4])
         // try{
         //     const exists = await database.exists({name:Information[i][1]})
         //     const watch = await database.where("name").equals(Information[i][1])

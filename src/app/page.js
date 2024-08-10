@@ -11,7 +11,7 @@ export default function Home() {
   const [stores, setStores] = useState([]);            // Available stores
   const [currentStores, setCurrentStores] = useState("");// Current store filter
   const [bought, setBought] = useState("");            // Bought filter
-  const [loading, setLoading] = useState(false);       // Loading state
+  const [loading, setLoading] = useState(true);       // Loading state
   const [inputValue, setInputValue] = useState("");    // Search input
 
   const handleInputChange = (value) => {
@@ -37,7 +37,6 @@ export default function Home() {
       setInitProducts([]);
       setProduct([]);
     }
-    setLoading(false);
   };
 
   const filterProducts = () => {
@@ -59,14 +58,14 @@ export default function Home() {
 
     // Filter by latest update time if bought === "unsale"
     if (bought === "unsale") {
-        const now = moment();
+        const now = moment().utc();
         filteredData = filteredData.filter((item) => {
             const latestUpdate = moment(item.latestUpdate).utc();
             const differenceInMinutes = now.diff(latestUpdate, 'minutes');
             return differenceInMinutes <= 60; // Only include items updated within the last hour
         });
     } else if (bought === "sale") {
-      const now = moment();
+      const now = moment().utc();
       filteredData = filteredData.filter((item) => {
           const latestUpdate = moment(item.latestUpdate).utc();
           const differenceInMinutes = now.diff(latestUpdate, 'minutes');
@@ -99,10 +98,16 @@ export default function Home() {
   }, []); // Only run once on initial load
 
   useEffect(() => {
+    setLoading(true)
     const filteredData = filterProducts();
     setProduct(filteredData);
     setLoading(false); // Stop loading once filtering is complete
-  }, [currentStores, inputValue, initproduct, bought]);
+  }, [currentStores, inputValue, bought]);
+
+
+  // useEffect(()=>{
+  //   setProduct(initproduct)
+  // },[initproduct])
 
   const handleShopChange = (value) => {
     setLoading(true);
@@ -129,7 +134,7 @@ export default function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <CardComponent wt={product} bought={bought} />
+        <CardComponent wt={product} bought={bought} initValue={initproduct} />
       )}
     </div>
   );

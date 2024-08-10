@@ -76,7 +76,7 @@ export const TT_main = async ({page, data})=>{
             return ([`${name_Chn?name_Chn.innerText:""} ${series_name?series_name.innerText:""} ${sereis_number?sereis_number.innerText:""} ${material?material.innerText:""} ${box} ${insurance} `,price, cleanedImage])
         })
     
-        checkDB(database,Info,"TTWatches 台北腕錶",url)
+        checkDB(database,Info,"TTWatches 台北腕錶",page.url())
     }catch(error){
         console.log(error)
     }finally{

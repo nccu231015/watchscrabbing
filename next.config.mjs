@@ -47,6 +47,9 @@ const nextConfig = {
             }, {
                 protocol: "https",
                 hostname:"www.egps.com.tw"
+            }, {
+                protocol: "http",
+                hostname: 'http://www.playwatch.com.tw/product/product_small'
             }
         ]
     },
