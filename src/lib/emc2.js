@@ -109,6 +109,7 @@ export const emc2_main = async ({page,data}) => {
                 
                 if (exists){
                     watch[0].latestUpdate = moment();
+                    await watch[0].save();
                     const lastUpdatedAt = moment(watch[0].latestUpdate);
                     const now = moment();
                     const difference = now.diff(lastUpdatedAt, 'minutes');

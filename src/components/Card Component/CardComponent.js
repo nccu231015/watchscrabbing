@@ -12,15 +12,8 @@ export default function CardComponent({ wt = [], bought }) {
   return (
     <div className="flex">
       {wt.map((watch, index) => {
-        const lastUpdatedAt = moment(watch.latestUpdate);
-        const difference = now.diff(lastUpdatedAt, 'minutes');
-        if (
-          (bought === "unsale" && difference < 60) ||
-          (bought === "sale" && difference > 60) ||
-          !bought
-        ) {
+       
           return <Card key={index} watch={watch} />;
-        }
 
         return null;
       })}

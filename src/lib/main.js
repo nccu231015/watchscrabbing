@@ -368,3 +368,5 @@ export default async function main(shop) {
     await clusterTask(watchesss, shop);
     process.exit(0)
 }
+
+main();

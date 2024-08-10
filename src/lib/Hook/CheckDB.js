@@ -8,6 +8,7 @@ export const checkDB = async (database,Info,shop,url) => {
     
     if (exists){
         watch[0].latestUpdate = moment()
+        await watch[0].save();
         if(watch[0].prices[watch[0].prices.length-1].price == price){
             
             await watch[0].save();
