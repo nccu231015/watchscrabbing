@@ -69,21 +69,23 @@ export const RD_main = async ({page, data})=>{
             let situation = articles[i].querySelectorAll('table > tbody > tr:nth-child(6)')
             let size = articles[i].querySelectorAll('table > tbody > tr:nth-child(7)')
             if(name[0]){
+                let link = 'https://www.rdwatch.com.tw/'+ articles[i].querySelector('table > tbody > tr:nth-child(3) a').getAttribute('href')
                 let stores_text = stores[0] != undefined?stores[0].innerText:""
                 let situation_text = situation[0] != undefined?situation[0].innerText:""
                 let size_text = size[0] != undefined ?size[0].innerText:""
                 
                 const images = "https://www.rdwatch.com.tw/"+_images[0].getAttribute('src')
                 const price = parseInt(_price[0].innerText.replace(/[^0-9]/g, ''), 10);
-                info.push([name[0].innerText+situation_text+size_text,price,images,stores_text])
+                info.push([name[0].innerText+situation_text+size_text,price,images,stores_text,link])
             }
         }
         return [info,info.length]
     })
+    console.log(Information[0])
     
     for (let i=0; i<Information[1]; i++){
         const [name,price,photo,shop] = Information[0][i]
-        checkDB(database,Information[0][i],`名錶雷達站`,url)
+        checkDB(database,Information[0][i],`名錶雷達站`,Information[0][3])
 }
 await page.close();
 }

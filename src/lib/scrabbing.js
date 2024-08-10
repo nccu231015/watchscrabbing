@@ -68,11 +68,12 @@ export const YS_main = async ({page,data})=>{
             const image = articles[i].querySelectorAll('#picture > div > a > img')
 
             if(name[0]){
+                const link = 'https://www.egps.com.tw/'+name[0].getAttribute('href')
                 const price = parseInt(_price[0].innerText.replace(/[^0-9]/g, ''), 10);
                 if(_situation[0]!== undefined){
                     var situation = _situation[0].innerText;
                 }
-                info.push([name[0].innerText+" "+situation,price,"https://www.egps.com.tw/"+image[0].getAttribute('src'),keepOnlyChineseCharacters(shop[0].innerText)])
+                info.push([name[0].innerText+" "+situation,price,"https://www.egps.com.tw/"+image[0].getAttribute('src'),keepOnlyChineseCharacters(shop[0].innerText),link])
             }
         }
 
@@ -80,12 +81,13 @@ export const YS_main = async ({page,data})=>{
     
     })
    
+    console.log(Information[0])
 
 
     for (let i=0; i<Information[1]; i++){
         const [name,price,photo,shop] = Information[0][i]
         // console.log(Information[0][i])
-        checkDB(database,Information[0][i],'永生名錶',url)
+        checkDB(database,Information[0][i],'永生名錶',Information[0][i][4])
 }
 await page.close();
 }

@@ -110,7 +110,7 @@ export const HS_Main = async ({ page, data }) => {
             return [photo,name,sereis, s];
         });
 
-        console.log("ready to add")
+        // console.log("ready to add")
         const [photo,name,sereis,s] = situation
         const full_name = `${name} ${s} ${sereis}`;
        
@@ -135,7 +135,7 @@ export const HS_Main = async ({ page, data }) => {
                 }],
                 stores: "好時計鐘錶",
                 photos: "https://www.goodtimezone.com.tw/"+photo,
-                webp: url,
+                webp: page.url(),
                 watchsereis: watchsereis
             })
             await console.log(`${name} in "好時計鐘錶" added sucessfully`);

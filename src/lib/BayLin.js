@@ -47,14 +47,9 @@ export const BayLin_main = async ({page, data})=>{
     const {url,database} = data
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
-
-
-       
-
        await scrollToBottom(page);
        await page.waitForSelector('div.sc-1drl28c-4 > span')
         const Info = yahooscrab(page);
-
         for (let i=0; i<Info.length; i++){
             checkDB(database,Info[i],"北林精品當鋪",url)
         }

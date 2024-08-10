@@ -112,6 +112,7 @@ export const YC = async ({page,data}) => {
                 
                 if (exists){
                     watch[0].latestUpdate = moment()
+                    await watch[0].save();
                     const lastUpdatedAt = moment(watch[0].prices[watch[0].prices.length - 1].updatedAt);
                     const now = moment();
                     const difference = now.diff(lastUpdatedAt, 'minutes');
@@ -168,7 +169,7 @@ export const YC = async ({page,data}) => {
                         stores: '永昌鐘錶行',
                         photos: photo_,
                         watchsereis: watchsereis_,
-                        webp: url
+                        webp: page.url()
                     })
                     await console.log(name_+"added sucessfully");
                 } else if (watch_[0].prices[watch_[0].prices.length-1].price != price_){

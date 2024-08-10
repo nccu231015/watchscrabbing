@@ -175,7 +175,7 @@ export const emc2_main = async ({page,data}) => {
                         stores: '相對論鐘錶行',
                         photos: photo_,
                         watchsereis: watchsereis_,
-                        webp: url,
+                        webp: page.url(),
                     })
                     await console.log(name_+"added sucessfully");
                 } else if (watch_[0].prices[watch_[0].prices.length-1].price != price_){

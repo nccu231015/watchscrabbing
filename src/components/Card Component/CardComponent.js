@@ -1,3 +1,5 @@
+"use client"
+
 import Card from '../card/Card';
 import './cardcomponent.css';
 import moment from 'moment';
