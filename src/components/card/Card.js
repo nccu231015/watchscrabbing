@@ -7,7 +7,7 @@ export default function Card({watch}){
         <div className="wrap">
             <div className="name">{watch.name}</div>
             <div className="imagePrice">
-                <Image className="image" src={watch.photos} width={100} height={100}/>
+                <Image className="image" alt={watch.name} src={watch.photos} width={100} height={100}/>
                 <Prices className="price" price={watch.prices}></Prices>
             </div>
             <div className="information">

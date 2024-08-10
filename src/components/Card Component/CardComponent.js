@@ -2,10 +2,14 @@ import Card from '../card/Card';
 import './cardcomponent.css';
 import moment from 'moment';
 
-export default function CardComponent({ wt = [], bought }) {
+export default function CardComponent({ wt=[], bought, initValue }) {
   const now = moment();
 
-  if (!wt || wt.length === 0) {
+  if(!initValue){
+    return <div>loading...</div>
+  }
+
+  if ( wt.length == 0) {
     return <div>沒有資料...</div>;
   }
 

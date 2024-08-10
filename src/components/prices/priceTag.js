@@ -4,7 +4,7 @@ export default function PriceTags({price, time, check}){
     const date= new Date(time);
     const _tpetime = date.toLocaleString('en-US', { timeZone: 'Asia/Taipei' });
     const tpetime = new Date(_tpetime)
-    console.log(_tpetime)
+    
     const hours = String(tpetime.getHours()).padStart(2, '0');
     const minutes = String(tpetime.getMinutes()).padStart(2, '0');
     return(
