@@ -109,19 +109,19 @@ export const YC = async ({page,data}) => {
                 const [watchsereis, price, photo] = watches[0][i]
                 const exists = await database.exists({watchsereis:watchsereis})
                 const watch = await database.where("watchsereis").equals(watchsereis)
+                
                 if (exists){
+                    watch[0].latestUpdate = moment()
                     const lastUpdatedAt = moment(watch[0].prices[watch[0].prices.length - 1].updatedAt);
                     const now = moment();
                     const difference = now.diff(lastUpdatedAt, 'minutes');
 
                    if(watch.length==1 && difference >= 3){
                         if(watch[0].prices[watch[0].prices.length-1].price == price && difference >= 3){
-                            watch[0].latestUpdate = moment();
                             await watch[0].save();
                             continue
                         }else {
                             console.log(`${watchsereis} already in the database, update prices`)
-                            watch[0].latestUpdate = moment() ;
                             await watch[0].prices.push({price:price})
                             await watch[0].save()
                             continue
@@ -136,7 +136,7 @@ export const YC = async ({page,data}) => {
 
                 // 確保導航完成後再進行評估
                 // await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
-                // await page.waitForSelector('body > section.box__product > div > ul > ul.box__ainfo > ul:nth-child(2) > li:nth-child(1) > p.con-text-text.con-text-Lora.font-black');
+                await page.waitForSelector('body > section.box__product > div > ul > ul.box__ainfo > ul:nth-child(2) > li:nth-child(1) > p.con-text-text.con-text-Lora.font-black');
 
                 const info = await page.evaluate(() => {
                     const series_name = document.querySelector('body > section.box__product > div > ul > ul.box__ainfo > ul:nth-child(2) > li:nth-child(1) > p.con-text-text.con-text-Lora.font-black')?.innerText || '';

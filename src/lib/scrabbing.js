@@ -85,7 +85,7 @@ export const YS_main = async ({page,data})=>{
     for (let i=0; i<Information[1]; i++){
         const [name,price,photo,shop] = Information[0][i]
         // console.log(Information[0][i])
-        checkDB(database,Information[0][i],'永生名錶'+shop,url)
+        checkDB(database,Information[0][i],'永生名錶',url)
 }
 await page.close();
 }

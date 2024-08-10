@@ -2,8 +2,6 @@ import { watchesss } from "@/lib/Database/database";
 import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic';
-
 export async function GET(request) {
   await fetchWatchMiddleware();
 
