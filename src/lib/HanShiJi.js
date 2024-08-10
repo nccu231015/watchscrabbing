@@ -97,7 +97,7 @@ export const HS_Main = async ({ page, data }) => {
         while (page.url() === url) {
             await page.click(`#content > div.prodmain > div.prodleft.fr > div.prodlist > table > tbody > tr:nth-child(${row}) > td:nth-child(${column})`, { waitUntil: 'domcontentloaded' });
         }
-
+        await page.waitForSelector("#photo1")
         const situation = await page.evaluate(() => {
             const photo = document.querySelector("#photo1").getAttribute("src")
             const name = document.querySelector("#content > div.prodmain > div.prodleft.fr > div > table > tbody > tr > td > table:nth-child(3) > tbody > tr:nth-child(1) > td").innerText
@@ -116,13 +116,13 @@ export const HS_Main = async ({ page, data }) => {
        
         const _exists = await database.exists({name:full_name})
         const _watch = await database.where("name").equals(full_name)
+        
         if (_exists){
+            _watch[0].latestUpdate = moment()
             if(_watch[0].prices[_watch[0].prices.length-1].price == price){
-                _watch[0].latestUpdate = moment()
                 await _watch[0].save();
             } else{
                 console.log(`${name} in "好時計鐘錶" already in the database, update prices`)
-                _watch[0].latestUpdate = moment()
                 await _watch[0].prices.push({price:price})
                 await _watch[0].save()
             }

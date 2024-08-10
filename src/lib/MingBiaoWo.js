@@ -26,9 +26,8 @@ export const MBW_count = async ()=>{
         browser = await puppeteer.launch();
     const page = await browser.newPage()
     await page.goto(url_MBW(1),{waitUntil:'networkidle0'});
-   
     const pages = await page.evaluate(()=>{
-        const pgs = document.querySelector("div.sc-16fedlx-0.gZkaGA.sc-5ehcvq-5.fpEedn > div > a:nth-last-child(1)")
+        const pgs = document.querySelector("div.sc-16fedlx-0 > div > :nth-last-child(1)")
         return pgs.innerText
     })
 
@@ -54,7 +53,7 @@ export const MBW_main = async ({page, data})=>{
 
 
        await scrollToBottom(page);
-       await page.waitForSelector('div.sc-1drl28c-4.njFQL > span')
+       await page.waitForSelector('div.sc-1drl28c-4 > span')
         
       const Info = yahooscrab(page);
 

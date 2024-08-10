@@ -6,6 +6,7 @@ export default function CardComponent({ wt = [], bought }) {
   const now = moment();
 
   return (
+    wt.length==0? <div>沒有資料...</div>:
     <div className="flex">
       {wt==[]?<div></div>:wt.map((watch, index) => {
         const lastUpdatedAt = moment(watch.latestUpdate);

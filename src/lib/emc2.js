@@ -102,25 +102,26 @@ export const emc2_main = async ({page,data}) => {
         
         for (let i=0; i<watches[1]; i++){
             try{
+                
                 const [watchsereis, price, photo] = watches[0][i]
                 const exists = await database.exists({watchsereis:watchsereis})
                 const watch = await database.where("watchsereis").equals(watchsereis)
+                
                 if (exists){
+                    watch[0].latestUpdate = moment();
                     const lastUpdatedAt = moment(watch[0].latestUpdate);
                     const now = moment();
                     const difference = now.diff(lastUpdatedAt, 'minutes');
                     
-
                     if(watch.length==1 && difference >= 60){
                         if(watch[0].prices[watch[0].prices.length-1].price == price && difference >= 3){
-                            watch[0].latestUpdate = moment();
+                            
                             await watch[0].save();
                             continue
                         }else {
                             console.log(`${watchsereis} already in the database, update prices`)
                             await watch[0].prices.push({price:price})
                             
-                            watch[0].latestUpdate = moment();
                             await watch[0].save();
                             continue
                     }

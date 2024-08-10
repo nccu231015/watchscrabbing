@@ -16,7 +16,7 @@ export default function FilterSearch({ inputValue, handleInputChange,startloadin
   const debouncedHandleInputChange = useCallback(debounce((value) => {
     
     handleInputChange(value);
-  }, 1000), [handleInputChange]);
+  }, 1500), [handleInputChange]);
 
   const onInputChange = (event) => {
     startloading();

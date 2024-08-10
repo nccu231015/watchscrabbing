@@ -25,9 +25,9 @@ export const BL_count = async ()=>{
         browser = await puppeteer.launch();
         const page = await browser.newPage()
         await page.goto(url_BL(1),{waitUntil:'networkidle0'});
-    
+        await scrollToBottom(page);
         const pages = await page.evaluate(()=>{
-            const pgs = document.querySelector("div.sc-16fedlx-0 > div > :nth-last-child(1)")
+            const pgs = document.querySelector("div.sc-16fedlx-0 > div > :nth-last-child(1)") || document.querySelector('div.sc-16fedlx-0.hzzXAb.sc-1567ie7-0.jQjUWm > div > a:nth-last-child(1)')
             return pgs.innerText
         })
 
@@ -52,7 +52,7 @@ export const BayLin_main = async ({page, data})=>{
        
 
        await scrollToBottom(page);
-       await page.waitForSelector('div.sc-1drl28c-4.njFQL > span')
+       await page.waitForSelector('div.sc-1drl28c-4 > span')
         const Info = yahooscrab(page);
 
         for (let i=0; i<Info.length; i++){
