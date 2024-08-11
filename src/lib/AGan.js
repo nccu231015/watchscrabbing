@@ -51,9 +51,8 @@ export const AGan_main = async ({page, data})=>{
         await scrollToBottom(page);
         await page.waitForSelector('#booth > main > section > div.subjectUnit__FBanD.boothListings__RwOCH > div.subjectUnitMain__eHHPb > div > div > div > ul > li')
         const Info = await yahooscrab(page);
-        console.log(Info)
         for (let i=0; i<Info.length; i++){
-            await checkDB(database,Info[i],"阿甘精品",url)
+            await checkDB(database,Info[i],"阿甘精品",Info[i][3])
         }
     await page.close();
 }

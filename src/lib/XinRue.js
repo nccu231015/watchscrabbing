@@ -49,19 +49,12 @@ export const XinRue_main = async ({page, data})=>{
     const {url,database} = data
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
-
-
-       
-
-
-       await scrollToBottom(page);
-       await page.waitForSelector('div.sc-1drl28c-4 > span')
-        const Info = yahooscrab(page);
-
-        for (let i=0; i<Info.length; i++){
-            checkDB(database,Info[i],"鑫瑞名錶精品",url);
-        }
-        await page.close();
+    await scrollToBottom(page);
+    const Info = await yahooscrab(page);
+    for (let i=0; i<Info.length; i++){
+        await checkDB(database,Info[i],"鑫銳名錶金品",Info[i][3])
+    }
+await page.close();
 
     }
 

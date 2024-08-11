@@ -48,19 +48,14 @@ export const TNJ_count = async ()=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     const {url,database} = data
-    FastLoad(page)
+    FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
-       await scrollToBottom(page);
-       await page.waitForSelector('div.sc-1drl28c-4 > span')
-        
-      const Info = yahooscrab(page);
-
-        for (let i=0; i<Info.length; i++){
-
-            checkDB(database,Info[i],"台南仁德仁川精品",url) 
-          
-        }
-        await page.close();
+    await scrollToBottom(page);
+    const Info = await yahooscrab(page);
+    for (let i=0; i<Info.length; i++){
+        await checkDB(database,Info[i],"台南仁德仁川精品",Info[i][3])
+    }
+await page.close();
 
     }
 

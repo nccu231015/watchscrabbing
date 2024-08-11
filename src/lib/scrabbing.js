@@ -80,8 +80,6 @@ export const YS_main = async ({page,data})=>{
         return [info,info.length]
     
     })
-   
-    console.log(Information[0])
 
 
     for (let i=0; i<Information[1]; i++){

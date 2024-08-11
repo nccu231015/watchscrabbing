@@ -80,6 +80,7 @@ export const YC = async ({page,data}) => {
 
      // ********* ******* //
     await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.detail__sn');
 
         // check the home page
 
@@ -111,15 +112,16 @@ export const YC = async ({page,data}) => {
                 const watch = await database.where("watchsereis").equals(watchsereis)
                 
                 if (exists){
+                    
+                    const lastUpdatedAt = moment(watch[0].latestUpdate).utc();
+                    const now = moment().utc();
+                    const difference = now.diff(lastUpdatedAt, 'minutes');
                     watch[0].latestUpdate = moment()
                     await watch[0].save();
-                    const lastUpdatedAt = moment(watch[0].prices[watch[0].prices.length - 1].updatedAt);
-                    const now = moment();
-                    const difference = now.diff(lastUpdatedAt, 'minutes');
-
-                   if(watch.length==1 && difference >= 3){
-                        if(watch[0].prices[watch[0].prices.length-1].price == price && difference >= 3){
-                            await watch[0].save();
+                    const v = watch[0].__v
+                
+                   if(watch.length==1 && difference >= 0.5 && v < 10){
+                        if(watch[0].prices[watch[0].prices.length-1].price == price && difference >= 0.5){
                             continue
                         }else {
                             console.log(`${watchsereis} already in the database, update prices`)
@@ -158,8 +160,8 @@ export const YC = async ({page,data}) => {
 
                 watches[0][i].push(info)
                 const [watchsereis_, price_, photo_, name_] = watches[0][i]
-                const exists_ = await database.exists({name:name_})
-                const watch_ = await database.where("name").equals(name_)
+                const exists_ = await database.exists({name:watchsereis_+ " " + name_})
+                const watch_ = await database.where("name").equals(watchsereis_+ " " + name_)
                 if(!exists_){
                     await database.create({
                         name: watchsereis_+ " " + name_,
@@ -171,8 +173,8 @@ export const YC = async ({page,data}) => {
                         watchsereis: watchsereis_,
                         webp: page.url()
                     })
-                    await console.log(name_+"added sucessfully");
-                } else if (watch_[0].prices[watch_[0].prices.length-1].price != price_){
+                    await console.log(watchsereis_+"added sucessfully");
+                } else if (watch_[0].prices[watch_[0].prices.length-1].price != price_ && watch_[0].__v.length <10){
                     console.log(`ready to update prices of ${watchsereies_} with new prices ${price_}`)
                     await watch_[0].prices.push({price:price_})
                     await watch_[0].save()
