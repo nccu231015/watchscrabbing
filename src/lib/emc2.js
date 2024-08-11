@@ -108,12 +108,17 @@ export const emc2_main = async ({page,data}) => {
                 const watch = await database.where("watchsereis").equals(watchsereis)
                 
                 if (exists){
-                    watch[0].latestUpdate = moment();
-                    await watch[0].save();
+                    
                     const lastUpdatedAt = moment(watch[0].latestUpdate);
                     const now = moment();
                     const difference = now.diff(lastUpdatedAt, 'minutes');
-                    
+                    watch[0].latestUpdate = moment();
+                    await watch[0].save();
+
+                    const version = watch[0].prices.length
+                    if(version > 10){
+                        continue
+                    }
                     if(watch.length==1 && difference >= 60){
                         if(watch[0].prices[watch[0].prices.length-1].price == price && difference >= 3){
                             
@@ -126,6 +131,7 @@ export const emc2_main = async ({page,data}) => {
                             await watch[0].save();
                             continue
                     }
+                    
                 }
                 }
 
@@ -182,7 +188,7 @@ export const emc2_main = async ({page,data}) => {
                     
                     await watch_[0].prices.push({price:price_})
                     await watch_[0].save()
-                    console.log(`ready to update prices of ${watchsereies_} with new prices ${price_}`)
+                    console.log(`ready to update prices of ${watchsereis_} with new prices ${price_}`)
                 
                 } 
                     await page.goto(url, { waitUntil: 'domcontentloaded' });

@@ -7,10 +7,12 @@ export const checkDB = async (database,Info,shop,url) => {
     const watch = await database.where("name").equals(name)
     
     if (exists){
+        if(watch[0].prices.length > 10){
+            return
+        }
         watch[0].latestUpdate = moment()
         await watch[0].save();
         if(watch[0].prices[watch[0].prices.length-1].price == price){
-            
             await watch[0].save();
         } else{
             console.log(`${name} in ${shop} already in the database, update prices`)
