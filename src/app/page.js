@@ -121,7 +121,7 @@ export default function Home() {
 
   return (
     <div>
-      <title>終點站 搜尋器</title>
+      <title>鐘點站 搜尋器</title>
       <Title />
       <FilterBar
         store={stores}
