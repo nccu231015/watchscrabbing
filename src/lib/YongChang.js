@@ -23,7 +23,8 @@ export const YC_count = async () => {
     //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
     //     headless: Chromium.headless,
     // });
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+    });
     const page = await browser.newPage();
 
     let currentpages = 11;
@@ -33,39 +34,46 @@ export const YC_count = async () => {
       finalpages = true;
     };
 
-    await page.goto(url_YC(currentpages - 1), {
+    await page.goto("https://www.watchart.com/watches.html?type=1&category=0&page=3000", {
       waitUntil: "domcontentloaded",
     });
 
-    while (!finalpages) {
-      while ((await page.url()) != url_YC((currentpages - 1) * 30)) {
-        await page.waitForSelector(
-          "body > section.box__pagination > div > div > a:nth-last-child(2)"
-        );
-        await page.click(
-          "body > section.box__pagination > div > div > a:nth-last-child(2)"
-        );
-      }
-      await page.waitForSelector(
-        "body > section.box__pagination > div > div > a:nth-last-child(2)"
-      );
-      const pages_number = await page.evaluate(() => {
-        const arrow = document.querySelectorAll(
-          "body > section.box__pagination > div > div > a > img"
-        );
-        const currentlastpages = document.querySelector(
-          "body > section.box__pagination > div > div > a:nth-last-child(2)"
-        );
-        return [arrow.length, currentlastpages.innerText];
-      });
-      if (pages_number[0] == 1) {
-        setfinalpages();
-      } else {
-        currentpages = pages_number[1];
-      }
+    await page.waitForSelector("body > section.box__pagination > div > div > a.active")
+    const nums= await page.evaluate(()=>{
+        const number = document.querySelector("body > section.box__pagination > div > div > a.active")
+        return number.innerText
+    })
+    console.log(nums)
+    return nums
+    // while (!finalpages) {
+    //   while ((await page.url()) != url_YC((currentpages - 1) * 30)) {
+    //     await page.waitForSelector(
+    //       "body > section.box__pagination > div > div > a:nth-last-child(2)"
+    //     );
+    //     await page.click(
+    //       "body > section.box__pagination > div > div > a:nth-last-child(2)"
+    //     );
+    //   }
+    //   await page.waitForSelector(
+    //     "body > section.box__pagination > div > div > a:nth-last-child(2)"
+    //   );
+    //   const pages_number = await page.evaluate(() => {
+    //     const arrow = document.querySelectorAll(
+    //       "body > section.box__pagination > div > div > a > img"
+    //     );
+    //     const currentlastpages = document.querySelector(
+    //       "body > section.box__pagination > div > div > a:nth-last-child(2)"
+    //     );
+    //     return [arrow.length, currentlastpages.innerText];
+    //   });
+    //   if (pages_number[0] == 1) {
+    //     setfinalpages();
+    //   } else {
+    //     currentpages = pages_number[1];
+    //   }
     }
-    return currentpages;
-  } catch (error) {
+    // return currentpages;
+ catch (error) {
     console.error("Error in TT_count:", error);
   } finally {
     await browser.close();

@@ -1,18 +1,18 @@
 import puppeteerCore from "puppeteer-core";
 import { scrollToBottom } from "./Hook/ScrollToBottom.js"
-import { yahooscrab } from "./Hook/yahooScrabbing.js"
+import { yahooscrabforYC } from "./Hook/yahooScrabForYC.js";
 import { checkDB } from "./Hook/CheckDB.js"
 import { FastLoad } from "./Hook/FastLoad.js"
 import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
 
 
-export const url_MBW = (pg)=>{
-    return `https://tw.bid.yahoo.com/booth/Y5182163893?pg=${pg+1}`
+export const url_YSWC = (pg)=>{
+    return `https://tw.bid.yahoo.com/tw/booth/Y5651372126?pg=${pg+1}`
 }
 
 
-export const MBW_count = async ()=>{
+export const YSWC_count = async ()=>{
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
     let browser
@@ -25,9 +25,9 @@ export const MBW_count = async ()=>{
         // });
         browser = await puppeteer.launch();
     const page = await browser.newPage()
-    await page.goto(url_MBW(1),{waitUntil:'networkidle0'});
+    await page.goto(url_YSWC(1),{waitUntil:'networkidle0'});
     const pages = await page.evaluate(()=>{
-        const pgs = document.querySelector("div.sc-16fedlx-0 > div > :nth-last-child(1)")
+        const pgs = document.querySelector("#booth > main > section > div.subjectUnit__FBanD.boothListings__RwOCH > div.subjectUnitMain__eHHPb > div > div > div > div.sc-16fedlx-0.kvTgSi.sc-5ehcvq-5.eSqFrh > div.sc-16fedlx-1.cTWPbB > a:nth-last-child(1)")
         return pgs.innerText
     })
 
@@ -41,14 +41,14 @@ export const MBW_count = async ()=>{
 }
 
 //{page, data}
-export const MBW_main = async ({page, data})=>{
+export const YSMBWC_main = async ({page, data})=>{
     const {url,database} = data
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
     await scrollToBottom(page);
-    const Info = await yahooscrab(page);
+    const Info = await yahooscrabforYC(page);
     for (let i=0; i<Info.length; i++){
-        await checkDB(database,Info[i],"名錶窩yahoo",Info[i][3])
+        await checkDB(database,Info[i],"永生名錶",Info[i][3])
     }
     await page.close();
 
