@@ -1,4 +1,6 @@
 
+import { YC, url_YC, YC_count } from "./YongChang.js";
+
 import { XinRue_main, XR_count, url_XR } from "./XinRue.js";
 import { WS_url, WS_main, WS_count } from "./watchstore.js";
 import { AG_count, url_AG, AGan_main } from "./AGan.js";
@@ -13,8 +15,10 @@ import { RD_url, RD_main, RD_count } from "./Radar.js";
 import { TNJ_count, TNJ_main, url_TNJ } from "./TaiNanJing.js";
 import { YS_count, YS_url, YS_main } from "./scrabbing.js";
 import { TT_count, TT_main, TT_url } from "./TTWatches.js";
+
 import { YSMB_main, YSWS_count, url_YSWS } from "./YongSanWenShin.js";
 import { url_YSWC,YSWC_count,YSMBWC_main } from "./YongSanWuChuen.js";
+
 
 import { Cluster } from "puppeteer-cluster";
 import { watchesss } from "./Database/database.js";
@@ -33,9 +37,7 @@ const createCluster = async () => {
     maxConcurrency: 5,
     monitor: true,
     timeout: 360000,
-    puppeteerOptions:{
-        // headless: false
-    }
+
   });
 };
 
@@ -259,6 +261,7 @@ const clusterTask = async (w, shop) => {
             cluster.queue({url:u, database:w},TT_main)
         }
 
+
   const PW_urlss = [];
 
   for (let i = 0; i < pages["PW"]; i++) {
@@ -268,6 +271,7 @@ const clusterTask = async (w, shop) => {
   for (const u of PW_urlss) {
     cluster.queue({ url: u, database: w }, PW_main);
   }
+
 
 //   const MBW_urlss = [];
 
