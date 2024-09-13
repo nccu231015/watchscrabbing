@@ -42,26 +42,15 @@ export const MBW_count = async ()=>{
 
 //{page, data}
 export const MBW_main = async ({page, data})=>{
-
-    // const browser = await puppeteer.launch({headless:false})
-    // const page = await browser.newPage()
     const {url,database} = data
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
-
-       
-
-
-       await scrollToBottom(page);
-       await page.waitForSelector('div.sc-1drl28c-4 > span')
-        
-      const Info = yahooscrab(page);
-
-        for (let i=0; i<Info.length; i++){
-            checkDB(database,Info[i],"名錶窩Yahoo",url) 
-        }
-        await page.close();
-
+    await scrollToBottom(page);
+    const Info = await yahooscrab(page);
+    for (let i=0; i<Info.length; i++){
+        await checkDB(database,Info[i],"名錶窩yahoo",Info[i][3])
+    }
+    await page.close();
 
     }
 
