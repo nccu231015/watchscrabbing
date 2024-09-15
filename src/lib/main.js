@@ -159,13 +159,13 @@ const clusterTask = async (w, shop) => {
     }
     console.log("HSe END")
 
-    // try{
-    // await YC_count().then(value=>{
-    //     pages["YC"] = value
-    // })}catch(error){
-    //     console.log(`爬取 YC 頁面時出錯 ${error}`)
-    // }
-    // console.log("YC END")
+    try{
+    await YC_count().then(value=>{
+        pages["YC"] = value
+    })}catch(error){
+        console.log(`爬取 YC 頁面時出錯 ${error}`)
+    }
+    console.log("YC END")
 
     try{
     await WS_count().then(value=>{
