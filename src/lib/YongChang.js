@@ -232,6 +232,7 @@ export const YC = async ({ page, data }) => {
       const watch_ = await database
         .where("name")
         .equals(watchsereis_ + " " + name_);
+      const url_check = await page.url();
       if (!exists_) {
         await database.create({
           name: watchsereis_ + " " + name_,
@@ -243,16 +244,16 @@ export const YC = async ({ page, data }) => {
           stores: "永昌鐘錶行",
           photos: photo_,
           watchsereis: watchsereis_,
-          webp: page.url(),
+          webp: url_check,
         });
         await console.log(watchsereis_ + "added sucessfully");
-        sendMessageToChannel(
+        await sendMessageToChannel(
           `!!!!!手錶新增通知
           有一個新的手錶 ${
             watchsereis_ + " " + name_
-          } 已新增，價格為 ${price_}，快速前往網址：${page.url()}`
+          } 已新增，價格為 ${price_}，快速前往網址：${url_check}`
         );
-        sendMessageToChannel(
+        await sendMessageToChannel(
           `快速播打電話: https://watchscrapping.store/phone`
         );
       } else if (
@@ -261,11 +262,11 @@ export const YC = async ({ page, data }) => {
       ) {
         await watch_[0].prices.push({ price: price_ });
         await watch_[0].save();
-        sendMessageToChannel(
+        await sendMessageToChannel(
           `!!!!價格變更通知
-          ${watch_[0].name} 有更新價格，價格為 ${price_}，快速前往網址：${watch_[0].webp}`
+          ${watch_[0].name} 有更新價格，價格為 ${price_}，快速前往網址：${url_check}`
         );
-        sendMessageToChannel(
+        await sendMessageToChannel(
           `快速播打電話: https://watchscrapping.store/phone`
         );
         console.log(`${watchsereis_} already in the database, update prices`);

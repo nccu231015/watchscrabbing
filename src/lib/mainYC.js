@@ -18,7 +18,7 @@ const createCluster = async () => {
       monitor: true,
       timeout: 360000,
       puppeteerOptions:{
-          // headless: false
+        //   headless: false
       }
     });
   };
