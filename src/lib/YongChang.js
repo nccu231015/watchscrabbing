@@ -121,7 +121,7 @@ export const YC = async ({ page, data }) => {
       );
       _wacthCollection.push([name, price_number, photo_url]);
     }
-    return [_wacthCollection, name_sn.length];
+    return [_wacthCollection, _wacthCollection.length];
   });
 
   //check if it's on the db
@@ -165,7 +165,7 @@ export const YC = async ({ page, data }) => {
         }
       }
 
-      while ((await page.url()) == url) {
+      while ((page.url()) == url) {
         await page.click(
           `body > section.box__clist > div > ul:nth-child(2) > li:nth-child(${
             i + 1
@@ -253,6 +253,7 @@ export const YC = async ({ page, data }) => {
             watchsereis_ + " " + name_
           } 已新增，價格為 ${price_}，快速前往網址：${url_check}`
         );
+
         await sendMessageToChannel(
           `快速播打電話: https://watchscrapping.store/phone`
         );
@@ -274,6 +275,7 @@ export const YC = async ({ page, data }) => {
       await page.goto(url, { waitUntil: "domcontentloaded" });
     } catch (error) {
       console.log(`Error when checking for duplicated: ${error}`);
+      await page.close();
     }
   }
 
