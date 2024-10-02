@@ -1,8 +1,20 @@
 import Image from "next/image";
 import Prices from "../prices/Prices";
 import "./card.css";
+import moment from "moment";
+import { ImCross } from "react-icons/im";
 
 export default function Card({watch}){
+
+    const checkifsold = (watch)=>{
+        const now = moment().utc();
+        const latestUpdate = moment(watch.latestUpdate).utc();
+        const differenceInMinutes = now.diff(latestUpdate, 'minutes');
+        return differenceInMinutes>60;
+    }
+   
+
+
     return (
         <div className="wrap">
             <div className="name">{watch.name}</div>
@@ -10,9 +22,10 @@ export default function Card({watch}){
                 <Image className="image" alt={watch.name} src={watch.photos} width={100} height={100}/>
                 <Prices className="price" price={watch.prices}></Prices>
             </div>
-            <div className="information">
+            <div className="information">  
                 <div>{watch.stores}</div>
                 <a href={watch.webp} target="_blank">網站頁面</a>
+                {checkifsold(watch)?<div className="sold"><ImCross style={{background:"transparent",color:"white",padding:0}}/></div>:null}
             </div>
         </div>
     );
