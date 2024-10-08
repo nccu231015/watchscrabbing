@@ -12,6 +12,8 @@ export default function Card({watch}){
         const differenceInMinutes = now.diff(latestUpdate, 'minutes');
         return differenceInMinutes>60;
     }
+
+    const sold = checkifsold(watch)
    
 
 
@@ -20,12 +22,11 @@ export default function Card({watch}){
             <div className="name">{watch.name}</div>
             <div className="imagePrice">
                 <Image className="image" alt={watch.name} src={watch.photos} width={100} height={100}/>
-                <Prices className="price" price={watch.prices}></Prices>
+                <Prices lastupdate = {watch.latestUpdate} sold={sold} className="price" price={watch.prices}></Prices>
             </div>
             <div className="information">  
                 <div>{watch.stores}</div>
                 <a href={watch.webp} target="_blank">網站頁面</a>
-                {checkifsold(watch)?<div className="sold"><ImCross style={{background:"transparent",color:"white",padding:0}}/></div>:null}
             </div>
         </div>
     );
