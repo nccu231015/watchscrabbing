@@ -37,7 +37,10 @@ const createCluster = async () => {
     maxConcurrency: 5,
     monitor: true,
     timeout: 360000,
-
+    puppeteerOptions:{
+      timeout: 60000
+    }
+    
   });
 };
 
@@ -47,33 +50,6 @@ const getClusterInstance = async () => {
   }
   return clusterInstance;
 };
-
-// const clusterTask = async (w, shop) => {
-//     const cluster = await getClusterInstance();
-
-//     cluster.on('taskerror', (err, data) => {
-//         console.error(`Error crawling ${data}: ${err.message}`);
-//     });
-
-//     console.log("Starting crawl");
-
-//     if (shop === "TT") {
-//         const TT_urls = [];
-//         for (let i = 0; i < pages["TT"]; i++) {
-//             TT_urls.push(TT_url(i + 1));
-//         }
-
-//         for (const u of TT_urls) {
-//             cluster.queue({ url: u, database: w }, async ({ page, data }) => {
-//                 // Define your scraping logic here
-//             });
-//         }
-//     }
-
-//     await cluster.idle();
-//     await cluster.close();
-//     console.log("Crawling done");
-// }
 
 const clusterTask = async (w, shop) => {
   const cluster = await getClusterInstance();
@@ -90,6 +66,14 @@ const clusterTask = async (w, shop) => {
     // }
    
     var pages = {}
+
+    try{
+      await TE_count().then(value=>{
+        pages['TE'] = value
+      })
+    }catch(error){
+      console.log(`爬取 TE 頁面時出錯 ${error}`)
+    }
 
     try{
         await YSWS_count().then(value=>{
@@ -162,7 +146,8 @@ const clusterTask = async (w, shop) => {
     try{
     await YC_count().then(value=>{
         pages["YC"] = value
-    })}catch(error){
+    })
+  }catch(error){
         console.log(`爬取 YC 頁面時出錯 ${error}`)
     }
     console.log("YC END")
@@ -206,7 +191,7 @@ const clusterTask = async (w, shop) => {
         console.log(`爬取 emc2 頁面時出錯 ${error}`)
     }
 
-    console.log("一半了！")
+    // console.log("一半了！")
  
     try{
     await HS_count().then(value=>{
@@ -228,6 +213,15 @@ const clusterTask = async (w, shop) => {
         console.log("開始爬蟲")
     
 
+        const TE_urlss= []
+        
+        for(let i=0; i<pages["TE"];i++){
+            TE_urlss.push(url_TE(i));
+        }
+        
+        for(const u of TE_urlss){
+            cluster.queue({url:u, database:w},TE_main)
+        }
 
         const YSWS_urlss= []
         
@@ -320,6 +314,8 @@ const clusterTask = async (w, shop) => {
     cluster.queue({ url: u, database: w }, YC);
   }
 
+  // cluster.queue({url:url_YC(0), database: w}, YC)
+
   const WS_urlss = [];
   for (let i = 0; i <= pages["WS"]; i++) {
     WS_urlss.push(WS_url(i));
@@ -406,3 +402,31 @@ export default async function main(shop) {
 }
 
 main();
+
+
+import fs from "fs"
+import { TE_count, TE_main, url_TE } from "./Theend.js";
+
+
+const loadUrls = ()=>{
+    const data = fs.readFileSync('src/test.watchdatas.json')
+    const jsonData = JSON.parse(data)
+    return jsonData.map(item=>item._id)
+}
+
+const watches_delete = async ()=>{
+    await fetchWatchMiddleware();
+    const urls = loadUrls();
+    for(const url of urls){
+        try {
+            const result = await watchesss.deleteMany({ webp: url });
+            console.log(`Deleted ${result.deletedCount} documents with webp: ${url}`);
+          } catch (error) {
+            console.error(`Error deleting documents with webp: ${url}`, error);
+          }
+    }
+    console.log("Deletion completed");
+}
+
+// watches_delete();
+
