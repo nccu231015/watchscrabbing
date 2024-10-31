@@ -10,7 +10,7 @@ export default function Card({watch}){
         const now = moment().utc();
         const latestUpdate = moment(watch.latestUpdate).utc();
         const differenceInMinutes = now.diff(latestUpdate, 'minutes');
-        return differenceInMinutes>60;
+        return differenceInMinutes>720;
     }
 
     const sold = checkifsold(watch)
