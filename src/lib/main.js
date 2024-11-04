@@ -184,12 +184,12 @@ const clusterTask = async (w, shop) => {
     }
     
     console.log("BL END")
-    try{
-    await emc2_count().then(value=>{
-        pages["emc2"] = value
-    })}catch(error){
-        console.log(`爬取 emc2 頁面時出錯 ${error}`)
-    }
+    // try{
+    // await emc2_count().then(value=>{
+    //     pages["emc2"] = value
+    // })}catch(error){
+    //     console.log(`爬取 emc2 頁面時出錯 ${error}`)
+    // }
 
     // console.log("一半了！")
  
