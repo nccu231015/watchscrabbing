@@ -38,6 +38,9 @@ const createCluster = async () => {
     monitor: true,
     timeout: 360000,
     puppeteerOptions:{
+      args:[
+        '--incognito'
+      ],
       timeout: 60000
     }
     
