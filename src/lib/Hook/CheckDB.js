@@ -3,7 +3,7 @@ export const checkDB = async (database,Info,shop,url) => {
     try{
     
     const [name,price,photo] = Info
-    const exists = await database.exists({name:name})
+    const exists = await database.exists({photos:photo})
     const watch = await database.where("name").equals(name)
     
     if (exists){
