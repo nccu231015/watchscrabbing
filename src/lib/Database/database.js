@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const watchSchema = new mongoose.Schema({
     name: String,
@@ -32,3 +32,10 @@ const watchpageSchema = new mongoose.Schema({
 })
 
 export const watchpage = mongoose.models.watchpage || mongoose.model('watchpage', watchpageSchema)
+
+const passwordSchema = new mongoose.Schema({
+    username: String,
+    password: String,
+})
+
+export const watchpassword = mongoose.models.password || mongoose.model('password', passwordSchema)

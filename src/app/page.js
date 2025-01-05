@@ -18,15 +18,15 @@ export default function Home() {
     setInputValue(value);
   };
 
-  const fetchProducts = async () => {
-    setLoading(true);
+  const fetchProducts = async (isInitialFetch = false) => {
+    if (isInitialFetch) setLoading(true); // Only show loading on initial fetch
     try {
       const res = await fetch("/api/fetchWatch");
       const data = await res.json();
 
       if (Array.isArray(data)) {
-        setInitProducts(data); // Set initial products
-        setProduct(data);      // Set products to display initially
+        setInitProducts(data); // Update initial products
+        setProduct(filterProducts(data)); // Apply filters to new data
       } else {
         console.error("Expected an array, but got:", data);
         setInitProducts([]);
@@ -36,40 +36,39 @@ export default function Home() {
       console.error("Failed to fetch products:", error);
       setInitProducts([]);
       setProduct([]);
+    } finally {
+      if (isInitialFetch) setLoading(false);
     }
   };
 
-  const filterProducts = () => {
-    let filteredData = initproduct;
+  const filterProducts = (products = initproduct) => {
+    let filteredData = products;
 
-    // Filter by stores if selected
     if (currentStores !== "") {
-        filteredData = filteredData.filter((item) => item.stores === currentStores);
+      filteredData = filteredData.filter((item) => item.stores === currentStores);
     }
 
-    // Filter by input value (search term)
     if (inputValue !== "") {
-        const searchTerms = inputValue.toLowerCase().split(" ");
-        filteredData = filteredData.filter((item) => {
-            const itemName = item.name.toLowerCase();
-            return searchTerms.every((term) => itemName.includes(term));
-        });
+      const searchTerms = inputValue.toLowerCase().split(" ");
+      filteredData = filteredData.filter((item) => {
+        const itemName = item.name.toLowerCase();
+        return searchTerms.every((term) => itemName.includes(term));
+      });
     }
 
-    // Filter by latest update time if bought === "unsale"
     if (bought === "unsale") {
-        const now = moment().utc();
-        filteredData = filteredData.filter((item) => {
-            const latestUpdate = moment(item.latestUpdate).utc();
-            const differenceInMinutes = now.diff(latestUpdate, 'minutes');
-            return differenceInMinutes <= 60; // Only include items updated within the last hour
-        });
+      const now = moment().utc();
+      filteredData = filteredData.filter((item) => {
+        const latestUpdate = moment(item.latestUpdate).utc();
+        const differenceInMinutes = now.diff(latestUpdate, "minutes");
+        return differenceInMinutes <= 60;
+      });
     } else if (bought === "sale") {
       const now = moment().utc();
       filteredData = filteredData.filter((item) => {
-          const latestUpdate = moment(item.latestUpdate).utc();
-          const differenceInMinutes = now.diff(latestUpdate, 'minutes');
-          return differenceInMinutes >= 60; // Only include items updated more than an hour ago
+        const latestUpdate = moment(item.latestUpdate).utc();
+        const differenceInMinutes = now.diff(latestUpdate, "minutes");
+        return differenceInMinutes >= 60;
       });
     }
 
@@ -93,21 +92,26 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchProducts();
+    // Initial fetch for products and stores
+    fetchProducts(true);
     fetchStores();
-  }, []); // Only run once on initial load
+
+    // Background fetch every 5 minutes
+    const interval = setInterval(() => {
+      fetchProducts(false); // Update products in the background
+      console.log("product refetch")
+    }, 300000); // 300,000 ms = 5 minutes
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const filteredData = filterProducts();
     setProduct(filteredData);
-    setLoading(false); // Stop loading once filtering is complete
+    setLoading(false);
   }, [currentStores, inputValue, bought]);
-
-
-  // useEffect(()=>{
-  //   setProduct(initproduct)
-  // },[initproduct])
 
   const handleShopChange = (value) => {
     setLoading(true);
