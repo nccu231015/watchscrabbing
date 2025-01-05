@@ -9,7 +9,7 @@ export const yahooscrab = async (page) => {
     for (let i=0; i<element.length; i++){
         const link = "https://tw.bid.yahoo.com"+element[i].querySelector('a').getAttribute('href')
         const name_Chn = element[i].querySelectorAll(':is(.kUGmTS,div.sc-1drl28c-4.ePiuzl > span)')
-        const _price = element[i].querySelectorAll(':is(.fuuacE, div > div.sc-1drl28c-4.njFQL > div.sc-dycZeM.jTyrtf > span:nth-child(1),div.sc-dIMGom.gGcbOk > span')
+        const _price = element[i].querySelectorAll(':is(.fuuacE, div > div.sc-1drl28c-4.njFQL > div.sc-dycZeM.jTyrtf > span:nth-child(1),div.sc-dIMGom.gGcbOk > span,div.sc-1drl28c-4.ePiuzl > div.sc-kXQcRk.eJfnEF')
         const img = element[i].querySelectorAll(':is(.sc-1drl28c-3>img, .swiper-slide-active>img)')
 
         if(name_Chn[0]){
