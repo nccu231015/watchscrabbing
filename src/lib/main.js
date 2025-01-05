@@ -41,7 +41,7 @@ const createCluster = async () => {
       args:[
         '--incognito'
       ],
-      timeout: 60000
+      timeout: 60000,
     }
     
   });
@@ -70,6 +70,13 @@ const clusterTask = async (w, shop) => {
    
     var pages = {}
 
+    try{
+      await AJ_count().then(value=>{
+        pages['AJ'] = value
+      })
+    }catch(error){
+      console.log(`爬取 AJ 頁面時出錯 ${error}`)
+    }
     try{
       await TE_count().then(value=>{
         pages['TE'] = value
@@ -215,6 +222,17 @@ const clusterTask = async (w, shop) => {
     //     console.log("RD END")
         console.log("開始爬蟲")
     
+  //////////
+
+    const AJ_urlss=[]
+
+    for(let i=0; i<pages["AJ"];i++){
+      AJ_urlss.push(url_AJ(i))
+    }
+
+    for(const u of AJ_urlss){
+      cluster.queue({url:u, database:w},AJ_main)
+    }
 
         const TE_urlss= []
         
@@ -409,6 +427,8 @@ main();
 
 import fs from "fs"
 import { TE_count, TE_main, url_TE } from "./Theend.js";
+import { AJ_count, AJ_main, url_AJ } from "./AJLuxury.js";
+import { url } from "inspector";
 
 
 const loadUrls = ()=>{
