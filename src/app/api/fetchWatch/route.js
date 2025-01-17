@@ -1,38 +1,49 @@
-
 import { watchesss } from "@/lib/Database/database";
 import fetchWatchMiddleware from "@/lib/Database/fetchWatch";
 import { NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic'
 export async function GET(request) {
-  
   await fetchWatchMiddleware();
 
   try {
     const url = new URL(request.url);
     const storeName = url.searchParams.get('store');
-    const Name = url.searchParams.get('inputvalue');
+    const searchValue = url.searchParams.get('inputvalue');
+    const page = parseInt(url.searchParams.get('page') || '1');
+    const limit = parseInt(url.searchParams.get('limit') || '20');
+    
     let filter = {};
+    
     if (storeName) {
       filter["stores"] = storeName;
     }
-    if (Name) {
-      filter['name'] = { $regex: new RegExp(Name, 'i') };
+
+    if (searchValue) {
+      const searchTerms = searchValue.toLowerCase().split(' ');
+      filter['name'] = {
+        $regex: searchTerms.map(term => `(?=.*${term})`).join(''),
+        $options: 'i'
+      };
     }
 
-    const products = await watchesss.find(filter);
+    const skip = (page - 1) * limit;
     
-    products.forEach(product => {
-      product.prices.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-    });
+    const products = await watchesss.find(filter)
+      .sort({ 
+        'prices.0.updatedAt': -1,
+        'latestUpdate': -1
+      })
+      .skip(skip)
+      .limit(limit);
     
-    products.sort((a, b) => {
-      const aLatestUpdate = a.prices.length > 0 ? new Date(a.prices[0].updatedAt) : new Date(0);
-      const bLatestUpdate = b.prices.length > 0 ? new Date(b.prices[0].updatedAt) : new Date(0);
-      return bLatestUpdate - aLatestUpdate;
-    });
+    const total = await watchesss.countDocuments(filter);
 
-    return NextResponse.json(products);
+    return NextResponse.json({
+      products,
+      total,
+      hasMore: skip + products.length < total
+    });
   } catch (err) {
     return NextResponse.json({ error: err.message });
   }

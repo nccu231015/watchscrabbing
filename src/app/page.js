@@ -13,66 +13,62 @@ export default function Home() {
   const [bought, setBought] = useState("");            // Bought filter
   const [loading, setLoading] = useState(true);       // Loading state
   const [inputValue, setInputValue] = useState("");    // Search input
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const handleInputChange = (value) => {
     setInputValue(value);
   };
 
-  const fetchProducts = async (isInitialFetch = false) => {
-    if (isInitialFetch) setLoading(true); // Only show loading on initial fetch
+  const fetchProducts = async (isInitialFetch = false, currentPage = 1) => {
+    if (isInitialFetch) setLoading(true);
     try {
-      const res = await fetch("/api/fetchWatch");
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: '20'
+      });
+      if (currentStores) params.append('store', currentStores);
+      if (inputValue) params.append('inputvalue', inputValue);
+      
+      const res = await fetch(`/api/fetchWatch?${params}`);
       const data = await res.json();
-
-      if (Array.isArray(data)) {
-        setInitProducts(data); // Update initial products
-        setProduct(filterProducts(data)); // Apply filters to new data
-      } else {
-        console.error("Expected an array, but got:", data);
-        setInitProducts([]);
-        setProduct([]);
+      
+      if (data.products) {
+        if (currentPage === 1) {
+          setInitProducts(data.products);
+          setProduct(filterProducts(data.products));
+        } else {
+          setInitProducts(prev => [...prev, ...data.products]);
+          setProduct(prev => [...prev, ...filterProducts(data.products)]);
+        }
+        setHasMore(data.hasMore);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
-      setInitProducts([]);
-      setProduct([]);
     } finally {
       if (isInitialFetch) setLoading(false);
+      setIsLoadingMore(false);
     }
   };
 
-  const filterProducts = (products = initproduct) => {
-    let filteredData = products;
-
-    if (currentStores !== "") {
-      filteredData = filteredData.filter((item) => item.stores === currentStores);
-    }
-
-    if (inputValue !== "") {
-      const searchTerms = inputValue.toLowerCase().split(" ");
-      filteredData = filteredData.filter((item) => {
-        const itemName = item.name.toLowerCase();
-        return searchTerms.every((term) => itemName.includes(term));
-      });
-    }
-
+  const filterProducts = (products) => {
     if (bought === "unsale") {
       const now = moment().utc();
-      filteredData = filteredData.filter((item) => {
+      return products.filter((item) => {
         const latestUpdate = moment(item.latestUpdate).utc();
         const differenceInMinutes = now.diff(latestUpdate, "minutes");
         return differenceInMinutes <= 60;
       });
     } else if (bought === "sale") {
       const now = moment().utc();
-      filteredData = filteredData.filter((item) => {
+      return products.filter((item) => {
         const latestUpdate = moment(item.latestUpdate).utc();
         const differenceInMinutes = now.diff(latestUpdate, "minutes");
         return differenceInMinutes >= 60;
       });
     }
-
-    return filteredData;
+    return products;
   };
 
   const fetchStores = async () => {
@@ -107,10 +103,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
-    const filteredData = filterProducts();
-    setProduct(filteredData);
-    setLoading(false);
+    setPage(1); // 重置頁碼
+    setInitProducts([]); // 清空現有資料
+    setProduct([]); 
+    fetchProducts(true, 1); // 重新獲取第一頁資料
   }, [currentStores, inputValue, bought]);
 
   const handleShopChange = (value) => {
@@ -122,6 +118,25 @@ export default function Home() {
     setLoading(true);
     setBought(value);
   };
+
+  // 監聽滾動事件
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        >= document.documentElement.offsetHeight - 100
+      ) {
+        if (hasMore && !isLoadingMore && !loading) {
+          setIsLoadingMore(true);
+          setPage(prev => prev + 1);
+          fetchProducts(false, page + 1);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, isLoadingMore, page, loading, currentStores, inputValue]);
 
   return (
     <div>
@@ -139,6 +154,11 @@ export default function Home() {
         <p>Loading...</p>
       ) : (
         <CardComponent wt={product} bought={bought} initValue={initproduct} />
+      )}
+      {isLoadingMore && (
+        <div className="loading-more">
+          載入更多資料中...
+        </div>
       )}
     </div>
   );
