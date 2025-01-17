@@ -19,6 +19,5 @@ export const yahooscrabforYC = async (page) => {
     }
       return information_list
     })
-    console.log(info)
     return info
 }
