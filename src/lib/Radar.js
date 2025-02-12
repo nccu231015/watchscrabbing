@@ -85,7 +85,7 @@ export const RD_main = async ({page, data})=>{
     
     for (let i=0; i<Information[1]; i++){
         const [name,price,photo,shop] = Information[0][i]
-        checkDB(database,Information[0][i],`名錶雷達站`,Information[0][i][3])
+        checkDB(database,Information[0][i],`名錶雷達站`,Information[0][i][4])
 }
 await page.close();
 }
