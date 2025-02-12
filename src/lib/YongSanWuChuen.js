@@ -27,8 +27,8 @@ export const YSWC_count = async ()=>{
     const page = await browser.newPage()
     await page.goto(url_YSWC(1),{waitUntil:'networkidle0'});
     const pages = await page.evaluate(()=>{
-        
-        const pgs = document.querySelector("div.sc-16fedlx-1.kUKfyi > a:nth-last-child(1) > span")
+     
+        const pgs = document.querySelector("div.sc-16fedlx-0.bKdNcg.sc-5ehcvq-5.fuQJOD > div.sc-16fedlx-1.jnNtwX > a:nth-last-child(1)")
         return pgs.innerText
     })
 

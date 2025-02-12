@@ -53,22 +53,30 @@ export default function Home() {
   };
 
   const filterProducts = (products) => {
+    let filteredProducts = [...products];
+    
     if (bought === "unsale") {
       const now = moment().utc();
-      return products.filter((item) => {
+      filteredProducts = products.filter((item) => {
         const latestUpdate = moment(item.latestUpdate).utc();
         const differenceInMinutes = now.diff(latestUpdate, "minutes");
         return differenceInMinutes <= 60;
       });
     } else if (bought === "sale") {
       const now = moment().utc();
-      return products.filter((item) => {
+      filteredProducts = products.filter((item) => {
         const latestUpdate = moment(item.latestUpdate).utc();
         const differenceInMinutes = now.diff(latestUpdate, "minutes");
         return differenceInMinutes >= 60;
       });
     }
-    return products;
+
+    // 根據 latestUpdate 進行排序，最新的在前面
+    return filteredProducts.sort((a, b) => {
+      const timeA = moment(a.latestUpdate).utc();
+      const timeB = moment(b.latestUpdate).utc();
+      return timeB - timeA;  // 降序排列
+    });
   };
 
   const fetchStores = async () => {
