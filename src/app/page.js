@@ -71,11 +71,24 @@ export default function Home() {
       });
     }
 
-    // 根據 latestUpdate 進行排序，最新的在前面
+    // 複雜排序邏輯
     return filteredProducts.sort((a, b) => {
-      const timeA = moment(a.latestUpdate).utc();
-      const timeB = moment(b.latestUpdate).utc();
-      return timeB - timeA;  // 降序排列
+      // 首先檢查是否已售出
+      const aSold = a.prices.some(price => price.price === "sold");
+      const bSold = b.prices.some(price => price.price === "sold");
+      
+      // 如果一個已售出而另一個未售出，未售出的優先
+      if (aSold && !bSold) return 1;
+      if (!aSold && bSold) return -1;
+      
+      // 如果售出狀態相同，則比較最後更新時間
+      const aLastPrice = a.prices[a.prices.length - 1];
+      const bLastPrice = b.prices[b.prices.length - 1];
+      
+      const aTime = moment(aLastPrice?.updatedAt).utc();
+      const bTime = moment(bLastPrice?.updatedAt).utc();
+      
+      return bTime - aTime;  // 降序排列，最新的在前面
     });
   };
 
