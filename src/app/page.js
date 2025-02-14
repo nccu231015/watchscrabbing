@@ -30,6 +30,7 @@ export default function Home() {
       });
       if (currentStores) params.append('store', currentStores);
       if (inputValue) params.append('inputvalue', inputValue);
+      if (bought) params.append('bought', bought);
       
       const res = await fetch(`/api/fetchWatch?${params}`);
       const data = await res.json();
@@ -37,10 +38,10 @@ export default function Home() {
       if (data.products) {
         if (currentPage === 1) {
           setInitProducts(data.products);
-          setProduct(filterProducts(data.products));
+          setProduct(data.products);
         } else {
           setInitProducts(prev => [...prev, ...data.products]);
-          setProduct(prev => [...prev, ...filterProducts(data.products)]);
+          setProduct(prev => [...prev, ...data.products]);
         }
         setHasMore(data.hasMore);
       }
@@ -56,39 +57,46 @@ export default function Home() {
     let filteredProducts = [...products];
     
     if (bought === "unsale") {
-      const now = moment().utc();
-      filteredProducts = products.filter((item) => {
-        const latestUpdate = moment(item.latestUpdate).utc();
-        const differenceInMinutes = now.diff(latestUpdate, "minutes");
-        return differenceInMinutes <= 60;
-      });
+        filteredProducts = products.filter((item) => {
+            // 檢查是否有任何價格標記為 "sold"
+            const isSold = item.prices.some(price => price.price === "sold");
+            if (isSold) return false;
+
+            // 檢查最後更新時間
+            const now = moment().utc();
+            const latestUpdate = moment(item.latestUpdate).utc();
+            const differenceInMinutes = now.diff(latestUpdate, "minutes");
+            return differenceInMinutes <= 60;
+        });
     } else if (bought === "sale") {
-      const now = moment().utc();
-      filteredProducts = products.filter((item) => {
-        const latestUpdate = moment(item.latestUpdate).utc();
-        const differenceInMinutes = now.diff(latestUpdate, "minutes");
-        return differenceInMinutes >= 60;
-      });
+        filteredProducts = products.filter((item) => {
+            // 檢查是否有任何價格標記為 "sold"
+            const isSold = item.prices.some(price => price.price === "sold");
+            if (isSold) return true;
+
+            // 如果沒有標記為 sold，則檢查最後更新時間
+            const now = moment().utc();
+            const latestUpdate = moment(item.latestUpdate).utc();
+            const differenceInMinutes = now.diff(latestUpdate, "minutes");
+            return differenceInMinutes >= 60;
+        });
     }
 
-    // 複雜排序邏輯
+    // 保持原有的排序邏輯
     return filteredProducts.sort((a, b) => {
-      // 首先檢查是否已售出
-      const aSold = a.prices.some(price => price.price === "sold");
-      const bSold = b.prices.some(price => price.price === "sold");
-      
-      // 如果一個已售出而另一個未售出，未售出的優先
-      if (aSold && !bSold) return 1;
-      if (!aSold && bSold) return -1;
-      
-      // 如果售出狀態相同，則比較最後更新時間
-      const aLastPrice = a.prices[a.prices.length - 1];
-      const bLastPrice = b.prices[b.prices.length - 1];
-      
-      const aTime = moment(aLastPrice?.updatedAt).utc();
-      const bTime = moment(bLastPrice?.updatedAt).utc();
-      
-      return bTime - aTime;  // 降序排列，最新的在前面
+        const aSold = a.prices.some(price => price.price === "sold");
+        const bSold = b.prices.some(price => price.price === "sold");
+        
+        if (aSold && !bSold) return 1;
+        if (!aSold && bSold) return -1;
+        
+        const aLastPrice = a.prices[a.prices.length - 1];
+        const bLastPrice = b.prices[b.prices.length - 1];
+        
+        const aTime = moment(aLastPrice?.updatedAt).utc();
+        const bTime = moment(bLastPrice?.updatedAt).utc();
+        
+        return bTime - aTime;
     });
   };
 
