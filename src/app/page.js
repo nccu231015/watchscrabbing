@@ -30,15 +30,7 @@ export default function Home() {
       });
       if (currentStores) params.append('store', currentStores);
       if (inputValue) params.append('inputvalue', inputValue);
-      if (bought === "unsale") {
-        filter.$and = [
-          { latestUpdate: { $gte: moment().subtract(60, 'minutes').toDate() } }
-        ];
-      } else if (bought === "sale") {
-        filter.$or = [
-          { latestUpdate: { $lt: moment().subtract(60, 'minutes').toDate() } }
-        ];
-      }
+      params.append('bought', bought || '');
       
       const res = await fetch(`/api/fetchWatch?${params}`);
       const data = await res.json();
@@ -59,65 +51,6 @@ export default function Home() {
       if (isInitialFetch) setLoading(false);
       setIsLoadingMore(false);
     }
-  };
-
-  const filterProducts = (products) => {
-    let filteredProducts = [...products];
-    
-    // 注意：API 已經處理了篩選，這裡不需要再次篩選
-    // 如果 API 返回的數據已經符合篩選條件，這裡可以直接進行排序
-    
-    // 修改排序邏輯，根據 latestUpdate 時間決定使用哪個時間戳進行排序
-    return filteredProducts.sort((a, b) => {
-        const aSold = a.prices.some(price => price.price === "sold");
-        const bSold = b.prices.some(price => price.price === "sold");
-        
-        // 如果兩個都是已售出，按照售出時間排序
-        if (aSold && bSold) {
-            // 找到標記為 sold 的價格記錄的時間
-            const aSoldPrice = a.prices.find(price => price.price === "sold");
-            const bSoldPrice = b.prices.find(price => price.price === "sold");
-            
-            const aSoldTime = moment(aSoldPrice?.updatedAt).utc();
-            const bSoldTime = moment(bSoldPrice?.updatedAt).utc();
-            
-            return bSoldTime - aSoldTime; // 最新售出的在前面
-        }
-        
-        // 如果只有一個已售出，已售出的排在後面
-        if (aSold && !bSold) return 1;
-        if (!aSold && bSold) return -1;
-        
-        // 獲取當前時間
-        const now = moment().utc();
-        
-        // 計算 latestUpdate 與當前時間的差異（分鐘）
-        const aLatestUpdate = moment(a.latestUpdate).utc();
-        const bLatestUpdate = moment(b.latestUpdate).utc();
-        const aDiffMinutes = now.diff(aLatestUpdate, "minutes");
-        const bDiffMinutes = now.diff(bLatestUpdate, "minutes");
-        
-        // 決定使用哪個時間戳進行排序
-        let aTime, bTime;
-        
-        // 如果 latestUpdate 距離現在一小時內，則使用 prices 當中最新的 updatedAt 數值
-        if (aDiffMinutes <= 60 && a.prices.length > 0) {
-            const aLastPrice = a.prices[a.prices.length - 1];
-            aTime = moment(aLastPrice?.updatedAt).utc();
-        } else {
-            // 否則使用 latestUpdate 的數值
-            aTime = aLatestUpdate;
-        }
-        
-        if (bDiffMinutes <= 60 && b.prices.length > 0) {
-            const bLastPrice = b.prices[b.prices.length - 1];
-            bTime = moment(bLastPrice?.updatedAt).utc();
-        } else {
-            bTime = bLatestUpdate;
-        }
-        
-        return bTime - aTime;
-    });
   };
 
   const fetchStores = async () => {
@@ -161,6 +94,11 @@ export default function Home() {
   const handleShopChange = (value) => {
     setLoading(true);
     setCurrentStores(value);
+    setPage(1);
+    setInitProducts([]);
+    setProduct([]);
+    setHasMore(true);
+    setIsLoadingMore(false);
   };
 
   const handleBoughtChange = (value) => {

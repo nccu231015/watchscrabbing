@@ -31,80 +31,73 @@ export async function GET(request) {
 
     if (bought === "unsale") {
       filter.$and = [
-        { latestUpdate: { $gte: moment().subtract(60, 'minutes').toDate() } }
+        { latestUpdate: { $gte: moment().utc().subtract(720, 'minutes').toDate() } }
       ];
     } else if (bought === "sale") {
       filter.$or = [
-        { latestUpdate: { $lt: moment().subtract(60, 'minutes').toDate() } }
+        { latestUpdate: { $lt: moment().utc().subtract(720, 'minutes').toDate() } }
       ];
     }
 
     const skip = (page - 1) * limit;
     
-    const products = await watchesss.aggregate([
+    // 先獲取所有符合條件的數據的 ID 和排序值
+    const allProducts = await watchesss.aggregate([
       { $match: filter },
       { 
         $addFields: {
-          latestUpdateDiff: {
-            $divide: [
-              { $subtract: [new Date(), "$latestUpdate"] },
-              60000
-            ]
-          },
-          lastPriceUpdate: {
-            $ifNull: [
-              { $arrayElemAt: ["$prices.updatedAt", -1] },
-              "$latestUpdate"
-            ]
-          },
-          soldPriceUpdate: {
-            $let: {
-              vars: {
-                soldPrice: {
-                  $filter: {
-                    input: "$prices",
-                    as: "price",
-                    cond: { $eq: ["$$price.price", "sold"] }
-                  }
-                }
-              },
-              in: {
-                $ifNull: [
-                  { $arrayElemAt: ["$$soldPrice.updatedAt", 0] },
-                  null
-                ]
-              }
-            }
-          }
-        }
-      },
-      { 
-        $addFields: {
-          sortTime: {
+          latestPriceUpdate: {
             $cond: {
-              if: { $ne: ["$soldPriceUpdate", null] },
-              then: "$soldPriceUpdate",
-              else: {
-                $cond: {
-                  if: { $lte: ["$latestUpdateDiff", 60] },
-                  then: "$lastPriceUpdate",
-                  else: "$latestUpdate"
-                }
-              }
+              if: {
+                $lt: [
+                  { $max: "$latestUpdate" },
+                  moment().utc().subtract(720, 'minutes').toDate()
+                ]
+              },
+              then: "$latestUpdate",
+              else: { $max: "$prices.updatedAt" }
             }
           }
         }
       },
       { 
         $sort: { 
-          sortTime: -1
+          latestPriceUpdate: -1
         }
       },
-      { $skip: skip },
-      { $limit: limit }
+      {
+        $project: {
+          _id: 1,
+          latestPriceUpdate: 1
+        }
+      }
     ]);
     
-    const total = await watchesss.countDocuments(filter);
+    // 獲取當前頁需要的 ID
+    const pageIds = allProducts.slice(skip, skip + limit).map(p => p._id);
+    
+    // 使用 ID 列表獲取完整的商品數據
+    const products = await watchesss.aggregate([
+      {
+        $match: {
+          _id: { $in: pageIds }
+        }
+      },
+      {
+        $addFields: {
+          sortOrder: {
+            $indexOfArray: [pageIds, "$_id"]
+          }
+        }
+      },
+      {
+        $sort: {
+          sortOrder: 1
+        }
+      }
+    ]);
+    
+    const total = allProducts.length;
 
     return NextResponse.json({
       products,
