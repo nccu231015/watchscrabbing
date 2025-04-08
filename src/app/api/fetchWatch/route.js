@@ -31,13 +31,11 @@ export async function GET(request) {
 
     if (bought === "unsale") {
       filter.$and = [
-
-        { latestUpdate: { $gte: moment().subtract(720, 'minutes').toDate() } }
+        { latestUpdate: { $gte: moment().subtract(60, 'minutes').toDate() } }
       ];
     } else if (bought === "sale") {
       filter.$or = [
-
-        { latestUpdate: { $lt: moment().subtract(720, 'minutes').toDate() } }
+        { latestUpdate: { $lt: moment().subtract(60, 'minutes').toDate() } }
       ];
     }
 
@@ -47,15 +45,59 @@ export async function GET(request) {
       { $match: filter },
       { 
         $addFields: {
-          latestPriceUpdate: {
-            $max: "$prices.updatedAt"
+          latestUpdateDiff: {
+            $divide: [
+              { $subtract: [new Date(), "$latestUpdate"] },
+              60000
+            ]
+          },
+          lastPriceUpdate: {
+            $ifNull: [
+              { $arrayElemAt: ["$prices.updatedAt", -1] },
+              "$latestUpdate"
+            ]
+          },
+          soldPriceUpdate: {
+            $let: {
+              vars: {
+                soldPrice: {
+                  $filter: {
+                    input: "$prices",
+                    as: "price",
+                    cond: { $eq: ["$$price.price", "sold"] }
+                  }
+                }
+              },
+              in: {
+                $ifNull: [
+                  { $arrayElemAt: ["$$soldPrice.updatedAt", 0] },
+                  null
+                ]
+              }
+            }
+          }
+        }
+      },
+      { 
+        $addFields: {
+          sortTime: {
+            $cond: {
+              if: { $ne: ["$soldPriceUpdate", null] },
+              then: "$soldPriceUpdate",
+              else: {
+                $cond: {
+                  if: { $lte: ["$latestUpdateDiff", 60] },
+                  then: "$lastPriceUpdate",
+                  else: "$latestUpdate"
+                }
+              }
+            }
           }
         }
       },
       { 
         $sort: { 
-          latestPriceUpdate: -1,
-
+          sortTime: -1
         }
       },
       { $skip: skip },
