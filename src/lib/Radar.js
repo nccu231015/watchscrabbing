@@ -31,7 +31,7 @@ export const RD_count = async () => {
     await page.goto('https://www.rdwatch.com.tw/')
     
     const pg = await page.evaluate(()=>{
-        const _p = document.querySelector('body > div:nth-child(4) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > div > table > tbody > tr > td > table > tbody > tr > td:nth-child(3) > span > a:nth-last-child(1)')
+        const _p = document.querySelector('body > div:nth-child(5) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > div > table > tbody > tr > td > table > tbody > tr > td:nth-child(3) > span > a:nth-last-child(1)')
         return _p.innerText
     })
     return pg
@@ -57,19 +57,19 @@ export const RD_main = async ({page, data})=>{
     const  Information = await page.evaluate(()=>{
 
         info = []
-        const articles =  document.querySelectorAll('body > div:nth-child(4) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td')
-        
+
+        const articles =  document.querySelectorAll('body > div:nth-child(5) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td > div ')
         
         for (let i=0 ; i<articles.length ; i++){
             let stores = articles[i].querySelectorAll('table > tbody > tr:nth-child(2)')
             const name = articles[i].querySelectorAll('table > tbody > tr:nth-child(3)')
             const _price = articles[i].querySelectorAll('table > tbody > tr:nth-child(5)')
-            const _images = articles[i].querySelectorAll('div > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > div:nth-child(2) > a:nth-child(2) > img')
+            const _images = articles[i].querySelectorAll('.a_photo_photos img')
             
             let situation = articles[i].querySelectorAll('table > tbody > tr:nth-child(6)')
             let size = articles[i].querySelectorAll('table > tbody > tr:nth-child(7)')
             if(name[0]){
-                let link = 'https://www.rdwatch.com.tw/'+ articles[i].querySelector('table > tbody > tr:nth-child(3) a').getAttribute('href')
+                let link = 'https://www.rdwatch.com.tw/'+ articles[i].querySelector('table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > a').getAttribute('href')
                 let stores_text = stores[0] != undefined?stores[0].innerText:""
                 let situation_text = situation[0] != undefined?situation[0].innerText:""
                 let size_text = size[0] != undefined ?size[0].innerText:""
@@ -84,7 +84,7 @@ export const RD_main = async ({page, data})=>{
     console.log(Information[0])
     
     for (let i=0; i<Information[1]; i++){
-        const [name,price,photo,shop] = Information[0][i]
+        const [name,price,photo,shop,link] = Information[0][i]
         checkDB(database,Information[0][i],`名錶雷達站`,Information[0][i][4])
 }
 await page.close();
