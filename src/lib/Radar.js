@@ -68,8 +68,8 @@ export const RD_main = async ({page, data})=>{
             
             let situation = articles[i].querySelectorAll('table > tbody > tr:nth-child(6)')
             let size = articles[i].querySelectorAll('table > tbody > tr:nth-child(7)')
-            if(name[0]){
-                let link = 'https://www.rdwatch.com.tw/'+ articles[i].querySelector('table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > a').getAttribute('href')
+            let link = 'https://www.rdwatch.com.tw/'+ articles[i].querySelector('table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > a').getAttribute('href')
+            if(link){
                 let stores_text = stores[0] != undefined?stores[0].innerText:""
                 let situation_text = situation[0] != undefined?situation[0].innerText:""
                 let size_text = size[0] != undefined ?size[0].innerText:""
