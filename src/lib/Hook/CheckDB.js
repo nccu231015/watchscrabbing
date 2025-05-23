@@ -14,7 +14,7 @@ export const checkDB = async (database,Info,shop,url) => {
             
             return
         }
-        
+        console.log(watch[0].name+"exists"+"update time "+moment().format("YYYY-MM-DD HH:mm:ss"))
         watch[0].latestUpdate = moment()
         await watch[0].save();
         

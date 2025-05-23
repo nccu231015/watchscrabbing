@@ -48,6 +48,7 @@ export const YSMB_main = async ({page, data})=>{
     await page.goto(url,{waitUntil:'networkidle0'})
     await scrollToBottom(page);
     const Info = await yahooscrabforYC(page);
+    console.log(Info)
     for (let i=0; i<Info.length; i++){
         await checkDB(database,Info[i],"永生名錶",Info[i][3])
     }
