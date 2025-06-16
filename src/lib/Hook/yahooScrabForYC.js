@@ -13,7 +13,8 @@ export const yahooscrabforYC = async (page) => {
 
         const _price = element[i].querySelectorAll(':is(div.sc-jeyNv.iKqoYo > span,div.sc-1drl28c-4.cZoKcX > div.sc-oxoUO.raXBV > span,.ceTyuS, div.sc-1drl28c-4.hBnyLx > div.sc-dNHLo.ioIbng)')
 
-        const img = element[i].querySelectorAll(':is(.sc-1drl28c-3>img, .swiper-slide-active>img, div.sc-1drl28c-4.hBnyLx > div.sc-dNHLo.ioIbng > span)')
+        const img = element[i].querySelectorAll(':is(div.swiper-slide.swiper-slide-active>img)')
+        console.log(img)
 
         if(name_Chn[0]){
         const price = parseInt(_price[0].innerText.replace(/[^0-9]/g, ''), 10)
