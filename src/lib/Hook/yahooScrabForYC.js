@@ -11,7 +11,7 @@ export const yahooscrabforYC = async (page) => {
         
          const name_Chn = element[i].querySelectorAll(':is(div.sc-1drl28c-4.bplhif > span,div.sc-1drl28c-4.kvOjcG>span,div.sc-1drl28c-4.cZoKcX>span,div.sc-1drl28c-4.hBnyLx > span)')
 
-        const _price = element[i].querySelectorAll(':is(div.sc-jeyNv.iKqoYo > span,div.sc-1drl28c-4.cZoKcX > div.sc-oxoUO.raXBV > span,.ceTyuS, div.sc-1drl28c-4.hBnyLx > div.sc-dNHLo.ioIbng)')
+        const _price = element[i].querySelectorAll(':is(div.sc-1drl28c-4.bplhif > div.sc-JQDoe.ilSWaG > span,div.sc-jeyNv.iKqoYo > span,div.sc-1drl28c-4.cZoKcX > div.sc-oxoUO.raXBV > span,.ceTyuS, div.sc-1drl28c-4.hBnyLx > div.sc-dNHLo.ioIbng)')
 
         const img = element[i].querySelectorAll(':is(div.swiper-slide.swiper-slide-active>img)')
         console.log(img)
