@@ -8,8 +8,8 @@ export const yahooscrabforYC = async (page) => {
     const element = document.querySelectorAll('li[role="gridcell"]')
     for (let i=0; i<element.length; i++){
         const link = "https://tw.bid.yahoo.com"+element[i].querySelector('a').getAttribute('href')
- 
-         const name_Chn = element[i].querySelectorAll(':is(div.sc-1drl28c-4.kvOjcG>span,div.sc-1drl28c-4.cZoKcX>span,div.sc-1drl28c-4.hBnyLx > span)')
+        
+         const name_Chn = element[i].querySelectorAll(':is(div.sc-1drl28c-4.bplhif > span,div.sc-1drl28c-4.kvOjcG>span,div.sc-1drl28c-4.cZoKcX>span,div.sc-1drl28c-4.hBnyLx > span)')
 
         const _price = element[i].querySelectorAll(':is(div.sc-jeyNv.iKqoYo > span,div.sc-1drl28c-4.cZoKcX > div.sc-oxoUO.raXBV > span,.ceTyuS, div.sc-1drl28c-4.hBnyLx > div.sc-dNHLo.ioIbng)')
 
