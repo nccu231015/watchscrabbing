@@ -15,6 +15,7 @@ import { RD_url, RD_main, RD_count } from "./Radar.js";
 import { TNJ_count, TNJ_main, url_TNJ } from "./TaiNanJing.js";
 import { YS_count, YS_url, YS_main } from "./scrabbing.js";
 import { TT_count, TT_main, TT_url } from "./TTWatches.js";
+import { YSW_count, YSW_main, YSW_url } from "./YongSanWeb.js";
 
 import { YSMB_main, YSWS_count, url_YSWS } from "./YongSanWenShin.js";
 import { url_YSWC,YSWC_count,YSMBWC_main } from "./YongSanWuChuen.js";
@@ -71,6 +72,14 @@ const clusterTask = async (w, shop) => {
     var pages = {}
 
     try{
+      await YSW_count().then(value=>{
+        pages['YSW'] = value
+      })
+    }catch(error){
+      console.log(`爬取 YSW 頁面時出錯 ${error}`)
+    }
+
+    try{
       await AJ_count().then(value=>{
         pages['AJ'] = value
       })
@@ -85,19 +94,19 @@ const clusterTask = async (w, shop) => {
       console.log(`爬取 TE 頁面時出錯 ${error}`)
     }
 
-    try{
-        await YSWS_count().then(value=>{
-            pages['YSWS'] = value
-        })}catch(error){
-            console.log(`爬取 YSWS 頁面時出錯 ${error}`)
-        }
+    // try{
+    //     await YSWS_count().then(value=>{
+    //         pages['YSWS'] = value
+    //     })}catch(error){
+    //         console.log(`爬取 YSWS 頁面時出錯 ${error}`)
+    //     }
 
-        try{
-            await YSWC_count().then(value=>{
-                pages['YSWC'] = value
-            })}catch(error){
-                console.log(`爬取 YSWC 頁面時出錯 ${error}`)
-            }
+    //     try{
+    //         await YSWC_count().then(value=>{
+    //             pages['YSWC'] = value
+    //         })}catch(error){
+    //             console.log(`爬取 YSWC 頁面時出錯 ${error}`)
+    //         }
 
     try{
     await TT_count().then(value=>{
@@ -208,6 +217,14 @@ const clusterTask = async (w, shop) => {
         console.log("開始爬蟲")
     
   //////
+
+    const YSW_urlss=[]
+    for(let i=0; i<pages["YSW"];i++){
+      YSW_urlss.push(YSW_url(i))
+    }
+    for(const u of YSW_urlss){
+      cluster.queue({url:u, database:w},YSW_main)
+    }
 
     const AJ_urlss=[]
 
