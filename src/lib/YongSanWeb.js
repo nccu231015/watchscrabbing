@@ -68,7 +68,7 @@ export const YSW_main = async ({page, data})=>{
             const _images = articles[i].querySelectorAll('.a_photo_photos img')
             
             let situation = articles[i].querySelectorAll('table > tbody > tr:nth-child(6)')
-            let _link = articles[i].querySelector('.a_photo_photos')
+            let _link = articles[i].querySelector('a')
             
             if(_link){
                 let link = "https://www.egps.com.tw/"+_link.getAttribute('href')
