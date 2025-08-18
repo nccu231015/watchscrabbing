@@ -32,7 +32,7 @@ export const YSW_count = async () => {
     
     const pg = await page.evaluate(()=>{
        
-        const _p = document.querySelector(' body > table:nth-child(1) > tbody > tr > td:nth-child(1) > table:nth-child(6) > tbody > tr > td:nth-child(2) > table:nth-child(5) > tbody > tr > td > table:nth-child(4) > tbody > tr > td > table > tbody > tr > td:nth-child(3) > a:nth-last-child(1)')
+        const _p = document.querySelector('body > table:nth-child(2) > tbody > tr > td:nth-child(1) > table:nth-child(6) > tbody > tr > td:nth-child(2) > table:nth-child(5) > tbody > tr > td > table:nth-child(4) > tbody > tr > td > table > tbody > tr > td:nth-child(3) > a:nth-last-child(1)')
         return _p.innerText
     })
     return pg
