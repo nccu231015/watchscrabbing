@@ -5,9 +5,9 @@ import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
 
 
-export const YSW_url = (pg)=> {return `https://www.egps.com.tw/products.asp?page=${pg}`}
+export const YSWF_url = (pg)=> {return `https://www.egps.com.tw/products.asp?page=${pg}`}
 
-export const YSW_count = async () => {
+export const YSWF_count = async () => {
     // const CHROMIUM_PATH =
     // "https://vomrghiulbmrfvmhlflk.supabase.co/storage/v1/object/public/chromium-pack/chromium-v123.0.0-pack.tar";
       let browser;
@@ -28,7 +28,7 @@ export const YSW_count = async () => {
             request.continue();
         }
     });
-    await page.goto('https://www.egps.com.tw/products.asp?cat=2&type=open')
+    await page.goto('https://www.egps.com.tw/products.asp?cat=1&type=open')
     
     const pg = await page.evaluate(()=>{
        
@@ -45,14 +45,14 @@ export const YSW_count = async () => {
 }
 
 
-export const YSW_main = async ({page, data})=>{
+export const YSWF_main = async ({page, data})=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     const {url,database} = data
 
     FastLoad(page);
 
-    await page.goto('https://www.egps.com.tw/products.asp?cat=2&type=open');
+    await page.goto('https://www.egps.com.tw/products.asp?cat=1&type=open');
     await page.goto(url);
     
     const  Information = await page.evaluate(()=>{

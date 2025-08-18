@@ -16,9 +16,11 @@ import { TNJ_count, TNJ_main, url_TNJ } from "./TaiNanJing.js";
 import { YS_count, YS_url, YS_main } from "./scrabbing.js";
 import { TT_count, TT_main, TT_url } from "./TTWatches.js";
 import { YSW_count, YSW_main, YSW_url } from "./YongSanWeb.js";
+import { YSWF_count, YSWF_main, YSWF_url } from "./YongSanWebFemale.js";
 
 import { YSMB_main, YSWS_count, url_YSWS } from "./YongSanWenShin.js";
 import { url_YSWC,YSWC_count,YSMBWC_main } from "./YongSanWuChuen.js";
+import { TEW_count, TEW_main, TEW_url } from "./TheendWeb.js";  
 
 
 import { Cluster } from "puppeteer-cluster";
@@ -72,27 +74,43 @@ const clusterTask = async (w, shop) => {
     var pages = {}
 
     try{
-      await YSW_count().then(value=>{
-        pages['YSW'] = value
+      await TEW_count().then(value=>{
+        pages['TEW'] = value
       })
     }catch(error){
-      console.log(`爬取 YSW 頁面時出錯 ${error}`)
+      console.log(`爬取 TEW 頁面時出錯 ${error}`)
     }
 
-    try{
-      await AJ_count().then(value=>{
-        pages['AJ'] = value
-      })
-    }catch(error){
-      console.log(`爬取 AJ 頁面時出錯 ${error}`)
-    }
-    try{
-      await TE_count().then(value=>{
-        pages['TE'] = value
-      })
-    }catch(error){
-      console.log(`爬取 TE 頁面時出錯 ${error}`)
-    }
+    // try{
+    //   await YSW_count().then(value=>{
+    //     pages['YSW'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 YSW 頁面時出錯 ${error}`)
+    // }
+
+    // try{
+    //   await YSWF_count().then(value=>{
+    //     pages['YSWF'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 YSW 頁面時出錯 ${error}`)
+    // }
+
+    // try{
+    //   await AJ_count().then(value=>{
+    //     pages['AJ'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 AJ 頁面時出錯 ${error}`)
+    // }
+    // try{
+    //   await TE_count().then(value=>{
+    //     pages['TE'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 TE 頁面時出錯 ${error}`)
+    // }
 
     // try{
     //     await YSWS_count().then(value=>{
@@ -108,113 +126,113 @@ const clusterTask = async (w, shop) => {
     //             console.log(`爬取 YSWC 頁面時出錯 ${error}`)
     //         }
 
-    try{
-    await TT_count().then(value=>{
-        pages['TT'] = value
-    })}catch(error){
-        console.log(`爬取 TT 頁面時出錯 ${error}`)
-    }
+    // try{
+    // await TT_count().then(value=>{
+    //     pages['TT'] = value
+    // })}catch(error){
+    //     console.log(`爬取 TT 頁面時出錯 ${error}`)
+    // }
  
-    console.log("TT END")
-    try{
-    await PW_count().then(value=>{
-        pages['PW'] = value
-    })}catch(error){
-        console.log(`爬取 PW 頁面時出錯 ${error}`)
-    }
-    console.log("PW END")
+    // console.log("TT END")
+    // try{
+    // await PW_count().then(value=>{
+    //     pages['PW'] = value
+    // })}catch(error){
+    //     console.log(`爬取 PW 頁面時出錯 ${error}`)
+    // }
+    // console.log("PW END")
 
   
-    try{
-    await MBW_count().then(value=>{
-        pages['MBW'] = value
-    })}catch(error){
-        console.log(`爬取 MBW 頁面時出錯 ${error}`)
-    }
-    console.log("MBW END")
+    // try{
+    // await MBW_count().then(value=>{
+    //     pages['MBW'] = value
+    // })}catch(error){
+    //     console.log(`爬取 MBW 頁面時出錯 ${error}`)
+    // }
+    // console.log("MBW END")
 
-    try{
-        await TNJ_count().then(value=>{
-            pages['TNJ'] = value
-        })}catch(error){
-            console.log(`爬取 TNJ 頁面時出錯 ${error}`)
-        }
-        console.log("TNJ END")
-    try{
-    await JC_count().then(value=>{
-        pages['JC'] = value
-    })}catch(error){
-        console.log(`爬取 JC 頁面時出錯 ${error}`)
-    }
+  //   try{
+  //       await TNJ_count().then(value=>{
+  //           pages['TNJ'] = value
+  //       })}catch(error){
+  //           console.log(`爬取 TNJ 頁面時出錯 ${error}`)
+  //       }
+  //       console.log("TNJ END")
+  //   try{
+  //   await JC_count().then(value=>{
+  //       pages['JC'] = value
+  //   })}catch(error){
+  //       console.log(`爬取 JC 頁面時出錯 ${error}`)
+  //   }
    
-    console.log("JC END")
-    try{
-    await HSe_count().then(value=>{
-        pages['HSe'] = value
-    })}catch(error){
-        console.log(`爬取 HSe 頁面時出錯 ${error}`)
-    }
-    console.log("HSe END")
+  //   console.log("JC END")
+  //   try{
+  //   await HSe_count().then(value=>{
+  //       pages['HSe'] = value
+  //   })}catch(error){
+  //       console.log(`爬取 HSe 頁面時出錯 ${error}`)
+  //   }
+  //   console.log("HSe END")
 
-    try{
-    await YC_count().then(value=>{
-        pages["YC"] = value
-    })
-  }catch(error){
-        console.log(`爬取 YC 頁面時出錯 ${error}`)
-    }
-    console.log("YC END")
+  //   try{
+  //   await YC_count().then(value=>{
+  //       pages["YC"] = value
+  //   })
+  // }catch(error){
+  //       console.log(`爬取 YC 頁面時出錯 ${error}`)
+  //   }
+  //   console.log("YC END")
 
-    try{
-    await WS_count().then(value=>{
-        pages["WS"] = value
-    })}catch(error){
-        console.log(`爬取 WS 頁面時出錯 ${error}`)
-    }
+  //   try{
+  //   await WS_count().then(value=>{
+  //       pages["WS"] = value
+  //   })}catch(error){
+  //       console.log(`爬取 WS 頁面時出錯 ${error}`)
+  //   }
   
-    console.log("WS END")
-    try{
-    await XR_count().then(value=>{
-        pages["XR"] = value
-    })}catch(error){
-        console.log(`爬取 XR 頁面時出錯 ${error}`)
-    }
+  //   console.log("WS END")
+  //   try{
+  //   await XR_count().then(value=>{
+  //       pages["XR"] = value
+  //   })}catch(error){
+  //       console.log(`爬取 XR 頁面時出錯 ${error}`)
+  //   }
     
-    console.log("XR END")
-    try{
-    await AG_count().then(value=>{
-        pages["AG"] = value
-    })}catch(error){
-        console.log(`爬取 AG 頁面時出錯 ${error}`)
-    }
+  //   console.log("XR END")
+  //   // try{
+  //   // await AG_count().then(value=>{
+  //   //     pages["AG"] = value
+  //   // })}catch(error){
+  //   //     console.log(`爬取 AG 頁面時出錯 ${error}`)
+  //   // }
    
-    console.log("AG END")
-    try{
-    await BL_count().then(value=>{
-        pages["BL"] = value
-    })}catch(error){
-        console.log(`爬取 BL 頁面時出錯 ${error}`)
-    }
+  //   // console.log("AG END")
+  //   try{
+  //   await BL_count().then(value=>{
+  //       pages["BL"] = value
+  //   })}catch(error){
+  //       console.log(`爬取 BL 頁面時出錯 ${error}`)
+  //   }
     
-    console.log("BL END")
+  //   console.log("BL END")
   
  
-    try{
-    await HS_count().then(value=>{
-        pages["HS"] = value
-    })}catch(error){
-        console.log(`爬取 HS 頁面時出錯 ${error}`)
-    }
+  //   try{
+  //   await HS_count().then(value=>{
+  //       pages["HS"] = value
+  //   })}catch(error){
+  //       console.log(`爬取 HS 頁面時出錯 ${error}`)
+  //   }
    
-    console.log("HS END")
-    try{
-        await RD_count().then(value=>{
-            pages['RD'] = value
-        })}catch(error){
-            console.log(`爬取 RD 頁面時出錯 ${error}`)
-        }
+  //   console.log("HS END")
+  //   try{
+  //       await RD_count().then(value=>{
+  //           pages['RD'] = value
+  //       })}catch(error){
+  //           console.log(`爬取 RD 頁面時出錯 ${error}`)
+  //       }
    
-        console.log("開始爬蟲")
+  //       console.log("開始爬蟲")
     
   //////
 
@@ -224,6 +242,14 @@ const clusterTask = async (w, shop) => {
     }
     for(const u of YSW_urlss){
       cluster.queue({url:u, database:w},YSW_main)
+    }
+
+    const YSWF_urlss=[]
+    for(let i=0; i<pages["YSWF"];i++){
+      YSWF_urlss.push(YSWF_url(i))
+    }
+    for(const u of YSW_urlss){
+      cluster.queue({url:u, database:w},YSWF_main)
     }
 
     const AJ_urlss=[]
@@ -299,6 +325,14 @@ const clusterTask = async (w, shop) => {
 //   for (const u of MBW_urlss) {
 //     cluster.queue({ url: u, database: w }, MBW_main);
 //   }
+
+  const TEW_urlss = [];
+  for (let i = 0; i < pages["TEW"]; i++) {
+    TEW_urlss.push(TEW_url(i));
+  }
+  for (const u of TEW_urlss) {
+    cluster.queue({ url: u, database: w }, TEW_main);
+  }
 
   const YS_urlss = [];
 
