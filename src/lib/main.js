@@ -143,21 +143,21 @@ const clusterTask = async (w, shop) => {
     console.log("PW END")
 
   
-    try{
-    await MBW_count().then(value=>{
-        pages['MBW'] = value
-    })}catch(error){
-        console.log(`爬取 MBW 頁面時出錯 ${error}`)
-    }
-    console.log("MBW END")
+    // try{
+    // await MBW_count().then(value=>{
+    //     pages['MBW'] = value
+    // })}catch(error){
+    //     console.log(`爬取 MBW 頁面時出錯 ${error}`)
+    // }
+    // console.log("MBW END")
 
-    try{
-        await TNJ_count().then(value=>{
-            pages['TNJ'] = value
-        })}catch(error){
-            console.log(`爬取 TNJ 頁面時出錯 ${error}`)
-        }
-        console.log("TNJ END")
+    // try{
+    //     await TNJ_count().then(value=>{
+    //         pages['TNJ'] = value
+    //     })}catch(error){
+    //         console.log(`爬取 TNJ 頁面時出錯 ${error}`)
+    //     }
+    //     console.log("TNJ END")
     try{
     await JC_count().then(value=>{
         pages['JC'] = value
@@ -191,14 +191,14 @@ const clusterTask = async (w, shop) => {
     }
   
     console.log("WS END")
-    try{
-    await XR_count().then(value=>{
-        pages["XR"] = value
-    })}catch(error){
-        console.log(`爬取 XR 頁面時出錯 ${error}`)
-    }
+    // try{
+    // await XR_count().then(value=>{
+    //     pages["XR"] = value
+    // })}catch(error){
+    //     console.log(`爬取 XR 頁面時出錯 ${error}`)
+    // }
     
-    console.log("XR END")
+    // console.log("XR END")
     // try{
     // await AG_count().then(value=>{
     //     pages["AG"] = value
@@ -207,14 +207,14 @@ const clusterTask = async (w, shop) => {
     // }
    
     // console.log("AG END")
-    try{
-    await BL_count().then(value=>{
-        pages["BL"] = value
-    })}catch(error){
-        console.log(`爬取 BL 頁面時出錯 ${error}`)
-    }
+    // try{
+    // await BL_count().then(value=>{
+    //     pages["BL"] = value
+    // })}catch(error){
+    //     console.log(`爬取 BL 頁面時出錯 ${error}`)
+    // }
     
-    console.log("BL END")
+    // console.log("BL END")
   
  
     try{
