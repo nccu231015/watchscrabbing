@@ -9,6 +9,8 @@
  * - IPV6_PREFIX: 您的 IPv6 前綴，例如 "2604:a880:800:10"
  * - IPV6_INTERFACE: 網路介面名稱，例如 "eth0"
  * - ENABLE_IPV6: 是否啟用真實 IPv6 (true/false)
+ * - IPV6_SKIP_SYSTEM_ADD: 跳過動態添加（生產環境推薦，使用預先創建的地址池）
+ * - IPV6_POOL_SIZE: 地址池大小，預設 200
  */
 
 // 從環境變數讀取配置

@@ -68,6 +68,12 @@ class IPv6SystemManager {
    * 在系統上添加 IPv6 地址
    */
   async addIpv6Address(ipv6) {
+    // 如果設置了跳過系統添加（生產環境使用預先創建的地址池）
+    if (process.env.IPV6_SKIP_SYSTEM_ADD === 'true') {
+      this.addedAddresses.add(ipv6);
+      return { success: true, skipped: true };
+    }
+    
     // 如果未啟用，只記錄不實際執行
     if (!this.enabled) {
       if (this.verbose) {
