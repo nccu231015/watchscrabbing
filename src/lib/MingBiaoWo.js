@@ -6,6 +6,10 @@ import { FastLoad } from "./Hook/FastLoad.js"
 import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 
 export const url_MBW = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y5182163893?pg=${pg+1}`
@@ -43,6 +47,12 @@ export const MBW_count = async ()=>{
 //{page, data}
 export const MBW_main = async ({page, data})=>{
     const {url,database} = data
+    
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('MBW', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [MBW] 使用 IPv6: ${ipv6} 爬取: ${url}`);
+    
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
     await scrollToBottom(page);

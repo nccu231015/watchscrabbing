@@ -6,6 +6,10 @@ import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import Chromium from "@sparticuz/chromium";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 export const url_AG = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y9321626809?pg=${pg+1}`
 }
@@ -46,6 +50,11 @@ export const AGan_main = async ({page, data})=>{
     // const url = url_AG(1);
 
         const {url,database} = data
+        
+        // 為這個任務分配一個唯一的 IPv6 地址
+        const ipv6 = ipv6Manager.getIpv6ForSite('AGan', url);
+        await systemManager.addIpv6Address(ipv6);
+        console.log(`🌐 [AGan] 使用 IPv6: ${ipv6} 爬取: ${url}`);
         FastLoad(page);
         await page.goto(url,{waitUntil:'networkidle0'})
         await scrollToBottom(page);

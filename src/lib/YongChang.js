@@ -8,6 +8,10 @@ import moment from "moment";
 import Chromium from "@sparticuz/chromium";
 import sendMessageToChannel from "./Hook/DiscordMessage.js";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 export const url_YC = (pg) => {
   return `https://www.watchart.com/watches.html?type=1&category=0&page=${pg}`;
 };
@@ -84,6 +88,14 @@ export const YC_count = async () => {
 export const YC = async ({page,data}) => {
   const {url, database} = data
 
+  // 為這個任務分配一個唯一的 IPv6 地址
+  const taskId = `YC-${url}`;
+  const ipv6 = ipv6Manager.getIpv6ForSite('YC', url);
+  
+  // 在系統上添加這個 IPv6 地址（如果啟用）
+  await systemManager.addIpv6Address(ipv6);
+  
+  console.log(`🌐 [YC] 使用 IPv6: ${ipv6} 爬取: ${url}`);
 
 try{
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });

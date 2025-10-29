@@ -6,6 +6,10 @@ import puppeteerCore from "puppeteer-core";
 import Chromium from '@sparticuz/chromium';
 import puppeteer from 'puppeteer'
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 export const url_emc2 = (pg)=>{
     return `https://www.emc2watches.com/product/index/is_featured2/1/page/${pg}.html`
 }
@@ -74,6 +78,11 @@ export const emc2_main = async ({page,data}) => {
     // const database = watch
 
     const {url,database} = data
+
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('emc2', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [emc2] 使用 IPv6: ${ipv6} 爬取: ${url}`);
 
      // ********* ******* //
     await page.goto(url, { waitUntil: 'domcontentloaded' });

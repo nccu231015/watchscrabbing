@@ -4,6 +4,10 @@ import { checkDB } from "./Hook/CheckDB.js"
 import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 export const YS_url = (pg)=>{ return  `https://www.egps.com.tw/index.asp?index=${pg}`}
 
 export const YS_count = async()=>{
@@ -40,6 +44,12 @@ export const YS_main = async ({page,data})=>{
     // const url = YS_url(36)
 
     const {url,database} = data
+    
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('YS', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [YS] 使用 IPv6: ${ipv6} 爬取: ${url}`);
+    
     FastLoad(page);
 
     await page.goto('https://www.egps.com.tw')

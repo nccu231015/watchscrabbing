@@ -6,6 +6,10 @@ import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import Chromium from "@sparticuz/chromium";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 
 export const url_BL = (pg)=>{
     return `https://tw.bid.yahoo.com/booth/Y0796619069?guccounter=1&pg=${pg+1}`
@@ -45,6 +49,12 @@ export const BayLin_main = async ({page, data})=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     const {url,database} = data
+    
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('BayLin', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [BayLin] 使用 IPv6: ${ipv6} 爬取: ${url}`);
+    
     FastLoad(page);
     await page.goto(url,{waitUntil:'networkidle0'})
     await scrollToBottom(page);

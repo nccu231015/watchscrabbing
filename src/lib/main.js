@@ -30,6 +30,11 @@ import Chromium from "@sparticuz/chromium";
 import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer-core";
 
+// IPv6 管理相關導入
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+import IPv6Config, { showIPv6Config } from "./ipv6-config.js";
+
 let clusterInstance = null;
 
 const pages = {};
@@ -58,6 +63,14 @@ const getClusterInstance = async () => {
 };
 
 const clusterTask = async (w, shop) => {
+  // 顯示 IPv6 配置信息
+  showIPv6Config();
+  
+  // 顯示初始統計
+  console.log('📊 IPv6 管理器狀態：');
+  ipv6Manager.showStats();
+  await systemManager.showStatus();
+  
   const cluster = await getClusterInstance();
 
   cluster.on("taskerror", (err, data) => {
@@ -65,7 +78,7 @@ const clusterTask = async (w, shop) => {
     return;
   });
 
-  console.log("爬取開始");
+  console.log("🚀 爬取開始");
 
     if(shop=="TT"){
         Scrapping(TT_count,TT_url,TT_main,w,cluster)
@@ -449,7 +462,15 @@ const clusterTask = async (w, shop) => {
 
   await cluster.idle();
   await cluster.close();
-  console.log("done");
+  
+  // 顯示最終統計
+  console.log('\n📊 爬取完成統計：');
+  ipv6Manager.showStats();
+  
+  // 可選：清理系統上的 IPv6 地址（如果需要）
+  // await systemManager.cleanup();
+  
+  console.log("✅ 爬取完成");
 };
 
 export default async function main(shop) {

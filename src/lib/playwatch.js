@@ -3,6 +3,10 @@ import { checkDB } from "./Hook/CheckDB.js";
 import { FastLoad } from "./Hook/FastLoad.js";
 import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
+
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
 export const PW_url = (pg)=>{ return `http://www.playwatch.com.tw/index.asp?index=${pg}`}
 
 export const PW_count = async () => {
@@ -38,6 +42,12 @@ export const PW_main = async ({page, data})=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     const {url,database} = data
+    
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('PW', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [PW] 使用 IPv6: ${ipv6} 爬取: ${url}`);
+    
     FastLoad(page);
     await page.goto('http://www.playwatch.com.tw/')
     await page.goto(url)

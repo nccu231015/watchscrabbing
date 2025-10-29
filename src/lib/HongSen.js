@@ -4,6 +4,10 @@ import { FastLoad } from "./Hook/FastLoad.js";
 import Chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
 
+// IPv6 管理
+import ipv6Manager from "./ipv6-proxy-manager.js";
+import systemManager from "./ipv6-system-manager.js";
+
 export const HSe_url = (pg)=>{
     return `https://www.999watch.com/index.asp?index=${pg}`
 }
@@ -48,6 +52,12 @@ export const HSe_main = async ({page,data})=>{
     // const browser = await puppeteer.launch({headless:false})
     // const page = await browser.newPage()
     const {url,database} = data
+    
+    // 為這個任務分配一個唯一的 IPv6 地址
+    const ipv6 = ipv6Manager.getIpv6ForSite('HSe', url);
+    await systemManager.addIpv6Address(ipv6);
+    console.log(`🌐 [HSe] 使用 IPv6: ${ipv6} 爬取: ${url}`);
+    
     FastLoad(page)
     await page.goto('https://www.999watch.com/')
     await page.goto(url)
