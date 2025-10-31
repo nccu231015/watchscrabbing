@@ -9,7 +9,7 @@ import ipv6Manager from "./ipv6-proxy-manager.js";
 import systemManager from "./ipv6-system-manager.js";
 
 
-export const YSWF_url = (pg)=> {return `https://www.egps.com.tw/products.asp?page=${pg}`}
+export const YSWF_url = (pg)=> {return `https://www.egps.com.tw/index.asp?page=${pg}`}
 
 export const YSWF_count = async () => {
     // const CHROMIUM_PATH =
@@ -22,21 +22,17 @@ export const YSWF_count = async () => {
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            headless: false
+        });
     const page = await browser.newPage();
-    await page.setRequestInterception(true);
-    page.on('request', (request) => {
-        if (['stylesheet', 'image', 'font'].includes(request.resourceType())) {
-            request.abort();
-        } else {
-            request.continue();
-        }
-    });
-    await page.goto('https://www.egps.com.tw/products.asp?cat=1&type=open')
+   
+    await page.goto('https://www.egps.com.tw/index.asp?cat=1&type=open')
+    
+ 
     
     const pg = await page.evaluate(()=>{
-       
-        const _p = document.querySelector('body > table:nth-child(1) > tbody > tr > td:nth-child(1) > table:nth-child(6) > tbody > tr > td:nth-child(2) > table:nth-child(2) > tbody > tr > td > table:nth-child(5) > tbody > tr > td > table > tbody > tr > td:nth-child(3) > a:nth-last-child(1)')
+        const _p = document.querySelector('body > table:nth-child(4) > tbody > tr > td:nth-child(2) > table:nth-child(6) > tbody > tr > td > table:nth-child(3) > tbody > tr > td > table > tbody > tr > td:nth-child(3) a[href]:nth-last-child(1)')
         return _p.innerText
     })
     return pg
@@ -61,14 +57,14 @@ export const YSWF_main = async ({page, data})=>{
 
     FastLoad(page);
 
-    await page.goto('https://www.egps.com.tw/products.asp?cat=1&type=open');
+    await page.goto('https://www.egps.com.tw/index.asp?cat=1&type=open');
     await page.goto(url);
     
     const  Information = await page.evaluate(()=>{
 
         info = []
        
-        const articles =  document.querySelectorAll('body > table:nth-child(1) > tbody > tr > td:nth-child(1) > table:nth-child(6) > tbody > tr > td:nth-child(2) > table:nth-child(2) > tbody > tr > td > table:nth-child(3) > tbody > tr > td')
+        const articles =  document.querySelectorAll('body > table:nth-child(3) > tbody > tr > td:nth-child(2) > table:nth-child(6) > tbody > tr > td > table:nth-child(1) > tbody > tr > td')
         for (let i=0 ; i<articles.length ; i++){
             let stores = articles[i].querySelectorAll('table > tbody > tr:nth-child(2) span:nth-child(1)')
             const name = articles[i].querySelectorAll('table > tbody > tr:nth-child(3)')
