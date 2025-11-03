@@ -23,7 +23,16 @@ export const YSW_count = async () => {
         //     headless: Chromium.headless,
         // });
         browser = await puppeteer.launch({
-            headless: false
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--disable-gpu'
+            ]
         });
     const page = await browser.newPage();
     await page.setRequestInterception(true);

@@ -27,7 +27,18 @@ export const YSWS_count = async ()=>{
         //     executablePath: await Chromium.executablePath(CHROMIUM_PATH),
         //     headless: Chromium.headless,
         // });
-        browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--disable-gpu'
+            ]
+        });
     const page = await browser.newPage()
     await page.goto(url_YSWS(1),{waitUntil:'networkidle0'});
     const pages = await page.evaluate(()=>{

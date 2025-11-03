@@ -45,9 +45,16 @@ const createCluster = async () => {
     maxConcurrency: 5,
     monitor: true,
     timeout: 360000,
-    headless: false,
     puppeteerOptions:{
+      headless: true,
       args:[
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-accelerated-2d-canvas',
+        '--no-first-run',
+        '--no-zygote',
+        '--disable-gpu',
         '--incognito'
       ],
       timeout: 60000,
