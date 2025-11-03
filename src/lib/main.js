@@ -148,7 +148,7 @@ const clusterTask = async (w, shop) => {
             }
 
 
-    start hash here
+
     try{
     await TT_count().then(value=>{
         pages['TT'] = value
