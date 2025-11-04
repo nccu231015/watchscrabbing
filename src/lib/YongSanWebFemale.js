@@ -9,7 +9,8 @@ import ipv6Manager from "./ipv6-proxy-manager.js";
 import systemManager from "./ipv6-system-manager.js";
 
 
-export const YSWF_url = (pg)=> {return `https://www.egps.com.tw/index.asp?page=${pg}`}
+
+export const YSWF_url = (pg)=> {return `https://www.egps.com.tw/index.asp?index=${pg+1}`}
 
 export const YSWF_count = async () => {
     // const CHROMIUM_PATH =
@@ -66,8 +67,13 @@ export const YSWF_main = async ({page, data})=>{
 
     FastLoad(page);
 
-    await page.goto('https://www.egps.com.tw/index.asp?cat=1&type=open');
-    await page.goto(url);
+    // 先訪問主頁面建立 session
+    await page.goto('https://www.egps.com.tw/index.asp?cat=1&type=open', { waitUntil: 'networkidle2' });
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // 再訪問目標分頁
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
     const  Information = await page.evaluate(()=>{
 
