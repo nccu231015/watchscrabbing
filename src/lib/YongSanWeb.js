@@ -9,8 +9,13 @@ import ipv6Manager from "./ipv6-proxy-manager.js";
 import systemManager from "./ipv6-system-manager.js";
 
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export const YSW_url = (pg)=> {return `https://www.egps.com.tw/index.asp?index=${pg+1}`}
+
+
+export const YSW_url = (pg)=> {return `https://www.egps.com.tw/products.asp?cat=2&type=open&page=${pg+1}`}
 
 export const YSW_count = async () => {
     // const CHROMIUM_PATH =
@@ -44,11 +49,12 @@ export const YSW_count = async () => {
             request.continue();
         }
     });
-    await page.goto('https://www.egps.com.tw/index.asp?cat=2&type=open')
+    await page.goto('https://www.egps.com.tw/products.asp?cat=2&type=open', {waitUntil: 'networkidle2'})
     
-    
+
+
     const pg = await page.evaluate(()=>{
-        const _p = document.querySelector('body > table:nth-child(4) > tbody > tr > td:nth-child(2) > table:nth-child(6) > tbody > tr > td > table:nth-child(3) > tbody > tr > td > table > tbody > tr > td:nth-child(3) a[href]:nth-last-child(1)')
+        const _p = document.querySelector('table tbody > tr > td > table:nth-child(5) > tbody > tr > td > table > tbody > tr > td:nth-child(3) > a[href]:nth-last-child(1)')
         return _p.innerText
     })
     return pg
@@ -74,9 +80,8 @@ export const YSW_main = async ({page, data})=>{
     FastLoad(page);
 
     // 先訪問主頁面建立 session
-    await page.goto('https://www.egps.com.tw/index.asp?cat=2&type=open', { waitUntil: 'networkidle2' });
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+   await page.goto('https://www.egps.com.tw/products.asp?cat=2&type=open')
+  
     // 再訪問目標分頁
     await page.goto(url, { waitUntil: 'networkidle2' });
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -84,8 +89,8 @@ export const YSW_main = async ({page, data})=>{
     const  Information = await page.evaluate(()=>{
 
         info = []
-        
-        const articles =  document.querySelectorAll('body > table:nth-child(3) > tbody > tr > td:nth-child(2) > table:nth-child(6) > tbody > tr > td > table:nth-child(1) > tbody > tr > td')
+       
+        const articles =  document.querySelectorAll('table:nth-child(4) > tbody > tr > td > table:nth-child(3) > tbody > tr > td')
         for (let i=0 ; i<articles.length ; i++){
             let stores = articles[i].querySelectorAll('table > tbody > tr:nth-child(2) span:nth-child(1)')
             const name = articles[i].querySelectorAll('table > tbody > tr:nth-child(3)')
