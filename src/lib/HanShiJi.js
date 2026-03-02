@@ -41,9 +41,10 @@ export const HS_count = async () => {
         })
     const page = await browser.newPage();
     await page.goto("https://www.goodtimezone.com.tw/", { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');
+    
+    await page.waitForSelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-last-child(2) > a');
     const l_pages = await page.evaluate(() => {
-        const _pg = document.querySelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-child(20)');
+        const _pg = document.querySelector('#content > div.prodmain > div.prodleft.fr > div.pordpage > span:nth-last-child(2) > a');
         return _pg.innerText;
     });
     return l_pages;

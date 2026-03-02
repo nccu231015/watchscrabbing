@@ -46,7 +46,8 @@ export const RD_count = async () => {
     await page.goto('https://www.rdwatch.com.tw/')
     
     const pg = await page.evaluate(()=>{
-        const _p = document.querySelector('body > div:nth-child(5) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > div > table > tbody > tr > td > table > tbody > tr > td:nth-child(3) > span > a:nth-last-child(1)')
+        
+        const _p = document.querySelector('table > tbody > tr > td > div > table > tbody > tr > td > table > tbody > tr > td:nth-child(3) > span > a:nth-last-child(1)')
         return _p.innerText
     })
     return pg
@@ -78,7 +79,7 @@ export const RD_main = async ({page, data})=>{
 
         info = []
 
-        const articles =  document.querySelectorAll('body > div:nth-child(5) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td > div ')
+        const articles =  document.querySelectorAll('body > div:nth-child(4) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td > div ')
         
         for (let i=0 ; i<articles.length ; i++){
             let stores = articles[i].querySelectorAll('table > tbody > tr:nth-child(2)')
