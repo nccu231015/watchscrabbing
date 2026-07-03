@@ -94,13 +94,13 @@ const clusterTask = async (w, shop) => {
    
     var pages = {}
 
-    try{
-      await TEW_count().then(value=>{
-        pages['TEW'] = value
-      })
-    }catch(error){
-      console.log(`爬取 TEW 頁面時出錯 ${error}`)
-    }
+    // try{
+    //   await TEW_count().then(value=>{
+    //     pages['TEW'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 TEW 頁面時出錯 ${error}`)
+    // }
 
     try{
       await YSW_count().then(value=>{
@@ -125,13 +125,13 @@ const clusterTask = async (w, shop) => {
     }catch(error){
       console.log(`爬取 AJ 頁面時出錯 ${error}`)
     }
-    try{
-      await TE_count().then(value=>{
-        pages['TE'] = value
-      })
-    }catch(error){
-      console.log(`爬取 TE 頁面時出錯 ${error}`)
-    }
+    // try{
+    //   await TE_count().then(value=>{
+    //     pages['TE'] = value
+    //   })
+    // }catch(error){
+    //   console.log(`爬取 TE 頁面時出錯 ${error}`)
+    // }
 
     try{
         await YSWS_count().then(value=>{
@@ -285,15 +285,15 @@ const clusterTask = async (w, shop) => {
       cluster.queue({url:u, database:w},AJ_main)
     }
 
-        const TE_urlss= []
-        
-        for(let i=0; i<pages["TE"];i++){
-            TE_urlss.push(url_TE(i));
-        }
-        
-        for(const u of TE_urlss){
-            cluster.queue({url:u, database:w},TE_main)
-        }
+        // const TE_urlss= []
+
+        // for(let i=0; i<pages["TE"];i++){
+        //     TE_urlss.push(url_TE(i));
+        // }
+
+        // for(const u of TE_urlss){
+        //     cluster.queue({url:u, database:w},TE_main)
+        // }
 
         const YSWS_urlss= []
         
@@ -349,13 +349,13 @@ const clusterTask = async (w, shop) => {
 //     cluster.queue({ url: u, database: w }, MBW_main);
 //   }
 
-  const TEW_urlss = [];
-  for (let i = 0; i < pages["TEW"]; i++) {
-    TEW_urlss.push(TEW_url(i));
-  }
-  for (const u of TEW_urlss) {
-    cluster.queue({ url: u, database: w }, TEW_main);
-  }
+  // const TEW_urlss = [];
+  // for (let i = 0; i < pages["TEW"]; i++) {
+  //   TEW_urlss.push(TEW_url(i));
+  // }
+  // for (const u of TEW_urlss) {
+  //   cluster.queue({ url: u, database: w }, TEW_main);
+  // }
 
   const YS_urlss = [];
 
