@@ -79,7 +79,7 @@ export const RD_main = async ({page, data})=>{
 
         info = []
 
-        const articles =  document.querySelectorAll('body > div:nth-child(4) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td > div ')
+        const articles =  document.querySelectorAll('body > div:nth-child(3) > div:nth-child(2) > div > table > tbody > tr > td > div > div.main > div:nth-child(4) > table > tbody > tr > td > table > tbody > tr > td > div')
         
         for (let i=0 ; i<articles.length ; i++){
             let stores = articles[i].querySelectorAll('table > tbody > tr:nth-child(2)')
